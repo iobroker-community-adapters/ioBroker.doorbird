@@ -1,0 +1,44 @@
+{
+  "name": "iobroker.doorbird",
+  "version": "0.0.1",
+  "description": "ioBroker doorbird Adapter",
+  "author": {
+    "name": "BuZZy1337",
+    "email": "buzzy1337@outlook.de"
+  },
+  "contributors": [
+    {
+      "name": "BuZZy1337",
+      "email": "buzzy1337@outlook.de"
+    }
+  ],
+  "homepage": "https://github.com/BuZZy1337/ioBroker.doorbird",
+  "license": "MIT",
+  "keywords": [
+    "ioBroker",
+    "doorbird",
+    "Smart Home",
+    "home automation"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BuZZy1337/ioBroker.doorbird"
+  },
+  "dependencies": {
+    "libsodium-wrappers": "^0.7.3",
+    "request": "^2.85.0"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "mocha": "^4.1.0",
+    "chai": "^4.1.2"
+  },
+  "main": "main.js",
+  "scripts": {
+    "test": "node node_modules/mocha/bin/mocha --exit"
+  },
+  "bugs": {
+    "url": "https://github.com/BuZZy1337/ioBroker.doorbird/issues"
+  },
+  "readmeFilename": "README.md"
+}

@@ -1,0 +1,190 @@
+{
+    "common": {
+        "name": "doorbird",
+        "version": "0.0.1",
+        "news": {
+            "0.0.1": {
+                "en": "initial adapter",
+                "de": "Initiale Version",
+                "ru": "Первоначальный адаптер",
+                "pt": "Versão inicial",
+                "fr": "Version initiale",
+                "nl": "Eerste release"
+            }
+        },
+        "title": "DoorBird",
+        "titleLang": {
+            "en": "DoorBird",
+            "de": "DoorBird",
+            "ru": "DoorBird",
+            "pt": "DoorBird",
+            "nl": "DoorBird",
+            "fr": "DoorBird",
+            "it": "DoorBird",
+            "es": "DoorBird"
+        },
+        "desc": {
+            "en": "Connects DoorBird doorbells to ioBroker",
+            "de": "Verbindet DoorBird-Türklingeln mit ioBroker",
+            "ru": "Соединяет дверные звонки DoorBird с ioBroker",
+            "pt": "Conecta campainhas DoorBird ao ioBroker",
+            "nl": "Verbindt deurbel-deurbellen met ioBroker",
+            "fr": "Relie les sonnettes DoorBird à ioBroker",
+            "it": "Collega i campanelli DoorBird a ioBroker",
+            "es": "Conecta los timbres de DoorBird a ioBroker",
+            "pl": "Łączy dzwonki DoorBird z ioBroker"
+        },
+        "authors": [
+            "BuZZy1337 <buzzy1337@outlook.de>"
+        ],
+        "docs": {
+            "en": "docs/en/admin.md",
+            "ru": "docs/ru/admin.md",
+            "de": "docs/de/admin.md",
+            "es": "docs/es/admin.md",
+            "it": "docs/it/admin.md",
+            "fr": "docs/fr/admin.md",
+            "nl": "docs/nl/admin.md",
+            "pt": "docs/pt/admin.md"
+        },
+        "platform": "Javascript/Node.js",
+        "mode": "daemon",
+        "icon": "doorbird.png",
+        "messagebox": true,
+        "subscribe": "messagebox",
+        "materialize": true,
+        "enabled": true,
+        "extIcon": "https://raw.githubusercontent.com/BuZZy1337/ioBroker.doorbird/master/admin/doorbird.png",
+        "keywords": [
+            "doorbird",
+            "vis",
+            "GUI",
+            "graphical",
+            "scada"
+        ],
+        "readme": "https://github.com/BuZZy1337/ioBroker.doorbird/blob/master/README.md",
+        "loglevel": "info",
+        "type": "iot-systems",
+        "restartAdapters": [
+            "vis"
+        ]
+    },
+    "native": {
+        "adapterport": 8100,
+        "ringFavID": 0,
+        "motionFavID": 0
+    },
+    "objects": [],
+    "instanceObjects": [
+        {
+            "_id": "ring.trigger",
+            "type": "state",
+            "common": {
+                "role": "indicator",
+                "name": "Doorbell pressed",
+                "type": "boolean",
+                "read": true,
+                "write": false,
+                "def": false
+            },
+            "native": {}
+        },
+        {
+            "_id": "ring.snapshot",
+            "type": "state",
+            "common": {
+                "name": "JPG file",
+                "type": "file",
+                "read": true,
+                "write": false,
+                "desc": "Can be accessed from web server under http://ip:8082/state/doorbird.0.ring.snapshot"
+            },
+            "native": {}
+        },
+        {
+            "_id": "motion.trigger",
+            "type": "state",
+            "common": {
+                "role": "indicator",
+                "name": "Motion detected",
+                "type": "boolean",
+                "read": true,
+                "write": false,
+                "def": false
+            },
+            "native": {}
+        },
+        {
+            "_id": "motion.snapshot",
+            "type": "state",
+            "common": {
+                "name": "JPG file",
+                "type": "file",
+                "read": true,
+                "write": false,
+                "desc": "Can be accessed from web server under http://ip:8082/state/doorbird.0.motion.snapshot"
+            },
+            "native": {}
+        },
+        {
+            "_id": "info",
+            "type": "channel",
+            "common": {
+                "name": "Information"
+            },
+            "native": {}
+        },
+        {
+            "_id": "info.connection",
+            "type": "state",
+            "common": {
+                "role": "indicator.connected",
+                "name": "If connected to DoorBird Device",
+                "type": "boolean",
+                "read": true,
+                "write": false,
+                "def": false
+            },
+            "native": {}
+        },
+        {
+            "_id": "info.firmware",
+            "type": "state",
+            "common": {
+                "role": "",
+                "name": "DoorBird Firmware version",
+                "type": "string",
+                "read": true,
+                "write": false,
+                "def": ""
+            },
+            "native": {}
+        },
+        {
+            "_id": "info.build",
+            "type": "state",
+            "common": {
+                "role": "",
+                "name": "DoorBird BuildNumber",
+                "type": "string",
+                "read": true,
+                "write": false,
+                "def": ""
+            },
+            "native": {}
+        },
+        {
+            "_id": "info.type",
+            "type": "state",
+            "common": {
+                "role": "",
+                "name": "DoorBird Type",
+                "type": "string",
+                "read": true,
+                "write": false,
+                "def": ""
+            },
+            "native": {}
+        }
+    ]
+}

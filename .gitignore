@@ -1,0 +1,9 @@
+.git
+.idea
+.vscode
+node_modules
+nbproject
+admin/i18n/flat.txt
+admin/i18n/*/flat.txt
+www
+widgets
