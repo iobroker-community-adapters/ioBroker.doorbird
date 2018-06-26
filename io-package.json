@@ -1,8 +1,16 @@
 {
     "common": {
         "name": "doorbird",
-        "version": "0.0.1",
+        "version": "0.0.2",
         "news": {
+            "0.0.2": {
+                "en": "Adapter not ready yet!",
+                "de": "Adapter not ready yet!",
+                "ru": "Adapter not ready yet!",
+                "pt": "Adapter not ready yet!",
+                "fr": "Adapter not ready yet!",
+                "nl": "Adapter not ready yet!"
+            },
             "0.0.1": {
                 "en": "initial adapter",
                 "de": "Initiale Version",

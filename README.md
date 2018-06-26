@@ -5,6 +5,8 @@
 
 THIS ADAPTER IS NOT READY FOR USE YET!!!!!!!!!
 
+### 0.0.2
+* (BuZZy1337) Just added the info that the Adapter is not ready yet .. just to be sure! ;)
 
 ### 0.0.1
 * (BuZZy1337) initial release
