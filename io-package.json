@@ -1,8 +1,19 @@
 {
     "common": {
         "name": "doorbird",
-        "version": "0.0.2",
+        "version": "0.0.3",
         "news": {
+            "0.0.3": {
+                "en": "Added possibility to choose the AdapterIP Address",
+                "de": "Möglichkeit zur Auswahl der AdapterIP-Adresse hinzugefügt",
+                "ru": "Добавлена ​​возможность выбора адреса AdapterIP",
+                "pt": "Adicionada possibilidade de escolher o endereço IP do adaptador",
+                "nl": "Mogelijkheid toegevoegd om het AdapterIP-adres te kiezen",
+                "fr": "Ajout de la possibilité de choisir l'adresse IP de l'adaptateur",
+                "it": "Aggiunta la possibilità di scegliere l'indirizzo AdapterIP",
+                "es": "Se agregó la posibilidad de elegir la dirección AdapterIP",
+                "pl": "Dodano możliwość wyboru adresu AdapterIP"
+            },
             "0.0.2": {
                 "en": "Adapter not ready yet!",
                 "de": "Adapter not ready yet!",

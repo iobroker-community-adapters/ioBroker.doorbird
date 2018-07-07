@@ -180,6 +180,35 @@ function startWizard(msg) {
 
 }
 
+function checkSchedules() {
+    if (authorized) {
+        request(buildURL('schedule'), function (error, response, body) {
+            if (!error) {
+                try {
+                    if (response.statusCode === 200) {
+                        var schedules = JSON.parse(body);
+                        adapter.log.debug(JSON.stringify(body));
+                        for (var key in schedules) {
+                            if (!schedules.hasOwnProperty(key)) continue;
+                            var obj = schedules[key];
+                            for (var prop in obj) {
+                                if (!obj.hasOwnProperty(prop)) continue;
+                                adapter.log.debug('Detected HTTP Favorite (ID: ' + key + ') (' + prop + " = " + obj[prop] + ')');
+                            }
+                        }
+                    }
+                }
+                catch (e) {
+                    adapter.log.error('Error in Parsing Schedules: ' + e);
+                }
+            } else {
+                adapter.log.error('Error in checkSchedules(): ' + error);
+            }
+        });
+    } else {
+        adapter.log.error('Execution of checkSchedules not allowed because not authorized!');
+    }
+}
 
 
 function checkFavorites() {
@@ -210,7 +239,7 @@ function checkFavorites() {
                         if (!birdRingFav) {
                             try {
                                 adapter.log.debug('Adding Ring-HTTP-Favorite on Doorbird-Device..');
-                                request('http://' + adapter.config.birdip + '/bha-api/favorites.cgi?http-user=' + adapter.config.birduser + '&http-password=' + adapter.config.birdpw + '&action=save&type=http&title=ioBroker ' + adapter.namespace + ' Ring&value=http://192.168.30.61:8100/ring');
+                                request('http://' + adapter.config.birdip + '/bha-api/favorites.cgi?http-user=' + adapter.config.birduser + '&http-password=' + adapter.config.birdpw + '&action=save&type=http&title=ioBroker ' + adapter.namespace + ' Ring&value=http://' + adapter.config.adapterAddress + ':' + adapter.config.adapterport + '/ring');
                             } catch (error) {
                                 adapter.log.error('Error in setting Ring-Favorite: ' + error);
                             }
@@ -220,13 +249,14 @@ function checkFavorites() {
                         if (!birdMotionFav) {
                             try {
                                 adapter.log.debug('Adding Motion-HTTP-Favorite on Doorbird-Device..');
-                                request('http://' + adapter.config.birdip + '/bha-api/favorites.cgi?http-user=' + adapter.config.birduser + '&http-password=' + adapter.config.birdpw + '&action=save&type=http&title=ioBroker ' + adapter.namespace + ' Motion&value=http://192.168.30.61:8100/motion');
+                                request('http://' + adapter.config.birdip + '/bha-api/favorites.cgi?http-user=' + adapter.config.birduser + '&http-password=' + adapter.config.birdpw + '&action=save&type=http&title=ioBroker ' + adapter.namespace + ' Motion&value=http://' + adapter.config.adapterAddress + ':' + adapter.config.adapterport + '/motion');
                             } catch (error) {
                                 adapter.log.error('Error in setting Motion-Favorite: ' + error);
                             }
                         } else {
                             adapter.log.debug('Motion-HTTP-Favorite detected successfully.');
                         }
+                        checkSchedules();
                     }
                 }
                 catch (e) {
@@ -303,7 +333,7 @@ function main() {
             res.writeHead(401, { 'Content-Type': 'text/plain' });
             res.end();
         }
-    }).listen(adapter.config.adapterport || 8100);
+    }).listen(adapter.config.adapterport || 8100, adapter.config.adapterAddress || '0.0.0.0');
 
     adapter.subscribeStates('*');
 }

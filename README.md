@@ -5,6 +5,9 @@
 
 THIS ADAPTER IS NOT READY FOR USE YET!!!!!!!!!
 
+### 0.0.3
+* (BuZZy1337) Added possibility to choose the AdapterIP Address
+
 ### 0.0.2
 * (BuZZy1337) Just added the info that the Adapter is not ready yet .. just to be sure! ;)
 

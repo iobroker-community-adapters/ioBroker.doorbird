@@ -1,120 +1,147 @@
 <html>
+
 <head>
-<!-- these 4 files always have to be included -->
-<link rel="stylesheet" type="text/css" href="../../lib/css/materialize.css">
-<link rel="stylesheet" type="text/css" href="../../css/adapter.css"/>
+    <!-- these 4 files always have to be included -->
+    <link rel="stylesheet" type="text/css" href="../../lib/css/materialize.css">
+    <link rel="stylesheet" type="text/css" href="../../css/adapter.css" />
 
-<script type="text/javascript" src="../../lib/js/jquery-3.2.1.min.js"></script>
-<script type="text/javascript" src="../../socket.io/socket.io.js"></script>
+    <script type="text/javascript" src="../../lib/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="../../socket.io/socket.io.js"></script>
 
-<!-- these files always have to be included -->
-<script type="text/javascript" src="../../js/translate.js"></script>
-<script type="text/javascript" src="../../lib/js/materialize.js"></script>
-<script type="text/javascript" src="../../js/adapter-settings.js"></script>
-<script type="text/javascript" src="words.js"></script>
- <style>
-  .m .col .select-wrapper+label {
-   top: -26px;  
-  }
-     .m span{
-         font-size: 0.9em;
-     }
-     
-     .blink {
-  animation: blinker 1s linear infinite;
-}
+    <!-- these files always have to be included -->
+    <script type="text/javascript" src="../../js/translate.js"></script>
+    <script type="text/javascript" src="../../lib/js/materialize.js"></script>
+    <script type="text/javascript" src="../../js/adapter-settings.js"></script>
+    <script type="text/javascript" src="words.js"></script>
+    <style>
+        .m .col .select-wrapper+label {
+            top: -26px;
+        }
 
-@keyframes blinker {
-  50% {
-    opacity: 0;
-  }
-}
+        .m span {
+            font-size: 0.9em;
+        }
 
-#searchbird:hover{
- cursor: pointer;
-}
- </style>
+        .blink {
+            animation: blinker 1s linear infinite;
+        }
 
-<script type="text/javascript">
-    var wizardTimer = false;
-    var timeleft = 60;
-
-    function load(settings, onChange) {
-       if (!settings) return;
-        $('.value').each(function () {            
-            var $key = $(this);
-            var id = $key.attr('id');
-            if ($key.attr('type') === 'checkbox') {
-                $key.prop('checked', settings[id]).change(function() {
-                    onChange();
-                });
-            } else {
-                $key.val(settings[id]).change(function() {
-                    onChange();
-                }).keyup(function() {
-                    onChange();
-                });
+        @keyframes blinker {
+            50% {
+                opacity: 0;
             }
-        });
-        onChange(false);
-        M.updateTextFields();
-        
-        if (!$('#birdip').val()) {
-            $('#noip').toggle();
-        }   
-        
+        }
 
-        $('#searchbird').click(function() {
-            if (!wizardTimer) {
-            timeleft = 60;
-            $('#countdowntimer').text(timeleft);
-            $('#birdip,#birdid').prop('disabled', true);
-            $('#wizard').toggle();
-            sendTo(null, 'wizard', null, function (response) {
-                $('#birdip,#birdid').prop('disabled', false);
-                $('#birdip').focus();
-                $('#birdip').val(response[0]);
-                $('#birdid').focus();
-                $('#birdid').val(response[1]);
-                $('#birduser').focus();
-                //$('#birduser').val(response[1] + '0001');
-                //$('#birdpw').focus();
-                clearInterval(wizardTimer);
-                wizardTimer = false;
-                $('#wizard,#noip').fadeOut('slow');
-                onChange();
-            });
-            wizardTimer = setInterval(function(){
-                timeleft--;
-                $('#countdowntimer').text(timeleft);
-                if(timeleft == 0) {
-                    clearInterval(wizardTimer);
-                    $('#birdip,#birdid').prop('disabled', false);
-                    $('#wizard').fadeOut('slow');
-                    wizardTimer = false;
+        #searchbird:hover {
+            cursor: pointer;
+        }
+    </style>
+
+    <script type="text/javascript">
+        var wizardTimer = false;
+        var timeleft = 60;
+        function fillSelectIPsbird(id, actualAddr, noIPv4, noIPv6, callback) {
+            getIPs(function (ips) {
+                var str = '';
+                var ip = '';
+                for (var i = 0; i < ips.length; i++) {
+                    if (noIPv4 && ips[i].family === 'ipv4') continue;
+                    if (noIPv6 && ips[i].family === 'ipv6') continue;
+                    ip = ips[i].address;
+                    if (ip.substr(0, 3) !== '192') continue;
+                    str += '<option value="' + ips[i].address + '" ' + ((ips[i].address === actualAddr) ? 'selected' : '') + '>' + ips[i].name + '</option>';
                 }
-            },1000);
+
+                $(id).html(str);
+                if (isMaterialize) {
+                    $(id).select();
+                }
+                if (typeof callback === 'function') {
+                    callback();
+                }
+            });
+        }
+
+        function load(settings, onChange) {
+            if (!settings) return;
+            $('.value').each(function () {
+                var $key = $(this);
+                var id = $key.attr('id');
+                if ($key.attr('type') === 'checkbox') {
+                    $key.prop('checked', settings[id]).change(function () {
+                        onChange();
+                    });
+                } else {
+                    $key.val(settings[id]).change(function () {
+                        onChange();
+                    }).keyup(function () {
+                        onChange();
+                    });
+                }
+            });
+            onChange(false);
+            M.updateTextFields();
+
+            if (!$('#birdip').val()) {
+                $('#noip').toggle();
             }
-        });
-        
-    }
+
+            fillSelectIPsbird('#adapterAddress', settings.adapterAddress, false, true, function () {
+                $('#adapterAddress').select();
+            });
+
+            $('#searchbird').click(function () {
+                if (!wizardTimer) {
+                    timeleft = 60;
+                    $('#countdowntimer').text(timeleft);
+                    $('#birdip,#birdid').prop('disabled', true);
+                    $('#wizard').toggle();
+                    sendTo(null, 'wizard', null, function (response) {
+                        $('#birdip,#birdid').prop('disabled', false);
+                        $('#birdip').focus();
+                        $('#birdip').val(response[0]);
+                        $('#birdid').focus();
+                        $('#birdid').val(response[1]);
+                        $('#birduser').focus();
+                        //$('#birduser').val(response[1] + '0001');
+                        //$('#birdpw').focus();
+                        clearInterval(wizardTimer);
+                        wizardTimer = false;
+                        $('#wizard,#noip').fadeOut('slow');
+                        onChange();
+                    });
+                    wizardTimer = setInterval(function () {
+                        timeleft--;
+                        $('#countdowntimer').text(timeleft);
+                        if (timeleft == 0) {
+                            clearInterval(wizardTimer);
+                            $('#birdip,#birdid').prop('disabled', false);
+                            $('#wizard').fadeOut('slow');
+                            wizardTimer = false;
+                        }
+                    }, 1000);
+                }
+            });
+
+        }
 
 
-    function save(callback) {
-        var obj = {};
-        $('.value').each(function () {
-            var $this = $(this);
-            if ($this.attr('type') === 'checkbox') {
-                obj[$this.attr('id')] = $this.prop('checked');
-            } else {
-                obj[$this.attr('id')] = $this.val();
-            }
-        });
-        callback(obj);
-    }
-    
-</script>
+        function save(callback) {
+            var obj = {};
+            $('.value').each(function () {
+                var $this = $(this);
+                if ($this.attr('type') === 'checkbox') {
+                    obj[$this.attr('id')] = $this.prop('checked');
+                } else {
+                    obj[$this.attr('id')] = $this.val();
+                }
+            });
+            callback(obj);
+        }
+
+    </script>
 </head>
+
 <body>
     <div class="m adapter-container">
         <div class="row">
@@ -123,32 +150,43 @@
                     <img src="doorbird.png" class="logo">
                 </div>
                 <div id="wizard" class="input-field col s6 m6 l6 pull-s1 pull-m1 pull-l1" style="text-align: center; margin: -10px !important; display: none;">
-                    <span class="translate blink">Press the RING Button on your DoorBird and wait a few seconds.</br>Time left: <span id="countdowntimer">30</span> Seconds.</span>
+                    <span class="translate blink">Press the RING Button on your DoorBird and wait a few seconds.</br>Time left:
+                        <span id="countdowntimer">30</span> Seconds.</span>
                     <div class="progress">
                         <div class="indeterminate"></div>
                     </div>
                 </div>
                 <div class="input-field col s3 m3 l3"></div>
             </div>
+
             <div class="row">
-                <div class="input-field col s12 m5 l5">
+                <div class="col s12 m8 l8">
+                    <select id="adapterAddress" class="value"></select>
+                    <label for="adapterAddress" class="translate">Adapter Address</label>
+                </div>
+                <div class="col s12 m4 l4">
+                    <input class="value" id="adapterport" type="number" />
+                    <label for="adapterport" class="translate">Adapterport</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 m6 l6">
                     <i id="searchbird" class="material-icons prefix">search</i>
                     <input class="value" id="birdip" type="text">
                     <label for="birdip">192.168.x.x</label>
-                    <span class="translate">DoorBird Device IP <span class="translate" id="noip" style="display: none;">(Click search Icon for automatic detection)</span></span>
+                    <span class="translate">DoorBird Device IP
+                        <span class="translate" id="noip" style="display: none;">(Click search Icon for automatic detection)</span>
+                    </span>
                 </div>
-                <div class="input-field col s12 m5 l5">
-                    <input class="value" id="birdid" type="text"/>
+                <div class="input-field col s12 m6 l6">
+                    <input class="value" id="birdid" type="text" />
                     <label for="birdid" class="translate">DoorBird Device ID</label>
                     <span class="translate">DoorBird Device ID</span>
                 </div>
-                <div class="input-field col s12 m2 l2">
-                    <input class="value" id="adapterport" type="number"/>
-                    <label for="adapterport" class="translate">Adapterport</label>
-                    <span class="translate">Adapterport</span>
-                </div>
+            </div>
+            <div class="row">
                 <div class="input-field col s12 m6 l6">
-                    <input class="value" id="birduser" type="text"/>
+                    <input class="value" id="birduser" type="text" />
                     <label for="birduser" class="translate">Username</label>
                     <span class="translate">Username</span>
                 </div>
@@ -160,5 +198,7 @@
             </div>
         </div>
     </div>
+    </div>
 </body>
+
 </html>
