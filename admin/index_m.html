@@ -38,6 +38,22 @@
     </style>
 
     <script type="text/javascript">
+        var secret;
+        function encrypt(key, value) {
+            var result = '';
+            for (var i = 0; i < value.length; ++i) {
+                result += String.fromCharCode(key[i % key.length].charCodeAt(0) ^ value.charCodeAt(i));
+            }
+            return result;
+        }
+        function decrypt(key, value) {
+            var result = '';
+            for (var i = 0; i < value.length; ++i) {
+                result += String.fromCharCode(key[i % key.length].charCodeAt(0) ^ value.charCodeAt(i));
+            }
+            return result;
+        }
+
         var wizardTimer = false;
         var timeleft = 60;
         function fillSelectIPsbird(id, actualAddr, noIPv4, noIPv6, callback) {
@@ -63,6 +79,14 @@
         }
 
         function load(settings, onChange) {
+            socket.emit('getObject', 'system.config', function (err, obj) {
+                secret = (obj.native ? obj.native.secret : '') || 'Zgfr56gFe87jJOM';
+                load2(settings, onChange);
+            });
+            onChange(false);
+        }
+
+        function load2(settings, onChange) {
             if (!settings) return;
             $('.value').each(function () {
                 var $key = $(this);
@@ -72,7 +96,7 @@
                         onChange();
                     });
                 } else {
-                    $key.val(settings[id]).change(function () {
+                    $key.val($key.attr('type') === 'password' && settings[id] ? decrypt(secret, settings[id]) : settings[id]).change(function () {
                         onChange();
                     }).keyup(function () {
                         onChange();
@@ -122,7 +146,6 @@
                     }, 1000);
                 }
             });
-
         }
 
 
@@ -132,6 +155,8 @@
                 var $this = $(this);
                 if ($this.attr('type') === 'checkbox') {
                     obj[$this.attr('id')] = $this.prop('checked');
+                } else if ($this.attr('type') === 'password') {
+                    obj[$this.attr('id')] = encrypt(secret, $this.val());
                 } else {
                     obj[$this.attr('id')] = $this.val();
                 }

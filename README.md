@@ -5,6 +5,13 @@
 
 THIS ADAPTER IS NOT READY FOR USE YET!!!!!!!!!
 
+### 0.0.4
+* (BuZZy1337) DO A COMPLETE REINSTALL OF THE ADAPTER (DELTE AND INSTALL THE ADAPTER AGAIN!)
+* (BuZZy1337) Added support for more then one Doorbell Button
+* (BuZZy1337) Encrypted saving of Doorbird Password
+* (BuZZy1337) Detect and create Favorites & Schedules on the Doorbird Device.
+* There is a Bug in the Doorbird Firmware for the Motion schedule! You can delete and set the Schedule for the Motionsensor in the App - thats a workaround for now.
+
 ### 0.0.3
 * (BuZZy1337) Added possibility to choose the AdapterIP Address
 
