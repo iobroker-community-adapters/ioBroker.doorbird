@@ -7,6 +7,7 @@ THIS ADAPTER IS NOT READY FOR USE YET!!!!!!!!!
 
 ### 0.0.4
 * (BuZZy1337) DO A COMPLETE REINSTALL OF THE ADAPTER (DELTE AND INSTALL THE ADAPTER AGAIN!)
+DELETE ALL IOBROKER SCHEDULES AND THEN ALL IOBROKER FAVORITES IN YOUR DOORBIRD APP BEFORE STARTING 0.0.4!
 * (BuZZy1337) Added support for more then one Doorbell Button
 * (BuZZy1337) Encrypted saving of Doorbird Password
 * (BuZZy1337) Detect and create Favorites & Schedules on the Doorbird Device.
