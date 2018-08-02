@@ -493,7 +493,7 @@ function main() {
     adapter.subscribeStates('*');
 }
 
-function decryptDoorBird(message) {
+/* function decryptDoorBird(message) {
     if (message.length > 25) {
         if (!ringActive) {
             ringActive = true;
@@ -548,4 +548,4 @@ function decryptDoorBird(message) {
     } else {
         return;
     }
-}
+} */
