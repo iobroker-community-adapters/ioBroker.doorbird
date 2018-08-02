@@ -6,3 +6,4 @@ nbproject
 admin/i18n/flat.txt
 admin/i18n/*/flat.txt
 gulpfile.js
+package-lock.json
