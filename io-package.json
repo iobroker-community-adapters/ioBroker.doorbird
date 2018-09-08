@@ -1,8 +1,19 @@
 {
     "common": {
         "name": "doorbird",
-        "version": "0.1.0",
+        "version": "0.1.1",
         "news": {
+            "0.1.1": {
+                "en": "Initial release to the ioBroker repo",
+                "de": "Erstveröffentlichung im ioBroker Repo",
+                "ru": "Первоначальный выпуск в репозиторий ioBroker",
+                "pt": "Lançamento inicial no repositório ioBroker",
+                "nl": "Initiële vrijgave voor de repro van ioBroker",
+                "fr": "Version initiale du référentiel ioBroker",
+                "it": "Versione iniziale del repository ioBroker",
+                "es": "Versión inicial para el repositorio ioBroker",
+                "pl": "Pierwsze wydanie do repozytu ioBroker"
+            },
             "0.1.0": {
                 "en": "Initial release to the ioBroker repo",
                 "de": "Erstveröffentlichung im ioBroker Repo",
