@@ -5,6 +5,11 @@
 
 THIS ADAPTER IS NOT READY FOR USE YET!!!!!!!!!
 
+### 0.1.0 (2018-09-08)
+* (BuZZy1337) "public release"
+* (BuZZy1337) Changed Adapteraddress option from dropdown list to inputfield
+* (BuZZy1337) Added Support for triggering Doorbird-Relays
+
 ### 0.0.4
 * (BuZZy1337) DO A COMPLETE REINSTALL OF THE ADAPTER (DELTE AND INSTALL THE ADAPTER AGAIN!)
 DELETE ALL IOBROKER SCHEDULES AND THEN ALL IOBROKER FAVORITES IN YOUR DOORBIRD APP BEFORE STARTING 0.0.4!

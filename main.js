@@ -1,34 +1,3 @@
-/**
- *
- * doorbird adapter
- *
- *
- *  file io-package.json comments:
- *
- *  {
- *      "common": {
- *          "name":         "doorbird",                  // name has to be set and has to be equal to adapters folder name and main file name excluding extension
- *          "version":      "0.0.0",                    // use "Semantic Versioning"! see http://semver.org/
- *          "title":        "Node.js doorbird Adapter",  // Adapter title shown in User Interfaces
- *          "authors":  [                               // Array of authord
- *              "name <mail@doorbird.com>"
- *          ]
- *          "desc":         "doorbird adapter",          // Adapter description shown in User Interfaces. Can be a language object {de:"...",ru:"..."} or a string
- *          "platform":     "Javascript/Node.js",       // possible values "javascript", "javascript/Node.js" - more coming
- *          "mode":         "daemon",                   // possible values "daemon", "schedule", "subscribe"
- *          "materialize":  true,                       // support of admin3
- *          "schedule":     "0 0 * * *"                 // cron-style schedule. Only needed if mode=schedule
- *          "loglevel":     "info"                      // Adapters Log Level
- *      },
- *      "native": {                                     // the native object is available via adapter.config in your adapters code - use it for configuration
- *          "test1": true,
- *          "test2": 42,
- *          "mySelect": "auto"
- *      }
- *  }
- *
- */
-
 /* jshint -W097 */// jshint strict:false
 /*jslint node: true */
 'use strict';
@@ -83,6 +52,19 @@ adapter.on('stateChange', function (id, state) {
     // if (state && !state.ack) {
     //     adapter.log.debug('ack is not set!');
     // }
+    if (!state || state.ack) return;
+    var comp = id.split('.');
+    if (comp[2] === 'Relays') {
+        if (!authorized) {
+            adapter.log.error('Cannot trigger relay because not authorized!');
+        } else {
+            try {
+                request('http://' + adapter.config.birdip + '/bha-api/open-door.cgi.cgi?http-user=' + adapter.config.birduser + '&http-password=' + adapter.config.birdpw + '&r=' + comp[3]);
+            } catch (e) {
+                adapter.log.error('Error in triggering Relay: ' + e);
+            }
+        }
+    }
 });
 
 adapter.on('message', function (msg) {
@@ -157,6 +139,21 @@ function getInfo() {
                         adapter.setState('info.build', info.BHA.VERSION[0].BUILD_NUMBER, true);
                         //  adapter.setState('info.wifimac', info.BHA.VERSION[0].WIFI_MAC_ADDR, true);
                         adapter.setState('info.type', info.BHA.VERSION[0]['DEVICE-TYPE'], true);
+                        var relays = info.BHA.VERSION[0].RELAYS;
+                        relays.forEach(function (value) {
+                            adapter.setObjectNotExists('Relays.' + value, {
+                                type: 'state',
+                                common: {
+                                    name: 'Activate relay',
+                                    type: 'boolean',
+                                    role: 'button',
+                                    read: true,
+                                    write: true,
+                                    desc: 'Activate the Relay (ID: ' + value + ')',
+                                },
+                                native: {}
+                            });
+                        });
                     }
                 }
                 catch (e) {
@@ -261,6 +258,7 @@ function checkFavorites() {
             if (!error) {
                 try {
                     if (response.statusCode === 200) {
+                        delete favoriteState['motion'];
                         favoriteArray = [];
                         var favorites = JSON.parse(body);
                         for (var key in favorites.http) {
@@ -448,7 +446,7 @@ function main() {
         var address = udpserver.address();
         adapter.log.debug('Adapter listening on IP: ' + address.address + ' - UDP Port 35344');
     });
-
+    
     udpserver.on('message', function (msg, remote) {
         if (remote.address == adapter.config.birdip && !wizard) {
             decryptDoorBird(msg);
@@ -456,39 +454,46 @@ function main() {
     });
 
     // udpserver.bind(35344);
-
-    http.createServer(function (req, res) {
-        if (res.socket.remoteAddress.replace(/^.*:/, '') == adapter.config.birdip || res.socket.remoteAddress == '192.168.30.47') {
-            res.writeHead(204, { 'Content-Type': 'text/plain' });
-            if (req.url == '/motion') {
-                adapter.log.debug('Received Motion-alert from Doorbird!');
-                adapter.setState('Motion.trigger', true, true);
-                download(buildURL('image'), jpgpath, function () {
-                    adapter.log.debug('Image downloaded!');
-                    sendToState('Motion');
-                });
-                setTimeout(function () {
-                    adapter.setState('Motion.trigger', false, true)
-                }, 2500);
-            }
-            if (req.url.indexOf('ring') != -1) {
-                var id = req.url.substr(req.url.indexOf('?') + 1, req.url.length);
-                adapter.log.debug('Received Ring-alert (ID: ' + id + ') from Doorbird!');
-                adapter.setState('Doorbell.' + id + '.trigger', true, true);
-                download(buildURL('image'), jpgpath, function () {
-                    adapter.log.debug('Image downloaded!');
-                    sendToState('Doorbell.' + id);
-                });
-                setTimeout(function () {
-                    adapter.setState('Doorbell.' + id + '.trigger', false, true)
-                }, 2500);
-            }
-            res.end();
-        } else {
-            res.writeHead(401, { 'Content-Type': 'text/plain' });
-            res.end();
+    if (adapter.config.adapterAddress) {
+        try {
+            http.createServer(function (req, res) {
+                if (res.socket.remoteAddress.replace(/^.*:/, '') == adapter.config.birdip || res.socket.remoteAddress == '192.168.30.47') {
+                    res.writeHead(204, { 'Content-Type': 'text/plain' });
+                    if (req.url == '/motion') {
+                        adapter.log.debug('Received Motion-alert from Doorbird!');
+                        adapter.setState('Motion.trigger', true, true);
+                        download(buildURL('image'), jpgpath, function () {
+                            adapter.log.debug('Image downloaded!');
+                            sendToState('Motion');
+                        });
+                        setTimeout(function () {
+                            adapter.setState('Motion.trigger', false, true)
+                        }, 2500);
+                    }
+                    if (req.url.indexOf('ring') != -1) {
+                        var id = req.url.substr(req.url.indexOf('?') + 1, req.url.length);
+                        adapter.log.debug('Received Ring-alert (ID: ' + id + ') from Doorbird!');
+                        adapter.setState('Doorbell.' + id + '.trigger', true, true);
+                        download(buildURL('image'), jpgpath, function () {
+                            adapter.log.debug('Image downloaded!');
+                            sendToState('Doorbell.' + id);
+                        });
+                        setTimeout(function () {
+                            adapter.setState('Doorbell.' + id + '.trigger', false, true)
+                        }, 2500);
+                    }
+                    res.end();
+                } else {
+                    res.writeHead(401, { 'Content-Type': 'text/plain' });
+                    res.end();
+                }
+            }).listen(adapter.config.adapterport || 8100, adapter.config.adapterAddress);
+        } catch (e) {
+            adapter.log.error('There was an Error starting the HTTP Server! (' + e + ')');
         }
-    }).listen(adapter.config.adapterport || 8100, adapter.config.adapterAddress || '0.0.0.0');
+    } else {
+        adapter.log.error('You need to set the Adapteraddress in the Instance-Settings!!');
+    }
 
     adapter.subscribeStates('*');
 }

@@ -64,13 +64,12 @@
                     if (noIPv4 && ips[i].family === 'ipv4') continue;
                     if (noIPv6 && ips[i].family === 'ipv6') continue;
                     ip = ips[i].address;
-                    if (ip.substr(0, 3) !== '192') continue;
-                    str += '<option value="' + ips[i].address + '" ' + ((ips[i].address === actualAddr) ? 'selected' : '') + '>' + ips[i].name + '</option>';
-                }
-
-                $(id).html(str);
-                if (isMaterialize) {
-                    $(id).select();
+                    if (ip.substr(0, 3) !== '192') {
+                        continue;
+                    } else {
+                        $("#adapterAddress").val(ip);
+                        break;
+                    }
                 }
                 if (typeof callback === 'function') {
                     callback();
@@ -110,9 +109,11 @@
                 $('#noip').toggle();
             }
 
-            fillSelectIPsbird('#adapterAddress', settings.adapterAddress, false, true, function () {
-                $('#adapterAddress').select();
-            });
+            if (!settings.adapterAddress) {
+                fillSelectIPsbird('#adapterAddress', settings.adapterAddress, false, true, function () {
+                    $('#birdip').focus();
+                });
+            }
 
             $('#searchbird').click(function () {
                 if (!wizardTimer) {
@@ -127,8 +128,8 @@
                         $('#birdid').focus();
                         $('#birdid').val(response[1]);
                         $('#birduser').focus();
-                        //$('#birduser').val(response[1] + '0001');
-                        //$('#birdpw').focus();
+                        $('#birduser').val(response[1] + '0001');
+                        $('#birdpw').focus();
                         clearInterval(wizardTimer);
                         wizardTimer = false;
                         $('#wizard,#noip').fadeOut('slow');
@@ -175,7 +176,8 @@
                     <img src="doorbird.png" class="logo">
                 </div>
                 <div id="wizard" class="input-field col s6 m6 l6 pull-s1 pull-m1 pull-l1" style="text-align: center; margin: -10px !important; display: none;">
-                    <span class="translate blink">Press the RING Button on your DoorBird and wait a few seconds.</br>Time left:
+                    <span class="translate blink">Press the RING Button on your DoorBird and wait a few seconds.</br>Time
+                        left:
                         <span id="countdowntimer">30</span> Seconds.</span>
                     <div class="progress">
                         <div class="indeterminate"></div>
@@ -186,12 +188,12 @@
 
             <div class="row">
                 <div class="col s12 m8 l8">
-                    <select id="adapterAddress" class="value"></select>
-                    <label for="adapterAddress" class="translate">Adapter Address</label>
+                    <input id="adapterAddress" class="value" type="text" />
+                    <label for="adapterAddress" class="translate">Adapter IP</label>
                 </div>
                 <div class="col s12 m4 l4">
                     <input class="value" id="adapterport" type="number" />
-                    <label for="adapterport" class="translate">Adapterport</label>
+                    <label for="adapterport" class="translate">Adapter Port</label>
                 </div>
             </div>
             <div class="row">

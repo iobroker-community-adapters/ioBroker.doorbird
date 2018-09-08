@@ -1,8 +1,19 @@
 {
     "common": {
         "name": "doorbird",
-        "version": "0.0.4",
+        "version": "0.1.0",
         "news": {
+            "0.1.0": {
+                "en": "Initial release to the ioBroker repo",
+                "de": "Erstveröffentlichung im ioBroker Repo",
+                "ru": "Первоначальный выпуск в репозиторий ioBroker",
+                "pt": "Lançamento inicial no repositório ioBroker",
+                "nl": "Initiële vrijgave voor de repro van ioBroker",
+                "fr": "Version initiale du référentiel ioBroker",
+                "it": "Versione iniziale del repository ioBroker",
+                "es": "Versión inicial para el repositorio ioBroker",
+                "pl": "Pierwsze wydanie do repozytu ioBroker"
+            },
             "0.0.4": {
                 "en": "Added support for more then one doorbell\nEncrypted saving of the Doorbird Password\nCheck and create Schedules and Favorites\nTry to detect all doorbells on the Doorbird Device",
                 "de": "Zusätzliche Unterstützung für mehr als eine Türklingel\nVerschlüsseltes Speichern des Doorbird Passworts\nÜberprüfen und erstellen Sie Termine und Favoriten\nVersuchen Sie, alle Türklingeln am Doorbird-Gerät zu erkennen",
@@ -88,9 +99,7 @@
         "keywords": [
             "doorbird",
             "vis",
-            "GUI",
-            "graphical",
-            "scada"
+            "GUI"
         ],
         "readme": "https://github.com/BuZZy1337/ioBroker.doorbird/blob/master/README.md",
         "loglevel": "info",
