@@ -1,8 +1,19 @@
 {
     "common": {
         "name": "doorbird",
-        "version": "0.1.1",
+        "version": "0.1.2",
         "news": {
+            "0.1.2": {
+                "en": "Initial release to the ioBroker repo",
+                "de": "Erstveröffentlichung im ioBroker Repo",
+                "ru": "Первоначальный выпуск в репозиторий ioBroker",
+                "pt": "Lançamento inicial no repositório ioBroker",
+                "nl": "Initiële vrijgave voor de repro van ioBroker",
+                "fr": "Version initiale du référentiel ioBroker",
+                "it": "Versione iniziale del repository ioBroker",
+                "es": "Versión inicial para el repositorio ioBroker",
+                "pl": "Pierwsze wydanie do repozytu ioBroker"
+            },
             "0.1.1": {
                 "en": "Initial release to the ioBroker repo",
                 "de": "Erstveröffentlichung im ioBroker Repo",
@@ -65,16 +76,6 @@
             }
         },
         "title": "DoorBird",
-        "titleLang": {
-            "en": "DoorBird",
-            "de": "DoorBird",
-            "ru": "DoorBird",
-            "pt": "DoorBird",
-            "nl": "DoorBird",
-            "fr": "DoorBird",
-            "it": "DoorBird",
-            "es": "DoorBird"
-        },
         "desc": {
             "en": "Connects DoorBird doorbells to ioBroker",
             "de": "Verbindet DoorBird-Türklingeln mit ioBroker",
@@ -89,17 +90,8 @@
         "authors": [
             "BuZZy1337 <buzzy1337@outlook.de>"
         ],
-        "docs": {
-            "en": "docs/en/admin.md",
-            "ru": "docs/ru/admin.md",
-            "de": "docs/de/admin.md",
-            "es": "docs/es/admin.md",
-            "it": "docs/it/admin.md",
-            "fr": "docs/fr/admin.md",
-            "nl": "docs/nl/admin.md",
-            "pt": "docs/pt/admin.md"
-        },
         "platform": "Javascript/Node.js",
+        "license": "MIT",
         "mode": "daemon",
         "icon": "doorbird.png",
         "messagebox": true,
@@ -114,10 +106,7 @@
         ],
         "readme": "https://github.com/BuZZy1337/ioBroker.doorbird/blob/master/README.md",
         "loglevel": "info",
-        "type": "iot-systems",
-        "restartAdapters": [
-            "vis"
-        ]
+        "type": "iot-systems"
     },
     "native": {
         "adapterport": 8100
