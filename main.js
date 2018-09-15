@@ -8,28 +8,27 @@ var birdConCheck;
 var adapter = new utils.Adapter('doorbird');
 var dgram = require('dgram');
 var udpserver = dgram.createSocket('udp4');
-var _sodium = require('libsodium-wrappers');
+// var _sodium = require('libsodium-wrappers'); - Not needed for now (DEP << "libsodium-wrappers": "^0.7.3" >> ALSO REMOVED IN PACKAGE FILE!!)
+// var ringActive = false; - Not needed for now .. Just saving it for later .. maybe ...
 var request = require('request');
 var fs = require('fs');
 var http = require('http');
 var path = require('path');
-var ringActive = false;
 var wizard = false;
 var wizardTimeout = false;
 var authorized = false;
 var bellCount = 0;
 var scheduleState = {};
 var motionState = {};
-var doorbellsArray = [];
-var doorbellsState = {};
-var favoriteArray = [];
-var favoriteState = {};
+var doorbellsArray = []; // Contains all Doorbell IDs
+var favoriteState = {}; // {'ID of Doorbell/Motion': 'ID of Favorite'}
 var jpgpath = path.normalize(path.join(utils.controllerDir, require(path.join(utils.controllerDir, 'lib', 'tools.js')).getDefaultDataDir()) + '/' + adapter.namespace + '.snap.jpg');
 var download = function (url, filename, callback) {
     request.head(url, function (err, res, body) {
         request(url).pipe(fs.createWriteStream(filename)).on('close', callback);
     });
 };
+
 
 adapter.on('unload', function (callback) {
     try {
@@ -41,17 +40,14 @@ adapter.on('unload', function (callback) {
     }
 });
 
+
 adapter.on('objectChange', function (id, obj) {
     // Warning, obj can be null if it was deleted
     // adapter.log.debug('objectChange ' + id + ' ' + JSON.stringify(obj));
 });
 
+
 adapter.on('stateChange', function (id, state) {
-    // Warning, state can be null if it was deleted
-    // adapter.log.debug('stateChange ' + id + ' ' + JSON.stringify(state));
-    // if (state && !state.ack) {
-    //     adapter.log.debug('ack is not set!');
-    // }
     if (!state || state.ack) return;
     var comp = id.split('.');
     if (comp[2] === 'Relays') {
@@ -59,13 +55,24 @@ adapter.on('stateChange', function (id, state) {
             adapter.log.error('Cannot trigger relay because not authorized!');
         } else {
             try {
-                request('http://' + adapter.config.birdip + '/bha-api/open-door.cgi.cgi?http-user=' + adapter.config.birduser + '&http-password=' + adapter.config.birdpw + '&r=' + comp[3]);
+                request('http://' + adapter.config.birdip + '/bha-api/open-door.cgi.cgi?http-user=' + adapter.config.birduser + '&http-password=' + adapter.config.birdpw + '&r=' + comp[3], function (error, response, body) {
+                    if (!error) {
+                        if (response.statusCode === 200) {
+                            adapter.log.debug('Relay ' + comp[3] + ' triggered successfully!');
+                        } else if (response.statusCode === 204) {
+                            adapter.log.error('Could not trigger relay ' + comp[3] + '! (Insufficient permissions)');
+                        } else {
+                            adapter.log.error('Could not trigger relay ' + comp[3] + '. (Got Statuscode ' + response.statusCode + ')');
+                        }
+                    }
+                });
             } catch (e) {
                 adapter.log.error('Error in triggering Relay: ' + e);
             }
         }
     }
 });
+
 
 adapter.on('message', function (msg) {
     if (msg.command === 'wizard' && !wizard) {
@@ -74,104 +81,12 @@ adapter.on('message', function (msg) {
     }
 });
 
-adapter.on('ready', function () {
-    adapter.getForeignObject('system.config', (err, obj) => {
-        if (obj && obj.native && obj.native.secret) {
-            adapter.config.birdpw = decrypt(obj.native.secret, adapter.config.birdpw || 'empty');
-        } else {
-            adapter.config.birdpw = decrypt('Zgfr56gFe87jJOM', adapter.config.birdpw || 'empty');
-        }
-        adapter.setState('info.connection', false, true);
-        main();
-    });
-});
-
-function decrypt(key, value) {
-    let result = '';
-    for (let i = 0; i < value.length; ++i) {
-        result += String.fromCharCode(key[i % key.length].charCodeAt(0) ^ value.charCodeAt(i));
-    }
-    return result;
-}
-
-function buildURL(com) {
-    return 'http://' + adapter.config.birdip + '/bha-api/' + com + '.cgi?http-user=' + adapter.config.birduser + '&http-password=' + adapter.config.birdpw;
-}
-
-function testBird() {
-    request(buildURL('schedule'), function (error, response, body) {
-        if (!error) {
-            //  adapter.log.debug('testBird() ResponseCode: ' + response.statusCode);
-            if (response.statusCode === 401) {
-                authorized = false;
-                adapter.setState('info.connection', false, true);
-                adapter.log.error('Whooops.. DoorBird says User ' + adapter.config.birduser + ' is unauthorized!!');
-                adapter.log.error('Check Username + Password and enable the "API-Operator" Permission for the User!!');
-            } else if (response.statusCode === 200) {
-                authorized = true;
-                adapter.setState('info.connection', true, true);
-                adapter.log.debug('Authorization with User ' + adapter.config.birduser + ' successfull!');
-                getInfo();
-                getSchedules();
-            }
-        } else {
-            if (error.code === "EHOSTUNREACH") {
-                authorized = false;
-                adapter.setState('info.connection', false, true);
-                adapter.log.error('DoorBird Device is offline!!');
-            } else {
-                authorized = false;
-                adapter.log.error('Error in testBird() Request: ' + error);
-                adapter.setState('info.connection', false, true);
-            }
-        }
-    });
-}
-
-function getInfo() {
-    if (authorized) {
-        request(buildURL('info'), function (error, response, body) {
-            if (!error) {
-                try {
-                    if (response.statusCode === 200) {
-                        var info = JSON.parse(body);
-                        adapter.setState('info.firmware', info.BHA.VERSION[0].FIRMWARE, true);
-                        adapter.setState('info.build', info.BHA.VERSION[0].BUILD_NUMBER, true);
-                        //  adapter.setState('info.wifimac', info.BHA.VERSION[0].WIFI_MAC_ADDR, true);
-                        adapter.setState('info.type', info.BHA.VERSION[0]['DEVICE-TYPE'], true);
-                        var relays = info.BHA.VERSION[0].RELAYS;
-                        relays.forEach(function (value) {
-                            adapter.setObjectNotExists('Relays.' + value, {
-                                type: 'state',
-                                common: {
-                                    name: 'Activate relay',
-                                    type: 'boolean',
-                                    role: 'button',
-                                    read: true,
-                                    write: true,
-                                    desc: 'Activate the Relay (ID: ' + value + ')',
-                                },
-                                native: {}
-                            });
-                        });
-                    }
-                }
-                catch (e) {
-                    adapter.log.error('Error in Parsing getInfo(): ' + e);
-                }
-            } else {
-                adapter.log.error('Error in getInfo(): ' + error);
-            }
-        });
-    } else {
-        adapter.log.error('Execution of getInfo not allowed because not authorized!');
-    }
-}
 
 function startWizard(msg) {
     wizard = true;
     var wizData = [];
     var wizServer = dgram.createSocket('udp4');
+
     wizServer.on('listening', function () {
         var address = wizServer.address();
         adapter.log.debug('Wizard listening on IP: ' + address.address + ' - UDP Port 6524');
@@ -196,134 +111,250 @@ function startWizard(msg) {
         wizard = false;
         adapter.log.debug('Wizard timeout!');
     }, 60000);
-
 }
 
-function getSchedules() {
+
+adapter.on('ready', function () {
+    adapter.getForeignObject('system.config', (err, obj) => {
+        if (obj && obj.native && obj.native.secret) {
+            adapter.config.birdpw = decrypt(obj.native.secret, adapter.config.birdpw || 'empty');
+        } else {
+            adapter.config.birdpw = decrypt('Zgfr56gFe87jJOM', adapter.config.birdpw || 'empty');
+        }
+        adapter.setState('info.connection', false, true);
+        main();
+    });
+});
+
+
+function decrypt(key, value) {
+    let result = '';
+    for (let i = 0; i < value.length; ++i) {
+        result += String.fromCharCode(key[i % key.length].charCodeAt(0) ^ value.charCodeAt(i));
+    }
+    return result;
+}
+
+
+function buildURL(com) {
+    return 'http://' + adapter.config.birdip + '/bha-api/' + com + '.cgi?http-user=' + adapter.config.birduser + '&http-password=' + adapter.config.birdpw;
+}
+
+
+function testBird() {
+    request(buildURL('schedule'), function (error, response, body) {
+        if (!error) {
+            if (response.statusCode === 401) {
+                authorized = false;
+                adapter.setState('info.connection', false, true);
+                adapter.log.error('Whooops.. DoorBird says User ' + adapter.config.birduser + ' is unauthorized!!');
+                adapter.log.error('Check Username + Password and enable the "API-Operator" Permission for the User!!');
+            } else if (response.statusCode === 200) {
+                authorized = true;
+                adapter.setState('info.connection', true, true);
+                adapter.log.debug('Authorization with User ' + adapter.config.birduser + ' successfull!');
+                getInfo();
+            }
+        } else {
+            if (error.code === "EHOSTUNREACH") {
+                authorized = false;
+                adapter.setState('info.connection', false, true);
+                adapter.log.error('DoorBird Device is offline!!');
+            } else {
+                authorized = false;
+                adapter.log.error('Error in testBird() Request: ' + error);
+                adapter.setState('info.connection', false, true);
+            }
+        }
+    });
+}
+
+
+function getInfo() {
     if (authorized) {
-        request(buildURL('schedule'), function (error, response, body) {
+        request(buildURL('info'), function (error, response, body) {
             if (!error) {
                 try {
                     if (response.statusCode === 200) {
-                        scheduleState = {};
-                        motionState = {};
-                        var schedules = JSON.parse(body);
-                        bellCount = 0;
-                        doorbellsArray = [];
-                        adapter.log.debug('Looping trough the Schedules..');
-                        for (var i = 0; i < schedules.length; i++) {
-                            if (schedules[i].input === "doorbell") {
-                                bellCount++;
-                                adapter.log.debug('Yeah! I have detected a Doorbell Schedule!');
-                                scheduleState[schedules[i].param] = schedules[i].output;
-                                adapter.log.debug('The Param of the actual Schedule is: ' + schedules[i].param);
-                                doorbellsArray.push(schedules[i].param);
-                                adapter.log.debug('The Output contains ' + schedules[i].output.length + ' entries!');
-                                for (var k = 0; k < schedules[i].output.length; k++) {
-                                    adapter.log.debug('Entry "' + k + '" is: ' + JSON.stringify(schedules[i].output[k]));
-                                }
-                                adapter.log.debug('So i counted ' + bellCount + ' Doorbells.');
-                                adapter.log.debug('Ring Schedules Object set to: ' + JSON.stringify(scheduleState));
-                                adapter.log.debug('-------------------');
-                            }
-                            if (schedules[i].input === "motion") {
-                                adapter.log.debug('Yeah! I have detected a Motion Schedule!');
-                                motionState.output = schedules[i].output;
-                                adapter.log.debug('The Output contains ' + schedules[i].output.length + ' entries!');
-                                for (var k = 0; k < schedules[i].output.length; k++) {
-                                    adapter.log.debug('Entry "' + k + '" is: ' + JSON.stringify(schedules[i].output[k]));
-                                }
-                                adapter.log.debug('-------------------');
-                            }
-                        }
-                        checkFavorites();
+                        var info = JSON.parse(body);
+                        adapter.setState('info.firmware', info.BHA.VERSION[0].FIRMWARE, true);
+                        adapter.setState('info.build', info.BHA.VERSION[0].BUILD_NUMBER, true);
+                        adapter.setState('info.type', info.BHA.VERSION[0]['DEVICE-TYPE'], true);
+                        var relays = info.BHA.VERSION[0].RELAYS;
+                        relays.forEach(function (value) {
+                            adapter.setObjectNotExists('Relays.' + value, {
+                                type: 'state',
+                                common: {
+                                    name: 'Activate relay',
+                                    type: 'boolean',
+                                    role: 'button',
+                                    read: true,
+                                    write: true,
+                                    desc: 'Activate the Relay (ID: ' + value + ')',
+                                },
+                                native: {}
+                            });
+                        });
                     }
                 }
                 catch (e) {
-                    adapter.log.error('Error in Parsing Schedules: ' + e);
+                    adapter.log.error('Error in Parsing getInfo(): ' + e);
                 }
+                checkFavorites();
             } else {
-                adapter.log.error('Error in getSchedules(): ' + error);
+                adapter.log.error('Error in getInfo(): ' + error);
             }
         });
     } else {
-        adapter.log.error('Execution of getSchedules not allowed because not authorized!');
+        adapter.log.error('Execution of getInfo not allowed because not authorized!');
     }
 }
 
 
 function checkFavorites() {
-    if (authorized) {
-        request(buildURL('favorites'), function (error, response, body) {
-            if (!error) {
-                try {
-                    if (response.statusCode === 200) {
-                        delete favoriteState['motion'];
-                        favoriteArray = [];
-                        var favorites = JSON.parse(body);
-                        for (var key in favorites.http) {
-                            if (!favorites.http.hasOwnProperty(key)) continue;
-                            var obj = favorites.http[key];
-                            if (obj.title.indexOf('ioBroker ' + adapter.namespace) != -1 && obj.title.indexOf('ioBroker ' + adapter.namespace + ' Motion') == -1) {
-                                adapter.log.debug('Detected HTTP Ring Favorite (ID: ' + key + ') (' + obj.title + ": " + obj.value + ')');
-                                if (favoriteArray.indexOf(obj.title.split(' ')[2]) == -1) {
-                                    favoriteArray.push(obj.title.split(' ')[2]);
-                                    favoriteState[obj.title.split(' ')[2]] = key;
-                                    adapter.log.debug('FavoriteArray is now set to: ' + favoriteArray.toString());
-                                    adapter.log.debug('FavoriteState is now set to: ' + JSON.stringify(favoriteState));
-                                } else {
-                                    adapter.log.debug('Whoops.. Seems like there is a duplicate in the Favorites.. I am deleting one of them.');
-                                    request('http://' + adapter.config.birdip + '/bha-api/favorites.cgi?http-user=' + adapter.config.birduser + '&http-password=' + adapter.config.birdpw + '&action=remove&type=http&id=' + key);
-                                }
-                            }
-                            if (obj.title.indexOf('ioBroker ' + adapter.namespace + ' Motion') != -1) {
-                                adapter.log.debug('Detected Motion Favorite (ID: ' + key + ')');
-                                favoriteState['motion'] = key;
+    adapter.log.debug('Checking favorites on DoorBird Device..');
+    request(buildURL('favorites'), function (error, response, body) {
+        if (!error) {
+            try {
+                if (response.statusCode === 200) {
+                    favoriteState = {};
+                    var favorites = JSON.parse(body);
+                    for (var key in favorites.http) {
+                        if (!favorites.http.hasOwnProperty(key)) continue;
+                        var obj = favorites.http[key];
+                        if (obj.value.indexOf(adapter.config.adapterAddress + ':' + adapter.config.adapterport) != -1) {
+                            adapter.log.debug('Found a Favorite that belongs to me..');
+                            adapter.log.debug('(ID: ' + key + ') (' + obj.title + ": " + obj.value + ')');
+                            if (!favoriteState[obj.title.split(' ')[2]]) {
+                                favoriteState[obj.title.split(' ')[2]] = {};
+                                favoriteState[obj.title.split(' ')[2]]['ID'] = key;
+                                favoriteState[obj.title.split(' ')[2]]['URL'] = obj.value;
+                            } else {
+                                adapter.log.debug('Found a duplicate favorite! (ID : ' + key + ') Trying to delete the duplicate..');
+                                request('http://' + adapter.config.birdip + '/bha-api/favorites.cgi?http-user=' + adapter.config.birduser + '&http-password=' + adapter.config.birdpw + '&action=remove&type=http&id=' + key, function (error, response, body) {
+                                    if (!error && response.statusCode === 200) {
+                                        adapter.log.debug('Deleted the duplicate (ID: ' + key + ') successfully!');
+                                    } else {
+                                        adapter.log.debug('I was unable to delete the duplicate! (ID: ' + key + ')');
+                                    }
+                                });
                             }
                         }
-                        createFavorites();
                     }
+                    if (Object.keys(favoriteState).length === 0) {
+                        adapter.log.debug('I did not find any Favorite on the DoorBird Device that belongs to me..');
+                    } else {
+                        adapter.log.debug('Result of Favorites: ' + JSON.stringify(favoriteState));
+                    }
+                    getSchedules();
                 }
-                catch (e) {
-                    adapter.log.error('Error in Parsing favorites: ' + e);
-                }
-            } else {
-                adapter.log.error('Error in getFavorites(): ' + error);
             }
-        });
-    } else {
-        adapter.log.error('Execution of getFavorites() not allowed because not authorized!');
-    }
+            catch (e) {
+                adapter.log.error('Error in Parsing favorites: ' + e);
+            }
+        } else {
+            adapter.log.error('Error in getFavorites(): ' + error);
+        }
+    });
 }
 
-function createFavorites() {
-    var needToCreate = false;
-    adapter.log.debug('Checking if we need to create some favorites..');
-    for (var i = 0; i < doorbellsArray.length; i++) {
-        if (favoriteArray.indexOf(doorbellsArray[i]) != -1) continue;
+
+function getSchedules() {
+    request(buildURL('schedule'), function (error, response, body) {
+        if (!error) {
+            try {
+                if (response.statusCode === 200) {
+                    scheduleState = {};
+                    motionState = {};
+                    var schedules = JSON.parse(body);
+                    bellCount = 0;
+                    doorbellsArray = [];
+                    adapter.log.debug('Looping trough the Schedules..');
+                    for (var i = 0; i < schedules.length; i++) {
+                        if (schedules[i].input === "doorbell") {
+                            bellCount++;
+                            adapter.log.debug('Detected a Doorbell Schedule!');
+                            scheduleState[schedules[i].param] = schedules[i].output;
+                            adapter.log.debug('The Param of the actual Schedule is: ' + schedules[i].param);
+                            doorbellsArray.push(schedules[i].param);
+                            adapter.log.debug('The Output contains ' + schedules[i].output.length + ' entries!');
+                            for (var k = 0; k < schedules[i].output.length; k++) {
+                                adapter.log.debug('Entry "' + k + '" is: ' + JSON.stringify(schedules[i].output[k]));
+                            }
+                            adapter.log.debug('Counted ' + bellCount + ' Doorbells.');
+                        }
+                        if (schedules[i].input === "motion") {
+                            adapter.log.debug('Detected Motion Schedule!');
+                            motionState.output = schedules[i].output;
+                            adapter.log.debug('The Output contains ' + schedules[i].output.length + ' entries!');
+                            for (var k = 0; k < schedules[i].output.length; k++) {
+                                adapter.log.debug('Entry "' + k + '" is: ' + JSON.stringify(schedules[i].output[k]));
+                            }
+                        }
+                    }
+                    createFavorites(0);
+                }
+            }
+            catch (e) {
+                adapter.log.error('Error in Parsing Schedules: ' + e);
+            }
+        } else {
+            adapter.log.error('Error in getSchedules(): ' + error);
+        }
+    });
+}
+
+
+
+function createFavorites(i, action, motion) {
+    adapter.log.debug('Checking if we need to create any favorites..');
+    if (i < doorbellsArray.length && !motion) {
+        adapter.log.debug('Cheking if Favorite for Doorbell ID ' + doorbellsArray[i] + ' exists.');
+        if (favoriteState[doorbellsArray[i]]) {
+            adapter.log.debug('Favorite for Doorbell ID ' + doorbellsArray[i] + ' exists!');
+            i++
+            createFavorites(i, false, false);
+            return;
+        }
         try {
-            needToCreate = true;
-            request('http://' + adapter.config.birdip + '/bha-api/favorites.cgi?http-user=' + adapter.config.birduser + '&http-password=' + adapter.config.birdpw + '&action=save&type=http&title=ioBroker ' + adapter.namespace + ' ' + doorbellsArray[i] + ' Ring&value=http://' + adapter.config.adapterAddress + ':' + adapter.config.adapterport + '/ring?' + doorbellsArray[i]);
-            adapter.log.debug('Favorite for Doorbell ' + doorbellsArray[i] + ' created.');
+            adapter.log.debug('Favorite for Doorbell ID ' + doorbellsArray[i] + ' has to be created!');
+            request('http://' + adapter.config.birdip + '/bha-api/favorites.cgi?http-user=' + adapter.config.birduser + '&http-password=' + adapter.config.birdpw + '&action=save&type=http&title=ioBroker ' + adapter.namespace + ' ' + doorbellsArray[i] + ' Ring&value=http://' + adapter.config.adapterAddress + ':' + adapter.config.adapterport + '/ring?' + doorbellsArray[i], function (error, response, body) {
+                if (!error) {
+                    if (response.statusCode === 200) {
+                        i++;
+                        adapter.log.debug('Favorite created successfully..');
+                        createFavorites(i, true, false);
+                    }
+                }
+            });
+            return;
         } catch (e) {
             adapter.log.error('Error in creating Favorite: ' + e);
         }
     }
-    if (typeof favoriteState['motion'] === 'undefined') {
-        needToCreate = true;
-        request('http://' + adapter.config.birdip + '/bha-api/favorites.cgi?http-user=' + adapter.config.birduser + '&http-password=' + adapter.config.birdpw + '&action=save&type=http&title=ioBroker ' + adapter.namespace + ' Motion&value=http://' + adapter.config.adapterAddress + ':' + adapter.config.adapterport + '/motion');
-        adapter.log.debug('Favorite for Motionsensor created.');
+    if (typeof favoriteState['Motion'] === 'undefined' && !motion) {
+        request('http://' + adapter.config.birdip + '/bha-api/favorites.cgi?http-user=' + adapter.config.birduser + '&http-password=' + adapter.config.birdpw + '&action=save&type=http&title=ioBroker ' + adapter.namespace + ' Motion&value=http://' + adapter.config.adapterAddress + ':' + adapter.config.adapterport + '/motion', function (error, response, body) {
+            if (!error) {
+                if (response.statusCode === 200) {
+                    adapter.log.debug('Favorite for Motionsensor created.');
+                    createFavorites(i, true, true)
+                }
+            }
+        });
+        return;
     }
-    if (needToCreate) {
+    if (action) {
+        adapter.log.debug('Finished creating Favorites.. Checking again - just to be sure!');
         checkFavorites();
-        adapter.log.debug('Rechecking ...');
     } else {
-        adapter.log.debug('Okay. We dont need to create any Favorites!');
+        adapter.log.debug('Favorites checked successfully. No actions needed!');
         createSchedules();
     }
 }
 
+
 function createSchedules() {
+    adapter.log.debug('Checking if we need to create Schedules on DoorBird Device..');
     for (var key in scheduleState) {
         var toCreate = {};
         if (scheduleState.hasOwnProperty(key)) {
@@ -332,14 +363,14 @@ function createSchedules() {
                 if (scheduleState[key][i].event !== 'http') {
                     continue;
                 }
-                if (scheduleState[key][i].param === favoriteState[key]) {
+                if (scheduleState[key][i].param === favoriteState[key]['ID']) {
                     actionNeeded = false;
                 }
             }
             if (actionNeeded) {
                 var array = scheduleState[key];
                 adapter.log.debug('We need to create a Schedule for Doorbell ID: ' + key);
-                array.push({ "event": "http", "param": favoriteState[key], "enabled": "1", "schedule": { "weekdays": [{ "from": "79200", "to": "79199" }] } });
+                array.push({ "event": "http", "param": favoriteState[key]['ID'], "enabled": "1", "schedule": { "weekdays": [{ "from": "79200", "to": "79199" }] } });
                 toCreate = { "input": "doorbell", "param": key, "output": array };
                 request({
                     url: buildURL('schedule'),
@@ -348,9 +379,9 @@ function createSchedules() {
                     body: toCreate
                 }, function (error, response, body) {
                     if (!error && response.statusCode === 200) {
-                        adapter.log.debug('Ring Schedule set successful!');
+                        adapter.log.debug('Schedule created successful!');
                     } else {
-                        adapter.log.error('There was an Error while setting the Ring schedule..');
+                        adapter.log.error('There was an Error while creating the schedule..');
                         adapter.log.error(error + ' ' + response.statusCode);
                     }
                 });
@@ -380,12 +411,13 @@ function createSchedules() {
                     });
                 });
             } else {
-                adapter.log.debug('Okay we dont need to create any Schedules..');
+                adapter.log.debug('Okay we dont need to create any Doorbell-Schedules..');
             }
         }
     }
     createMotionSchedule();
 }
+
 
 function createMotionSchedule() {
     for (var key in motionState) {
@@ -396,14 +428,14 @@ function createMotionSchedule() {
                 if (motionState[key][i].event !== 'http') {
                     continue;
                 }
-                if (motionState[key][i].param === favoriteState['motion']) {
+                if (motionState[key][i].param === favoriteState['Motion']['ID']) {
                     actionNeeded = false;
                 }
             }
             if (actionNeeded) {
                 var array = motionState[key];
                 adapter.log.debug('We need to create a Schedule for the Motion Sensor!');
-                array.push({ "event": "http", "param": favoriteState['motion'], "enabled": "1", "schedule": { "weekdays": [{ "from": "79200", "to": "79199" }] } });
+                array.push({ "event": "http", "param": favoriteState['Motion']['ID'], "enabled": "1", "schedule": { "weekdays": [{ "from": "79200", "to": "79199" }] } });
                 toCreate = { "input": "motion", "param": "", "output": array };
                 request({
                     url: buildURL('schedule'),
@@ -412,16 +444,17 @@ function createMotionSchedule() {
                     body: toCreate
                 }, function (error, response, body) {
                     if (!error && response.statusCode === 200) {
-                        adapter.log.debug('Motion Schedule set successful!');
+                        adapter.log.debug('Schedule for Motionsensor set successful!');
                     } else {
                         adapter.log.error('There was an Error while setting the Motion schedule..');
-                        adapter.log.error(error + ' ' + response.statusCode);
+                        adapter.log.error(error + ' (Statuscode: ' + response.statusCode + ')');
                     }
                 });
             }
         }
     }
 }
+
 
 function sendToState(cmd) {
     let fileData;
@@ -436,6 +469,7 @@ function sendToState(cmd) {
     }
 }
 
+
 function main() {
     if (adapter.config.birdip && adapter.config.birdpw && adapter.config.birduser) {
         testBird();
@@ -446,7 +480,7 @@ function main() {
         var address = udpserver.address();
         adapter.log.debug('Adapter listening on IP: ' + address.address + ' - UDP Port 35344');
     });
-    
+
     udpserver.on('message', function (msg, remote) {
         if (remote.address == adapter.config.birdip && !wizard) {
             decryptDoorBird(msg);
@@ -497,6 +531,7 @@ function main() {
 
     adapter.subscribeStates('*');
 }
+
 
 /* function decryptDoorBird(message) {
     if (message.length > 25) {
