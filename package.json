@@ -1,6 +1,6 @@
 {
   "name": "iobroker.doorbird",
-  "version": "0.1.2",
+  "version": "0.1.5",
   "description": "ioBroker doorbird Adapter",
   "author": {
     "name": "BuZZy1337",
@@ -25,7 +25,6 @@
     "url": "https://github.com/BuZZy1337/ioBroker.doorbird"
   },
   "dependencies": {
-    "libsodium-wrappers": "^0.7.3",
     "request": "^2.85.0"
   },
   "devDependencies": {

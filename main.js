@@ -50,15 +50,41 @@ adapter.on('objectChange', function (id, obj) {
 adapter.on('stateChange', function (id, state) {
     if (!state || state.ack) return;
     var comp = id.split('.');
-    if (comp[2] === 'Relays') {
+    if (comp[2] === 'Restart') {
+        if (!authorized) {
+            adapter.log.error('Cannot Restart DoorBird because not authorized!');
+        } else {
+            adapter.log.debug('Trying to restart DoorBird Device..');
+            try {
+                request(buildURL('restart'), function (error, response, body) {
+                    if (!error) {
+                        if (response.statusCode === 200) {
+                            adapter.log.debug('DoorBird Device is now restarting!!');
+                            adapter.setState(id, state, true);
+                        } else if (response.statusCode === 503) {
+                            adapter.log.error('DoorBird denied restart! (Device is busy and cannot restart now!)');
+                        } else {
+                            adapter.log.error('DoorBird denied restart! (Statuscode: ' + response.statusCode + ')')
+                        }
+                    } else {
+                        adapter.log.error('DoorBird denied restart: ' + error)
+                    }
+                });
+            } catch (e) {
+                adapter.log.error('Error in restarting DoorBird: ' + e);
+            }
+        }
+    }
+    else if (comp[2] === 'Relays') {
         if (!authorized) {
             adapter.log.error('Cannot trigger relay because not authorized!');
         } else {
             try {
-                request('http://' + adapter.config.birdip + '/bha-api/open-door.cgi.cgi?http-user=' + adapter.config.birduser + '&http-password=' + adapter.config.birdpw + '&r=' + comp[3], function (error, response, body) {
+                request('http://' + adapter.config.birdip + '/bha-api/open-door.cgi?http-user=' + adapter.config.birduser + '&http-password=' + adapter.config.birdpw + '&r=' + comp[3], function (error, response, body) {
                     if (!error) {
                         if (response.statusCode === 200) {
                             adapter.log.debug('Relay ' + comp[3] + ' triggered successfully!');
+                            adapter.setState(id, state, true);
                         } else if (response.statusCode === 204) {
                             adapter.log.error('Could not trigger relay ' + comp[3] + '! (Insufficient permissions)');
                         } else {
@@ -210,6 +236,17 @@ function getInfo() {
     }
 }
 
+function updateFavorite(key, obj) {
+    var newURL = obj.value.replace(/(?<=\/\/)(.*)(?=\/)/, adapter.config.adapterAddress + ':' + adapter.config.adapterport);
+    request('http://' + adapter.config.birdip + '/bha-api/favorites.cgi?http-user=' + adapter.config.birduser + '&http-password=' + adapter.config.birdpw + '&action=save&type=http&id=' + key + '&title=' + obj.title + '&value=' + newURL, function (error, response, body) {
+        if (!error && response.statusCode === 200) {
+            adapter.log.debug('Favorite Updated successfully..');
+            checkFavorites();
+        } else {
+            adapter.log.debug('There was an error while updating the Favorite! (' + error + ' ' + response.statusCode + ')');
+        }
+    });
+}
 
 function checkFavorites() {
     adapter.log.debug('Checking favorites on DoorBird Device..');
@@ -222,6 +259,11 @@ function checkFavorites() {
                     for (var key in favorites.http) {
                         if (!favorites.http.hasOwnProperty(key)) continue;
                         var obj = favorites.http[key];
+                        if (obj.title.indexOf('ioBroker ' + adapter.namespace) != -1 && obj.value.indexOf(adapter.config.adapterAddress + ':' + adapter.config.adapterport) === -1) {
+                            adapter.log.debug('The Favorite ID ' + key + ' contains a wrong URL.. I will update that..');
+                            updateFavorite(key, obj);
+                            return;
+                        }
                         if (obj.value.indexOf(adapter.config.adapterAddress + ':' + adapter.config.adapterport) != -1) {
                             adapter.log.debug('Found a Favorite that belongs to me..');
                             adapter.log.debug('(ID: ' + key + ') (' + obj.title + ": " + obj.value + ')');
@@ -385,36 +427,36 @@ function createSchedules() {
                         adapter.log.error(error + ' ' + response.statusCode);
                     }
                 });
-                doorbellsArray.forEach(function (value) {
-                    adapter.setObjectNotExists('Doorbell.' + value + '.trigger', {
-                        type: 'state',
-                        common: {
-                            role: "indicator",
-                            name: "Doorbell ID '" + value + "' pressed",
-                            type: "boolean",
-                            read: true,
-                            write: false,
-                            def: false
-                        },
-                        native: {}
-                    });
-                    adapter.setObjectNotExists('Doorbell.' + value + '.snapshot', {
-                        type: 'state',
-                        common: {
-                            name: "JPG file",
-                            type: "file",
-                            read: true,
-                            write: false,
-                            desc: "Can be accessed from web server under http://ip:8082/state/doorbird.0.Doorbell." + value + ".snapshot"
-                        },
-                        "native": {}
-                    });
-                });
             } else {
                 adapter.log.debug('Okay we dont need to create any Doorbell-Schedules..');
             }
         }
     }
+    doorbellsArray.forEach(function (value) {
+        adapter.setObjectNotExists('Doorbell.' + value + '.trigger', {
+            type: 'state',
+            common: {
+                role: "indicator",
+                name: "Doorbell ID '" + value + "' pressed",
+                type: "boolean",
+                read: true,
+                write: false,
+                def: false
+            },
+            native: {}
+        });
+        adapter.setObjectNotExists('Doorbell.' + value + '.snapshot', {
+            type: 'state',
+            common: {
+                name: "JPG file",
+                type: "file",
+                read: true,
+                write: false,
+                desc: "Can be accessed from web server under http://ip:8082/state/doorbird.0.Doorbell." + value + ".snapshot"
+            },
+            "native": {}
+        });
+    });
     createMotionSchedule();
 }
 
