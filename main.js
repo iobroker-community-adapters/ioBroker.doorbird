@@ -237,13 +237,13 @@ function getInfo() {
 }
 
 function updateFavorite(key, obj) {
-    var newURL = obj.value.replace(/(?<=\/\/)(.*)(?=\/)/, adapter.config.adapterAddress + ':' + adapter.config.adapterport);
+    var newURL = obj.value.replace(/(http:\/\/)(.*)(\/.*)/, '$1' + adapter.config.adapterAddress + ':' + adapter.config.adapterport + '$3');
     request('http://' + adapter.config.birdip + '/bha-api/favorites.cgi?http-user=' + adapter.config.birduser + '&http-password=' + adapter.config.birdpw + '&action=save&type=http&id=' + key + '&title=' + obj.title + '&value=' + newURL, function (error, response, body) {
         if (!error && response.statusCode === 200) {
-            adapter.log.debug('Favorite Updated successfully..');
+            adapter.log.warn('Favorite Updated successfully..');
             checkFavorites();
         } else {
-            adapter.log.debug('There was an error while updating the Favorite! (' + error + ' ' + response.statusCode + ')');
+            adapter.log.error('There was an error while updating the Favorite! (' + error + ' ' + response.statusCode + ')');
         }
     });
 }
