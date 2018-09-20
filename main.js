@@ -260,7 +260,7 @@ function checkFavorites() {
                         if (!favorites.http.hasOwnProperty(key)) continue;
                         var obj = favorites.http[key];
                         if (obj.title.indexOf('ioBroker ' + adapter.namespace) != -1 && obj.value.indexOf(adapter.config.adapterAddress + ':' + adapter.config.adapterport) === -1) {
-                            adapter.log.debug('The Favorite ID ' + key + ' contains a wrong URL.. I will update that..');
+                            adapter.log.warn('The Favorite ID ' + key + ' contains a wrong URL (' + obj.value + ').. I will update that..');
                             updateFavorite(key, obj);
                             return;
                         }
