@@ -96,7 +96,7 @@ adapter.on('stateChange', function (id, state) {
                 adapter.log.error('Error in triggering Relay: ' + e);
             }
         }
-    } else if (comp[2] === 'Light') {
+    } else if (comp[2] === 'light') {
         if(!authorized) {
             adapter.log.error('Cannot trigger light because not authorized!');
         } else {
