@@ -96,6 +96,25 @@ adapter.on('stateChange', function (id, state) {
                 adapter.log.error('Error in triggering Relay: ' + e);
             }
         }
+    } else if (comp[2] === 'Light') {
+        if(!authorized) {
+            adapter.log.error('Cannot trigger light because not authorized!');
+        } else {
+            try {
+                request('http://' + adapter.config.birdip + '/bha-api/light-on.cgi?http-user=' + adapter.config.birduser + '&http-password=' + adapter.config.birdpw, function (error, response, body) {
+                    if (!error) {
+                        if (response.statusCode === 200) {
+                            adapter.log.debug('Light successfully triggered!');
+                            adapter.setState(id, state, true);
+                        } else {
+                            adapter.log.error('Could not trigger light. (Got Statuscode ' + response.statusCode + ')');
+                        }
+                    }
+                });
+            } catch (e) {
+                adapter.log.error('Error in triggering Light: ' + e);
+            }
+        }
     }
 });
 
