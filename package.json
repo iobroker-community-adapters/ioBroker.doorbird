@@ -25,14 +25,22 @@
     "url": "https://github.com/BuZZy1337/ioBroker.doorbird"
   },
   "dependencies": {
-    "request": "^2.85.0"
+    "request": "^2.88.2"
   },
   "devDependencies": {
-    "gulp": "^3.9.1",
-    "mocha": "^4.1.0",
-    "chai": "^4.1.2"
+    "gulp": "^4.0.2",
+    "mocha": "^10.0.0",
+    "chai": "^4.3.6"
   },
   "main": "main.js",
+  "files": [
+    "admin/",
+    "lib/",
+    "main.js",
+    "io-package.json",
+    "img/",
+    "LICENSE"
+  ],
   "scripts": {
     "test": "node node_modules/mocha/bin/mocha --exit"
   },
