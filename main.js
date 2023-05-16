@@ -4,6 +4,7 @@
 
 
 var utils = require(__dirname + '/lib/utils');
+var ioButils = require('@iobroker/adapter-core');
 var birdConCheck;
 var adapter = new utils.Adapter('doorbird');
 var dgram = require('dgram');
@@ -22,7 +23,10 @@ var scheduleState = {};
 var motionState = {};
 var doorbellsArray = []; // Contains all Doorbell IDs
 var favoriteState = {}; // {'ID of Doorbell/Motion': 'ID of Favorite'}
-var jpgpath = path.normalize(path.join(utils.controllerDir, require(path.join(utils.controllerDir, 'lib', 'tools.js')).getDefaultDataDir()) + '/' + adapter.namespace + '.snap.jpg');
+//This is not working with js-controller 5.0 anymore. Chaning to 'getAbsoluteInstanceDataDir'
+//var jpgpath = path.normalize(path.join(utils.controllerDir, require(path.join(utils.controllerDir, 'lib', 'tools.js')).getDefaultDataDir()) + '/' + adapter.namespace + '.snap.jpg');
+var instanceDir = ioButils.getAbsoluteInstanceDataDir(adapter);
+var jpgpath = path.join(ioButils.getAbsoluteInstanceDataDir(adapter), 'snap.jpg');
 var download = function (url, filename, callback) {
     request.head(url, function (err, res, body) {
         request(url).pipe(fs.createWriteStream(filename)).on('close', callback);
@@ -513,6 +517,11 @@ function sendToState(cmd) {
 
 
 function main() {
+    //create adapter dir if not availible
+    if (!fs.existsSync(instanceDir)) {
+        fs.mkdirSync(instanceDir);
+    }
+    
     if (adapter.config.birdip && adapter.config.birdpw && adapter.config.birduser) {
         testBird();
         birdConCheck = setInterval(testBird, 180000);
