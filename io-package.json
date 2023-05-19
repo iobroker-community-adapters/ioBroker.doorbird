@@ -3,6 +3,10 @@
         "name": "doorbird",
         "version": "0.1.5",
         "news": {
+            "0.1.7": {
+                "en": "Fixed js-controller 5 issue"
+                "de": "Problem mit js-controller 5 behoben"
+            },
             "0.1.5": {
                 "en": "Just some changes under the hood",
                 "de": "Nur ein paar Änderungen unter der Haube",
