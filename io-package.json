@@ -4,7 +4,7 @@
         "version": "0.1.5",
         "news": {
             "0.1.7": {
-                "en": "Fixed js-controller 5 issue"
+                "en": "Fixed js-controller 5 issue",
                 "de": "Problem mit js-controller 5 behoben"
             },
             "0.1.5": {
