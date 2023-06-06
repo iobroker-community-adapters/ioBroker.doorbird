@@ -30,7 +30,7 @@
   "devDependencies": {
     "gulp": "^4.0.2",
     "mocha": "^10.0.0",
-    "chai": "^4.3.6"
+    "chai": "^4.3.7"
   },
   "main": "main.js",
   "files": [
