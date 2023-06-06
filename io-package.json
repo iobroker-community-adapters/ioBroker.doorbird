@@ -91,6 +91,19 @@
             }
         },
         "title": "DoorBird",
+        "titleLang":{
+            "en": "DoorBird",
+            "de": "DoorBird",
+            "ru": "DoorBird",
+            "pt": "DoorBird",
+            "nl": "DoorBird",
+            "fr": "DoorBird",
+            "it": "DoorBird",
+            "es": "DoorBird",
+            "pl": "DoorBird",
+            "uk": "DoorBird",
+            "zh-cn": "DoorBird"
+        },
         "desc": {
             "en": "Connects DoorBird doorbells to ioBroker",
             "de": "Verbindet DoorBird-Türklingeln mit ioBroker",
