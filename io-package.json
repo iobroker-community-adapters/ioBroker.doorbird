@@ -1,7 +1,7 @@
 {
     "common": {
         "name": "doorbird",
-        "version": "0.1.5",
+        "version": "0.1.7",
         "news": {
             "0.1.7": {
                 "en": "Fixed js-controller 5 issue",
