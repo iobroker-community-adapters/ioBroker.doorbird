@@ -112,13 +112,13 @@
     "subscribe": "messagebox",
     "materialize": true,
     "enabled": true,
-    "extIcon": "https://raw.githubusercontent.com/BuZZy1337/ioBroker.doorbird/master/admin/doorbird.png",
+    "extIcon": "https://raw.githubusercontent.com/iobroker-community-adapters/ioBroker.doorbird/master/admin/doorbird.png",
     "keywords": [
       "doorbird",
       "vis",
       "GUI"
     ],
-    "readme": "https://github.com/BuZZy1337/ioBroker.doorbird/blob/master/README.md",
+    "readme": "https://github.com/iobroker-community-adapters/ioBroker.doorbird/blob/master/README.md",
     "loglevel": "info",
     "type": "iot-systems"
   },
