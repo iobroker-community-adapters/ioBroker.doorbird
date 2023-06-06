@@ -3,4 +3,5 @@ admin/words.js
 
 # must be removed after cleanup
 main.js
-lib/util.js
+lib/utils.js
+test/**
