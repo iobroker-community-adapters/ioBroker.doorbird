@@ -29,7 +29,8 @@ The Adapter should now restart, and you are ready to go!
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-### 0.2.0-alpha.0 (2023-06-06)
+
+### **WORK IN PROGRESS**
 
 * (mcm1957) Adapter has been moved into iobroker-community-adapters-area
 * (mcm1957) Github actions and testing has been added
