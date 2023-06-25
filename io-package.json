@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "doorbird",
-    "version": "0.2.0-alpha.0",
+    "version": "0.2.0",
     "news": {
+      "0.2.0": {
+        "en": "Adapter has been moved into iobroker-community-adapters-area\nGithub actions and testing has been added\nstandard development tools have been added\ndependencies have been upgraded",
+        "de": "Adapter wurde in iobroker-community-adapter-area bewegt\nGithub-Aktionen und Tests wurden hinzugefügt\nstandard-entwicklungswerkzeuge wurden hinzugefügt\nabhängigkeiten wurden verbessert",
+        "ru": "Адаптер переехал в iobroker-community-adapters-area\nДобавлены действия Github и тестирование\nдобавлены стандартные инструменты разработки\nзависимости были обновлены",
+        "pt": "Adapter foi transferido para iobroker-community-adapters-area\nAcções e testes do Github foram adicionados\nferramentas de desenvolvimento padrão foram adicionadas\ndependências foram atualizadas",
+        "nl": "Adapter is verhuisd naar iobroker-community-apters-areaters\nGithub acties en testen zijn toegevoegd\nstandaard ontwikkelingsmiddelen zijn toegevoegd\nafhankelijkheid is geüpgradeerd",
+        "fr": "Adaptateur a été déplacé dans iobroker-community-adapters-area\nLes actions et les tests Github ont été ajoutés\ndes outils de développement standard ont été ajoutés\nles dépendances ont été améliorées",
+        "it": "L'adattatore è stato spostato in zona iobroker-community-adapters-\nAzioni Github e test sono stati aggiunti\nstrumenti di sviluppo standard sono stati aggiunti\nle dipendenze sono state aggiornate",
+        "es": "Adaptador ha sido trasladado a iobroker-community-adapters-area\nGithub acciones y pruebas se han añadido\nse han añadido instrumentos de desarrollo estándar\nse han mejorado las dependencias",
+        "pl": "Adapter został przeniesiony do iobroker-kommunity-areaa-reakcja\nDodano działania i testy\ndodano standardowe narzędzia rozwoju\nzależności zostały zmodernizowane",
+        "uk": "Переміщено перехід на iobroker-community-adapters-area\nДодано дії Github та тестування\nдодано стандартні інструменти розробки\nбуло оновлено залежності",
+        "zh-cn": "现已进入加勒比妓院。\n增加了白色行动和试验\n增加标准开发工具\n依赖性升级"
+      },
       "0.2.0-alpha.0": {
         "en": "Adapter has been moved into iobroker-community-adapters-area\nGithub actions and testing has been added\nstandard development tools have been added\ndependencies have been upgraded",
         "de": "Adapter wurde in iobroker-community-adapter-area bewegt\nGithub-Aktionen und Tests wurden hinzugefügt\nstandard-entwicklungswerkzeuge wurden hinzugefügt\nabhängigkeiten wurden verbessert",
@@ -63,17 +76,6 @@
         "it": "Versione iniziale del repository ioBroker",
         "es": "Versión inicial para el repositorio ioBroker",
         "pl": "Pierwsze wydanie do repozytu ioBroker"
-      },
-      "0.0.4": {
-        "en": "Added support for more then one doorbell\nEncrypted saving of the Doorbird Password\nCheck and create Schedules and Favorites\nTry to detect all doorbells on the Doorbird Device",
-        "de": "Zusätzliche Unterstützung für mehr als eine Türklingel\nVerschlüsseltes Speichern des Doorbird Passworts\nÜberprüfen und erstellen Sie Termine und Favoriten\nVersuchen Sie, alle Türklingeln am Doorbird-Gerät zu erkennen",
-        "ru": "Добавлена ​​поддержка более одного дверного звонка\nЗашифрованное сохранение пароля Doorbird\nПроверка и создание расписаний и избранных\nПопробуйте обнаружить все дверные звонки на устройстве Doorbird",
-        "pt": "Adicionado suporte para mais de uma campainha\nSalvamento Criptografado da Senha Doorbird\nVerificar e criar programações e favoritos\nTente detectar todas as campainhas no dispositivo Doorbird",
-        "nl": "Ondersteuning toegevoegd voor meer dan één deurbel\nVersleuteld opslaan van het Doorbird-wachtwoord\nControleer en maak schema's en favorieten\nProbeer alle deurbellen op het Doorbird-apparaat te detecteren",
-        "fr": "Ajout du support pour plus d'une sonnette\nEnregistrement chiffré du mot de passe Doorbird\nVérifier et créer des horaires et des favoris\nEssayez de détecter toutes les sonnettes sur le périphérique Doorbird",
-        "it": "Aggiunto supporto per più di un campanello\nSalvataggio crittografato della password Doorbird\nControlla e crea programmi e preferiti\nProva a rilevare tutti i campanelli sul dispositivo Doorbird",
-        "es": "Se agregó soporte para más de un timbre\nAhorro encriptado de la contraseña de Doorbird\nVerificar y crear horarios y favoritos\nIntenta detectar todos los timbres en el dispositivo Doorbird",
-        "pl": "Dodano obsługę więcej niż jednego dzwonka\nSzyfrowane zapisywanie hasła Doorbird\nSprawdź i utwórz harmonogramy i ulubione\nSpróbuj wykryć wszystkie dzwonki na urządzeniu Doorbird"
       }
     },
     "title": "DoorBird",

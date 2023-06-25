@@ -1,6 +1,6 @@
 {
   "name": "iobroker.doorbird",
-  "version": "0.2.0-alpha.0",
+  "version": "0.2.0",
   "description": "ioBroker doorbird Adapter",
   "author": {
     "name": "BuZZy1337",
@@ -15,7 +15,6 @@
       "name": "McM1957",
       "email": "mcm57@gmx.at"
     }
-
   ],
   "homepage": "https://github.com/iobroker-community-adapters/ioBroker.doorbird",
   "license": "MIT",
