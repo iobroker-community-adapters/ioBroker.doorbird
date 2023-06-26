@@ -1,230 +1,101 @@
 {
-  "common": {
-    "name": "doorbird",
-    "version": "0.2.0",
-    "news": {
-      "0.2.0": {
-        "en": "Adapter has been moved into iobroker-community-adapters-area\nGithub actions and testing has been added\nstandard development tools have been added\ndependencies have been upgraded",
-        "de": "Adapter wurde in iobroker-community-adapter-area bewegt\nGithub-Aktionen und Tests wurden hinzugefügt\nstandard-entwicklungswerkzeuge wurden hinzugefügt\nabhängigkeiten wurden verbessert",
-        "ru": "Адаптер переехал в iobroker-community-adapters-area\nДобавлены действия Github и тестирование\nдобавлены стандартные инструменты разработки\nзависимости были обновлены",
-        "pt": "Adapter foi transferido para iobroker-community-adapters-area\nAcções e testes do Github foram adicionados\nferramentas de desenvolvimento padrão foram adicionadas\ndependências foram atualizadas",
-        "nl": "Adapter is verhuisd naar iobroker-community-apters-areaters\nGithub acties en testen zijn toegevoegd\nstandaard ontwikkelingsmiddelen zijn toegevoegd\nafhankelijkheid is geüpgradeerd",
-        "fr": "Adaptateur a été déplacé dans iobroker-community-adapters-area\nLes actions et les tests Github ont été ajoutés\ndes outils de développement standard ont été ajoutés\nles dépendances ont été améliorées",
-        "it": "L'adattatore è stato spostato in zona iobroker-community-adapters-\nAzioni Github e test sono stati aggiunti\nstrumenti di sviluppo standard sono stati aggiunti\nle dipendenze sono state aggiornate",
-        "es": "Adaptador ha sido trasladado a iobroker-community-adapters-area\nGithub acciones y pruebas se han añadido\nse han añadido instrumentos de desarrollo estándar\nse han mejorado las dependencias",
-        "pl": "Adapter został przeniesiony do iobroker-kommunity-areaa-reakcja\nDodano działania i testy\ndodano standardowe narzędzia rozwoju\nzależności zostały zmodernizowane",
-        "uk": "Переміщено перехід на iobroker-community-adapters-area\nДодано дії Github та тестування\nдодано стандартні інструменти розробки\nбуло оновлено залежності",
-        "zh-cn": "现已进入加勒比妓院。\n增加了白色行动和试验\n增加标准开发工具\n依赖性升级"
-      },
-      "0.2.0-alpha.0": {
-        "en": "Adapter has been moved into iobroker-community-adapters-area\nGithub actions and testing has been added\nstandard development tools have been added\ndependencies have been upgraded",
-        "de": "Adapter wurde in iobroker-community-adapter-area bewegt\nGithub-Aktionen und Tests wurden hinzugefügt\nstandard-entwicklungswerkzeuge wurden hinzugefügt\nabhängigkeiten wurden verbessert",
-        "ru": "Адаптер переехал в iobroker-community-adapters-area\nДобавлены действия Github и тестирование\nдобавлены стандартные инструменты разработки\nзависимости были обновлены",
-        "pt": "Adapter foi transferido para iobroker-community-adapters-area\nAcções e testes do Github foram adicionados\nferramentas de desenvolvimento padrão foram adicionadas\ndependências foram atualizadas",
-        "nl": "Adapter is verhuisd naar iobroker-community-apters-areaters\nGithub acties en testen zijn toegevoegd\nstandaard ontwikkelingsmiddelen zijn toegevoegd\nafhankelijkheid is geüpgradeerd",
-        "fr": "Adaptateur a été déplacé dans iobroker-community-adapters-area\nLes actions et les tests Github ont été ajoutés\ndes outils de développement standard ont été ajoutés\nles dépendances ont été améliorées",
-        "it": "L'adattatore è stato spostato in zona iobroker-community-adapters-\nAzioni Github e test sono stati aggiunti\nstrumenti di sviluppo standard sono stati aggiunti\nle dipendenze sono state aggiornate",
-        "es": "Adaptador ha sido trasladado a iobroker-community-adapters-area\nGithub acciones y pruebas se han añadido\nse han añadido instrumentos de desarrollo estándar\nse han mejorado las dependencias",
-        "pl": "Adapter został przeniesiony do iobroker-kommunity-areaa-reakcja\nDodano działania i testy\ndodano standardowe narzędzia rozwoju\nzależności zostały zmodernizowane",
-        "uk": "Переміщено перехід на iobroker-community-adapters-area\nДодано дії Github та тестування\nдодано стандартні інструменти розробки\nбуло оновлено залежності",
-        "zh-cn": "现已进入加勒比妓院。\n增加了白色行动和试验\n增加标准开发工具\n依赖性升级"
-      },
-      "0.1.7": {
-        "en": "Fixed js-controller 5 issue",
-        "de": "Problem mit js-controller 5 behoben"
-      },
-      "0.1.5": {
-        "en": "Just some changes under the hood",
-        "de": "Nur ein paar Änderungen unter der Haube",
-        "ru": "Просто некоторые изменения под капотом",
-        "pt": "Apenas algumas mudanças sob o capô",
-        "nl": "Slechts enkele veranderingen onder de motorkap",
-        "fr": "Juste quelques changements sous le capot",
-        "it": "Solo alcuni cambiamenti sotto il cofano",
-        "es": "Solo algunos cambios bajo el capó",
-        "pl": "Tylko niektóre zmiany pod maską"
-      },
-      "0.1.2": {
-        "en": "Initial release to the ioBroker repo",
-        "de": "Erstveröffentlichung im ioBroker Repo",
-        "ru": "Первоначальный выпуск в репозиторий ioBroker",
-        "pt": "Lançamento inicial no repositório ioBroker",
-        "nl": "Initiële vrijgave voor de repro van ioBroker",
-        "fr": "Version initiale du référentiel ioBroker",
-        "it": "Versione iniziale del repository ioBroker",
-        "es": "Versión inicial para el repositorio ioBroker",
-        "pl": "Pierwsze wydanie do repozytu ioBroker"
-      },
-      "0.1.1": {
-        "en": "Initial release to the ioBroker repo",
-        "de": "Erstveröffentlichung im ioBroker Repo",
-        "ru": "Первоначальный выпуск в репозиторий ioBroker",
-        "pt": "Lançamento inicial no repositório ioBroker",
-        "nl": "Initiële vrijgave voor de repro van ioBroker",
-        "fr": "Version initiale du référentiel ioBroker",
-        "it": "Versione iniziale del repository ioBroker",
-        "es": "Versión inicial para el repositorio ioBroker",
-        "pl": "Pierwsze wydanie do repozytu ioBroker"
-      },
-      "0.1.0": {
-        "en": "Initial release to the ioBroker repo",
-        "de": "Erstveröffentlichung im ioBroker Repo",
-        "ru": "Первоначальный выпуск в репозиторий ioBroker",
-        "pt": "Lançamento inicial no repositório ioBroker",
-        "nl": "Initiële vrijgave voor de repro van ioBroker",
-        "fr": "Version initiale du référentiel ioBroker",
-        "it": "Versione iniziale del repository ioBroker",
-        "es": "Versión inicial para el repositorio ioBroker",
-        "pl": "Pierwsze wydanie do repozytu ioBroker"
-      }
-    },
-    "title": "DoorBird",
-    "titleLang": {
-      "en": "DoorBird",
-      "de": "DoorBird",
-      "ru": "DoorBird",
-      "pt": "DoorBird",
-      "nl": "DoorBird",
-      "fr": "DoorBird",
-      "it": "DoorBird",
-      "es": "DoorBird",
-      "pl": "DoorBird",
-      "uk": "DoorBird",
-      "zh-cn": "DoorBird"
-    },
-    "desc": {
-      "en": "Connects DoorBird doorbells to ioBroker",
-      "de": "Verbindet DoorBird-Türklingeln mit ioBroker",
-      "ru": "Соединяет дверные звонки DoorBird с ioBroker",
-      "pt": "Conecta campainhas DoorBird ao ioBroker",
-      "nl": "Verbindt deurbel-deurbellen met ioBroker",
-      "fr": "Relie les sonnettes DoorBird à ioBroker",
-      "it": "Collega i campanelli DoorBird a ioBroker",
-      "es": "Conecta los timbres de DoorBird a ioBroker",
-      "pl": "Łączy dzwonki DoorBird z ioBroker"
-    },
-    "authors": [
-      "BuZZy1337 <buzzy1337@outlook.de>"
-    ],
-    "platform": "Javascript/Node.js",
-    "license": "MIT",
-    "mode": "daemon",
-    "icon": "doorbird.png",
-    "messagebox": true,
-    "subscribe": "messagebox",
-    "materialize": true,
-    "enabled": true,
-    "extIcon": "https://raw.githubusercontent.com/iobroker-community-adapters/ioBroker.doorbird/master/admin/doorbird.png",
-    "keywords": [
-      "doorbird",
-      "vis",
-      "GUI"
-    ],
-    "readme": "https://github.com/iobroker-community-adapters/ioBroker.doorbird/blob/master/README.md",
-    "loglevel": "info",
-    "type": "iot-systems"
-  },
-  "native": {
-    "adapterport": 8100
-  },
-  "objects": [],
-  "instanceObjects": [
-    {
-      "_id": "Restart",
-      "type": "state",
-      "common": {
-        "name": "Restart DoorBird",
-        "type": "boolean",
-        "role": "button",
-        "read": true,
-        "write": true
-      },
-      "native": {}
-    },
-    {
-      "_id": "Motion.trigger",
-      "type": "state",
-      "common": {
-        "role": "indicator",
-        "name": "Motion detected",
-        "type": "boolean",
-        "read": true,
-        "write": false,
-        "def": false
-      },
-      "native": {}
-    },
-    {
-      "_id": "Motion.snapshot",
-      "type": "state",
-      "common": {
-        "name": "JPG file",
-        "type": "file",
-        "read": true,
-        "write": false,
-        "desc": "Can be accessed from web server under http://ip:8082/state/doorbird.0.motion.snapshot"
-      },
-      "native": {}
-    },
-    {
-      "_id": "info",
-      "type": "channel",
-      "common": {
-        "name": "Information"
-      },
-      "native": {}
-    },
-    {
-      "_id": "info.connection",
-      "type": "state",
-      "common": {
-        "role": "indicator.connected",
-        "name": "If connected to DoorBird Device",
-        "type": "boolean",
-        "read": true,
-        "write": false,
-        "def": false
-      },
-      "native": {}
-    },
-    {
-      "_id": "info.firmware",
-      "type": "state",
-      "common": {
-        "role": "",
-        "name": "DoorBird Firmware version",
-        "type": "string",
-        "read": true,
-        "write": false,
-        "def": ""
-      },
-      "native": {}
-    },
-    {
-      "_id": "info.build",
-      "type": "state",
-      "common": {
-        "role": "",
-        "name": "DoorBird BuildNumber",
-        "type": "string",
-        "read": true,
-        "write": false,
-        "def": ""
-      },
-      "native": {}
-    },
-    {
-      "_id": "info.type",
-      "type": "state",
-      "common": {
-        "role": "",
-        "name": "DoorBird Type",
-        "type": "string",
-        "read": true,
-        "write": false,
-        "def": ""
-      },
-      "native": {}
-    }
-  ]
+	"common": {
+		"name": "doorbird",
+		"version": "0.0.1",
+		"news": {
+			"0.0.1": {
+				"en": "initial release",
+				"de": "Erstveröffentlichung",
+				"ru": "Начальная версия",
+				"pt": "lançamento inicial",
+				"nl": "Eerste uitgave",
+				"fr": "Première version",
+				"it": "Versione iniziale",
+				"es": "Versión inicial",
+				"pl": "Pierwsze wydanie",
+				"zh-cn": "首次出版"
+			}
+		},
+		"title": "DoorBird",
+		"titleLang": {
+			"en": "DoorBird",
+			"de": "Türvogel",
+			"ru": "ДверьПтица",
+			"pt": "DoorBird",
+			"nl": "DoorBird",
+			"fr": "PorteOiseau",
+			"it": "Uccello della porta",
+			"es": "PuertaPájaro",
+			"pl": "DrzwiPtak",
+			"zh-cn": "门鸟"
+		},
+		"desc": {
+			"en": "Connects DoorBird doorbells to ioBroker",
+			"de": "Verbindet DoorBird-Türklingeln mit ioBroker",
+			"ru": "Подключает дверные звонки DoorBird к ioBroker",
+			"pt": "Conecta as campainhas DoorBird ao ioBroker",
+			"nl": "Verbindt DoorBird deurbellen met ioBroker",
+			"fr": "Connecte les sonnettes DoorBird à ioBroker",
+			"it": "Collega i campanelli DoorBird a ioBroker",
+			"es": "Conecta los timbres DoorBird a ioBroker",
+			"pl": "Łączy dzwonki DoorBird z ioBroker",
+			"zh-cn": "将 DoorBird 门铃连接到 ioBroker"
+		},
+		"authors": ["Schmakus <schmakus@gmail.com>"],
+		"keywords": ["doorbird", "VIS", "GUI"],
+		"license": "MIT",
+		"platform": "Javascript/Node.js",
+		"main": "main.js",
+		"icon": "doorbird.png",
+		"enabled": true,
+		"extIcon": "https://raw.githubusercontent.com/Schmakus/ioBroker.doorbird/main/admin/doorbird.png",
+		"readme": "https://github.com/Schmakus/ioBroker.doorbird/blob/main/README.md",
+		"loglevel": "info",
+		"mode": "daemon",
+		"type": "iot-systems",
+		"compact": true,
+		"connectionType": "local",
+		"dataSource": "push",
+		"adminUI": {
+			"config": "json"
+		},
+		"dependencies": [
+			{
+				"js-controller": ">=3.3.22"
+			}
+		],
+		"globalDependencies": [
+			{
+				"admin": ">=5.1.13"
+			}
+		]
+	},
+	"native": {
+		"option1": true,
+		"option2": "42"
+	},
+	"objects": [],
+	"instanceObjects": [
+		{
+			"_id": "info",
+			"type": "channel",
+			"common": {
+				"name": "Information"
+			},
+			"native": {}
+		},
+		{
+			"_id": "info.connection",
+			"type": "state",
+			"common": {
+				"role": "indicator.connected",
+				"name": "Device or service connected",
+				"type": "boolean",
+				"read": true,
+				"write": false,
+				"def": false
+			},
+			"native": {}
+		}
+	]
 }
