@@ -1,118 +1,108 @@
 ![Logo](admin/doorbird.png)
+
 # ioBroker.doorbird
 
 [![NPM version](https://img.shields.io/npm/v/iobroker.doorbird.svg)](https://www.npmjs.com/package/iobroker.doorbird)
 [![Downloads](https://img.shields.io/npm/dm/iobroker.doorbird.svg)](https://www.npmjs.com/package/iobroker.doorbird)
-![Number of Installations](https://iobroker.live/badges/doorbird-installed.svg)
-![Current version in stable repository](https://iobroker.live/badges/doorbird-stable.svg)
+![Snyk Vulnerabilities for npm package](https://img.shields.io/snyk/vulnerabilities/npm/iobroker.doorbird?label=npm%20vulnerabilities&style=flat-square)
+![node-lts](https://img.shields.io/node/v-lts/iobroker.doorbird?style=flat-square)
+![Libraries.io dependency status for latest release](https://img.shields.io/librariesio/release/npm/iobroker.doorbird?label=npm%20dependencies&style=flat-square)
+[![Translation status](https://weblate.iobroker.net/widgets/adapters/-/doorbird/svg-badge.svg)](https://weblate.iobroker.net/engage/adapters/?utm_source=widget)
+
+![GitHub](https://img.shields.io/github/license/schmakus/iobroker.doorbird?style=flat-square)
+![GitHub repo size](https://img.shields.io/github/repo-size/schmakus/iobroker.doorbird?logo=github&style=flat-square)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/m/schmakus/iobroker.doorbird?logo=github&style=flat-square)
+![GitHub last commit](https://img.shields.io/github/last-commit/schmakus/iobroker.doorbird?logo=github&style=flat-square)
+![GitHub issues](https://img.shields.io/github/issues/schmakus/iobroker.doorbird?logo=github&style=flat-square)
+
+![Test and Release](https://github.com/Schmakus/ioBroker.doorbird/workflows/Test%20and%20Release/badge.svg)
 
 [![NPM](https://nodei.co/npm/iobroker.doorbird.png?downloads=true)](https://nodei.co/npm/iobroker.doorbird/)
 
-**Tests:** ![Test and Release](https://github.com/Schmakus/ioBroker.doorbird/workflows/Test%20and%20Release/badge.svg)
+## Versions
 
-## doorbird adapter for ioBroker
+![Beta](https://img.shields.io/npm/v/iobroker.doorbird.svg?color=red&label=beta)
+![Stable](http://iobroker.live/badges/doorbird-stable.svg)
+![Installed](http://iobroker.live/badges/doorbird-installed.svg)
 
-Connects DoorBird doorbells to ioBroker
+## Configuration
 
-## Developer manual
-This section is intended for the developer. It can be deleted later.
+1. Enter the IP on which the Adapter should listen to Events from the Doorbird Device.
+   (This is normally the IP of your ioBroker Host).
+   The adapter tries to prefill the field with the correct IP for you. If the prefilled IP is not the IP of your ioBroker Host please change it to the correct IP.
+2. The Port is predefined to `8100`. You can change it if the Port is already used by another service.
+   Just try to run the Adapter with this Port. If the Port is not available you will get an error while starting the adapter. Then just get back here and change the port.
+3. Enter the IP of your Doorbird device. You can click on the "search icon" left to the input field. After you clicked the icon a message at the top of the config screen will appear. Now you have 60 Seconds to press the ring button on your Doorbird device. The Adapter tries to detect the IP and fill all fields for you.
+4. The Device ID (NOT IP!) of your Doorbird.
+5. The Username which needs to have the API Permission on the Doorbird device.
+6. The password for the Username entered in field 5.
 
-### DISCLAIMER
+![Screenshot](img/configscreen.png)
 
-Please make sure that you consider copyrights and trademarks when you use names or logos of a company and add a disclaimer to your README.
-You can check other adapters for examples or ask in the developer community. Using a name or logo of a company without permission may cause legal problems for you.
-
-### Getting started
-
-You are almost done, only a few steps left:
-1. Create a new repository on GitHub with the name `ioBroker.doorbird`
-1. Initialize the current folder as a new git repository:  
-	```bash
-	git init -b main
-	git add .
-	git commit -m "Initial commit"
-	```
-1. Link your local repository with the one on GitHub:  
-	```bash
-	git remote add origin https://github.com/Schmakus/ioBroker.doorbird
-	```
-
-1. Push all files to the GitHub repo:  
-	```bash
-	git push origin main
-	```
-1. Add a new secret under https://github.com/Schmakus/ioBroker.doorbird/settings/secrets. It must be named `AUTO_MERGE_TOKEN` and contain a personal access token with push access to the repository, e.g. yours. You can create a new token under https://github.com/settings/tokens.
-
-1. Head over to [main.js](main.js) and start programming!
-
-### Best Practices
-We've collected some [best practices](https://github.com/ioBroker/ioBroker.repositories#development-and-coding-best-practices) regarding ioBroker development and coding in general. If you're new to ioBroker or Node.js, you should
-check them out. If you're already experienced, you should also take a look at them - you might learn something new :)
-
-### Scripts in `package.json`
-Several npm scripts are predefined for your convenience. You can run them using `npm run <scriptname>`
-| Script name | Description |
-|-------------|-------------|
-| `test:js` | Executes the tests you defined in `*.test.js` files. |
-| `test:package` | Ensures your `package.json` and `io-package.json` are valid. |
-| `test:integration` | Tests the adapter startup with an actual instance of ioBroker. |
-| `test` | Performs a minimal test run on package files and your tests. |
-| `check` | Performs a type-check on your code (without compiling anything). |
-| `lint` | Runs `ESLint` to check your code for formatting errors and potential bugs. |
-| `translate` | Translates texts in your adapter to all required languages, see [`@iobroker/adapter-dev`](https://github.com/ioBroker/adapter-dev#manage-translations) for more details. |
-| `release` | Creates a new release, see [`@alcalzone/release-script`](https://github.com/AlCalzone/release-script#usage) for more details. |
-
-### Writing tests
-When done right, testing code is invaluable, because it gives you the 
-confidence to change your code while knowing exactly if and when 
-something breaks. A good read on the topic of test-driven development 
-is https://hackernoon.com/introduction-to-test-driven-development-tdd-61a13bc92d92. 
-Although writing tests before the code might seem strange at first, but it has very 
-clear upsides.
-
-The template provides you with basic tests for the adapter startup and package files.
-It is recommended that you add your own tests into the mix.
-
-### Publishing the adapter
-Using GitHub Actions, you can enable automatic releases on npm whenever you push a new git tag that matches the form 
-`v<major>.<minor>.<patch>`. We **strongly recommend** that you do. The necessary steps are described in `.github/workflows/test-and-release.yml`.
-
-Since you installed the release script, you can create a new
-release simply by calling:
-```bash
-npm run release
-```
-Additional command line options for the release script are explained in the
-[release-script documentation](https://github.com/AlCalzone/release-script#command-line).
-
-To get your adapter released in ioBroker, please refer to the documentation 
-of [ioBroker.repositories](https://github.com/ioBroker/ioBroker.repositories#requirements-for-adapter-to-get-added-to-the-latest-repository).
-
-### Test the adapter manually with dev-server
-Since you set up `dev-server`, you can use it to run, test and debug your adapter.
-
-You may start `dev-server` by calling from your dev directory:
-```bash
-dev-server watch
-```
-
-The ioBroker.admin interface will then be available at http://localhost:8081/
-
-Please refer to the [`dev-server` documentation](https://github.com/ioBroker/dev-server#command-line) for more details.
+After you entered all required information to the config dialog click "Save & Close".
+The Adapter should now restart, and you are ready to go!
 
 ## Changelog
+
 <!--
-	Placeholder for the next version (at the beginning of the line):
-	### **WORK IN PROGRESS**
+    Placeholder for the next version (at the beginning of the line):
+    ### **WORK IN PROGRESS**
 -->
 
 ### **WORK IN PROGRESS**
-* (Schmakus) initial release
+
+-   (Schmakus) Re-new with adapter creator
+
+### 0.2.0 (2023-06-25)
+
+-   (mcm1957) Adapter has been moved into iobroker-community-adapters-area
+-   (mcm1957) Github actions and testing has been added
+-   (mcm1957) standard development tools have been added
+-   (mcm1957) dependencies have been upgraded
+
+### 0.1.7 (2023-05-16)
+
+-   (todde99) Fixed js-controller 5 issue
+
+### 0.1.5 (2018-09-18)
+
+-   (BuZZy1337) Check response of Doorbird when triggering relays
+-   (BuZZy1337) Check if any favorite has to be updated (For example when adapter address or port changes)
+-   (BuZZy1337) Added state for restarting DoorBird Device (There is a bug in DoorBird Firmware. DoorBird will fix it with next FW Update!)
+-   (BuZZy1337) Change some Code for working more with responses from DoorBird
+
+### 0.1.0 (2018-09-08)
+
+-   (BuZZy1337) "public release"
+-   (BuZZy1337) Changed Adapter address option from dropdown list to input field
+-   (BuZZy1337) Added Support for triggering Doorbird-Relays
+
+### 0.0.4
+
+-   (BuZZy1337) DO A COMPLETE REINSTALL OF THE ADAPTER (DELETE AND INSTALL THE ADAPTER AGAIN!)
+    DELETE ALL IOBROKER SCHEDULES AND THEN ALL IOBROKER FAVORITES IN YOUR DOORBIRD APP BEFORE STARTING 0.0.4!
+-   (BuZZy1337) Added support for more than one Doorbell Button
+-   (BuZZy1337) Encrypted saving of Doorbird Password
+-   (BuZZy1337) Detect and create Favorites & Schedules on the Doorbird Device.
+-   There is a Bug in the Doorbird Firmware for the Motion schedule! You can delete and set the Schedule for the Motion sensor in the App - that's a workaround for now.
+
+### 0.0.3
+
+-   (BuZZy1337) Added possibility to choose the AdapterIP Address
+
+### 0.0.2
+
+-   (BuZZy1337) Just added the info that the Adapter is not ready yet .. just to be sure! ;)
+
+### 0.0.1
+
+-   (BuZZy1337) initial release
 
 ## License
-MIT License
 
-Copyright (c) 2023 Schmakus <schmakus@gmail.com>
+The MIT License (MIT)
+
+Copyright (c) 2023 iobroker-community-adapters <>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -121,13 +111,13 @@ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 copies of the Software, and to permit persons to whom the Software is
 furnished to do so, subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
