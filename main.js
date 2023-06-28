@@ -538,22 +538,6 @@ class Doorbird extends utils.Adapter {
 		}
 
 		for (const value of doorbellsArray) {
-			//create device
-			await this.createObjects('Doorbell', 'channel', {
-				name: {
-					en: 'Doorbell',
-					de: 'Türklingel',
-					ru: 'Дверной звонок',
-					pt: 'Campainha de porta',
-					nl: 'Deur',
-					fr: 'Doorbell',
-					it: 'Campana porta',
-					es: 'Doorbell',
-					pl: 'Doorbell',
-					uk: 'Рушники',
-					'zh-cn': 'Doorbell',
-				},
-			});
 			await this.createObjects(`Doorbell.${value}`, 'device', {
 				name: {
 					en: 'Doorbell',
@@ -579,30 +563,34 @@ class Doorbird extends utils.Adapter {
 				write: false,
 				def: false,
 			});
-			await this.createObjects(`Doorbell.${value}.snapshot`, 'meta', {
-				name: {
-					en: 'JPG File',
-					de: 'JPG Datei',
-					ru: 'ДЖП Файл',
-					pt: 'JPG Arquivo',
-					nl: 'JPG Veld',
-					fr: 'JPG Fichier',
-					it: 'JPG File',
-					es: 'JPG Archivo',
-					pl: 'JPG File',
-					uk: 'JPG Головна',
-					'zh-cn': 'J. 导 言 导 言',
+			await this.createObjects(
+				`Doorbell.${value}.snapshot`,
+				'meta',
+				{
+					name: {
+						en: 'JPG File',
+						de: 'JPG Datei',
+						ru: 'ДЖП Файл',
+						pt: 'JPG Arquivo',
+						nl: 'JPG Veld',
+						fr: 'JPG Fichier',
+						it: 'JPG File',
+						es: 'JPG Archivo',
+						pl: 'JPG File',
+						uk: 'JPG Головна',
+						'zh-cn': 'J. 导 言 导 言',
+					},
+					// @ts-ignore
+					type: 'meta.user',
 				},
-				// @ts-ignore
-				type: 'meta.user',
-			});
+				true,
+			);
 		}
 
 		await this.createMotionSchedule();
 	}
 
 	async createMotionSchedule() {
-		const adapter = this;
 		for (const key in motionState) {
 			if (Object.hasOwnProperty.call(motionState, key)) {
 				let actionNeeded = true;
@@ -625,18 +613,18 @@ class Doorbird extends utils.Adapter {
 					});
 					const toCreate = { input: 'motion', param: '', output: array };
 					try {
-						const createUrl = await adapter.buildURL('schedule');
+						const createUrl = await this.buildURL('schedule');
 						const response = await Axios.post(createUrl, toCreate);
 
 						if (response.status === 200) {
-							adapter.log.debug('Schedule for Motion Sensor set successfully!');
+							this.log.debug('Schedule for Motion Sensor set successfully!');
 						} else {
-							adapter.log.warn(
+							this.log.warn(
 								`There was an Error while setting the Motion schedule. (Statuscode: ${response.status}), (Statustext: ${response.statusText}`,
 							);
 						}
 					} catch (error) {
-						adapter.log.warn(`Error in setting Motion schedule: ${error}`);
+						this.log.warn(`Error in setting Motion schedule: ${error}`);
 					}
 				}
 			}
@@ -644,8 +632,6 @@ class Doorbird extends utils.Adapter {
 	}
 
 	async main() {
-		const adapter = this;
-
 		if (this.config.birdip && this.config.birdpw && this.config.birduser) {
 			await this.testBird();
 			birdConCheck = setInterval(async () => {
@@ -653,9 +639,9 @@ class Doorbird extends utils.Adapter {
 			}, 180000);
 		}
 
-		udpserver.on('listening', function () {
+		udpserver.on('listening', () => {
 			const address = udpserver.address();
-			adapter.log.debug('Adapter listening on IP: ' + address.address + ' - UDP Port 35344');
+			this.log.debug('Adapter listening on IP: ' + address + ' - UDP Port 35344');
 		});
 
 		/*
@@ -669,29 +655,29 @@ class Doorbird extends utils.Adapter {
 		// udpserver.bind(35344);
 		if (this.config.adapterAddress) {
 			try {
-				this.server = http.createServer(async function (req, res) {
+				this.server = http.createServer(async (req, res) => {
 					if (res.socket && res.socket.remoteAddress) {
 						const remoteAddress = res.socket.remoteAddress.replace(/^.*:/, '');
-						if (remoteAddress === adapter.config.birdip || remoteAddress === '192.168.30.47') {
+						if (remoteAddress === this.config.birdip || remoteAddress === '192.168.30.47') {
 							res.writeHead(204, { 'Content-Type': 'text/plain' });
 							if (req.url == '/motion') {
-								adapter.log.debug('Received Motion-alert from Doorbird!');
-								await adapter.setStateAsync('Motion.trigger', true, true);
-								await adapter.downloadFile(adapter.buildURL('image'), adapter.jpgpath, 'Motion');
+								this.log.debug('Received Motion-alert from Doorbird!');
+								await this.setStateAsync('Motion.trigger', true, true);
+								await this.downloadFile(await this.buildURL('image'), this.jpgpath, 'Motion');
 
-								adapter.setTimeout(async () => {
-									await adapter.setStateAsync('Motion.trigger', false, true);
+								this.setTimeout(async () => {
+									await this.setStateAsync('Motion.trigger', false, true);
 								}, 2500);
 							}
 							if (req.url && req.url.indexOf('ring') != -1) {
 								const id = req.url.substring(req.url.indexOf('?') + 1, req.url.length);
-								adapter.log.debug('Received Ring-alert (ID: ' + id + ') from Doorbird!');
-								await adapter.setStateAsync('Doorbell.' + id + '.trigger', true, true);
+								this.log.debug('Received Ring-alert (ID: ' + id + ') from Doorbird!');
+								await this.setStateAsync('Doorbell.' + id + '.trigger', true, true);
 
-								adapter.downloadFile(adapter.buildURL('image'), adapter.jpgpath, 'Doorbell.' + id);
+								this.downloadFile(await this.buildURL('image'), this.jpgpath, 'Doorbell.' + id);
 
-								adapter.setTimeout(async () => {
-									await adapter.setStateAsync('Doorbell.' + id + '.trigger', false, true);
+								this.setTimeout(async () => {
+									await this.setStateAsync('Doorbell.' + id + '.trigger', false, true);
 								}, 2000);
 							}
 							res.end();
@@ -704,19 +690,19 @@ class Doorbird extends utils.Adapter {
 
 				this.server.listen(this.config.adapterport || 8081, this.config.adapterAddress, () => {
 					this.log.debug(
-						`Server gestartet auf Port ${adapter.config.adapterport || 8100} und IP ${
+						`Server gestartet auf Port ${this.config.adapterport || 8100} und IP ${
 							this.config.adapterAddress
 						}`,
 					);
 				});
 			} catch (e) {
-				adapter.log.warn('There was an Error starting the HTTP Server! (' + e + ')');
+				this.log.warn('There was an Error starting the HTTP Server! (' + e + ')');
 			}
 		} else {
-			adapter.log.warn('You need to set the Adapteraddress in the Instance-Settings!!');
+			this.log.warn('You need to set the Adapteraddress in the Instance-Settings!!');
 		}
 
-		adapter.subscribeStates('*');
+		this.subscribeStates('*');
 	}
 
 	/**

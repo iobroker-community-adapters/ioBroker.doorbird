@@ -166,6 +166,26 @@
 			"native": {}
 		},
 		{
+			"_id": "Doorbell",
+			"type": "channel",
+			"common": {
+				"name": {
+					"en": "Doorbell",
+					"de": "Türklingel",
+					"ru": "Дверной звонок",
+					"pt": "Campainha de porta",
+					"nl": "Deur",
+					"fr": "Doorbell",
+					"it": "Campana porta",
+					"es": "Doorbell",
+					"pl": "Doorbell",
+					"uk": "Рушники",
+					"zh-cn": "Doorbell"
+				}
+			},
+			"native": {}
+		},
+		{
 			"_id": "Motion",
 			"type": "channel",
 			"common": {
