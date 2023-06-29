@@ -269,40 +269,6 @@ class Doorbird extends utils.Adapter {
 		}
 	}
 
-	async updateFavorite(key, obj) {
-		const newURL = obj.value.replace(
-			/(http:\/\/)(.*)(\/.*)/,
-			'$1' + this.config.adapterAddress + ':' + this.config.adapterport + '$3',
-		);
-
-		try {
-			const url =
-				'http://' +
-				this.config.birdip +
-				'/bha-api/favorites.cgi?http-user=' +
-				this.config.birduser +
-				'&http-password=' +
-				this.config.birdpw +
-				'&action=save&type=http&id=' +
-				key +
-				'&title=' +
-				obj.title +
-				'&value=' +
-				newURL;
-
-			const response = await Axios.get(url);
-
-			if (response.status === 200) {
-				this.log.warn('Favorite Updated successfully..');
-				await this.checkFavorites();
-			} else {
-				this.log.warn(`There was an error while updating the Favorite! ${response.status}`);
-			}
-		} catch (error) {
-			this.log.warn('There was an error while updating the Favorite! (' + error + ')');
-		}
-	}
-
 	async checkFavorites() {
 		this.log.debug('Checking favorites on DoorBird Device..');
 		try {
@@ -370,6 +336,40 @@ class Doorbird extends utils.Adapter {
 		}
 	}
 
+	async updateFavorite(key, obj) {
+		const newURL = obj.value.replace(
+			/(http:\/\/)(.*)(\/.*)/,
+			'$1' + this.config.adapterAddress + ':' + this.config.adapterport + '$3',
+		);
+
+		try {
+			const url =
+				'http://' +
+				this.config.birdip +
+				'/bha-api/favorites.cgi?http-user=' +
+				this.config.birduser +
+				'&http-password=' +
+				this.config.birdpw +
+				'&action=save&type=http&id=' +
+				key +
+				'&title=' +
+				obj.title +
+				'&value=' +
+				newURL;
+
+			const response = await Axios.get(url);
+
+			if (response.status === 200) {
+				this.log.warn('Favorite Updated successfully..');
+				await this.checkFavorites();
+			} else {
+				this.log.warn(`There was an error while updating the Favorite! ${response.status}`);
+			}
+		} catch (error) {
+			this.log.warn('There was an error while updating the Favorite! (' + error + ')');
+		}
+	}
+
 	async getSchedules() {
 		try {
 			const url = await this.buildURL('schedule');
@@ -379,6 +379,7 @@ class Doorbird extends utils.Adapter {
 				try {
 					const schedules = response.data;
 					bellCount = 0;
+					this.log.debug(`Following schedules found: ${JSON.stringify(schedules)}`);
 					this.log.debug('Looping through the Schedules..');
 
 					for (let i = 0; i < schedules.length; i++) {
@@ -420,7 +421,6 @@ class Doorbird extends utils.Adapter {
 
 	async createFavorites(i, action, motion) {
 		this.log.debug('Checking if we need to create any favorites..');
-		const adapter = this;
 		if (i < doorbellsArray.length && !motion) {
 			this.log.debug('Cheking if Favorite for Doorbell ID ' + doorbellsArray[i] + ' exists.');
 			if (favoriteState[doorbellsArray[i]]) {
@@ -462,7 +462,7 @@ class Doorbird extends utils.Adapter {
 		if (typeof favoriteState['Motion'] === 'undefined' && !motion) {
 			request(
 				'http://' +
-					adapter.config.birdip +
+					this.config.birdip +
 					'/bha-api/favorites.cgi?http-user=' +
 					this.config.birduser +
 					'&http-password=' +
@@ -474,11 +474,11 @@ class Doorbird extends utils.Adapter {
 					':' +
 					this.config.adapterport +
 					'/motion',
-				function (error, response) {
+				async (error, response) => {
 					if (!error) {
 						if (response.statusCode === 200) {
-							adapter.log.debug('Favorite for Motionsensor created.');
-							adapter.createFavorites(i, true, true);
+							this.log.debug('Favorite for Motionsensor created.');
+							await this.createFavorites(i, true, true);
 						}
 					}
 				},
@@ -674,7 +674,7 @@ class Doorbird extends utils.Adapter {
 								this.log.debug('Received Ring-alert (ID: ' + id + ') from Doorbird!');
 								await this.setStateAsync('Doorbell.' + id + '.trigger', true, true);
 
-								this.downloadFile(await this.buildURL('image'), this.jpgpath, 'Doorbell.' + id);
+								await this.downloadFile(await this.buildURL('image'), this.jpgpath, 'Doorbell.' + id);
 
 								this.setTimeout(async () => {
 									await this.setStateAsync('Doorbell.' + id + '.trigger', false, true);
