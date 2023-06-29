@@ -10,7 +10,6 @@ const utils = require('@iobroker/adapter-core');
 
 let birdConCheck;
 const dgram = require('dgram');
-const request = require('request');
 const Axios = require('axios').default;
 const fs = require('fs');
 const http = require('http');
@@ -460,8 +459,9 @@ class Doorbird extends utils.Adapter {
 			}
 		}
 		if (typeof favoriteState['Motion'] === 'undefined' && !motion) {
-			request(
-				'http://' +
+			try {
+				const url =
+					'http://' +
 					this.config.birdip +
 					'/bha-api/favorites.cgi?http-user=' +
 					this.config.birduser +
@@ -473,16 +473,18 @@ class Doorbird extends utils.Adapter {
 					this.config.adapterAddress +
 					':' +
 					this.config.adapterport +
-					'/motion',
-				async (error, response) => {
-					if (!error) {
-						if (response.statusCode === 200) {
-							this.log.debug('Favorite for Motionsensor created.');
-							await this.createFavorites(i, true, true);
-						}
-					}
-				},
-			);
+					'/motion';
+
+				const response = await Axios.get(url);
+
+				if (response.status === 200) {
+					this.log.debug('Favorite for Motionsensor created.');
+					await this.createFavorites(i, true, true);
+				}
+			} catch (error) {
+				this.log.warn('Error creating favorite for Motionsensor: ' + error);
+			}
+
 			return;
 		}
 		if (action) {
