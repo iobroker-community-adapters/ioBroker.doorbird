@@ -160,7 +160,7 @@
 				},
 				"type": "boolean",
 				"role": "button",
-				"read": true,
+				"read": false,
 				"write": true
 			},
 			"native": {}
@@ -248,6 +248,30 @@
 					"zh-cn": "J. 导 言 导 言"
 				},
 				"type": "meta.user"
+			},
+			"native": {}
+		},
+		{
+			"_id": "Motion.getSnapshot",
+			"type": "state",
+			"common": {
+				"name": {
+					"en": "Get Snapshot",
+					"de": "Schnappschuss holen",
+					"ru": "Получить снимок",
+					"pt": "Instantâneo",
+					"nl": "Haal Snapshot",
+					"fr": "Snapshot",
+					"it": "Indossando una cinghia",
+					"es": "Captura",
+					"pl": "Get Snapshot (ang.)",
+					"uk": "Отримати Snapshot",
+					"zh-cn": "Get Steshot"
+				},
+				"type": "boolean",
+				"role": "button",
+				"read": false,
+				"write": true
 			},
 			"native": {}
 		},

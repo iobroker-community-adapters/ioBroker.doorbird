@@ -173,6 +173,14 @@ class Doorbird extends utils.Adapter {
 					this.log.warn('DoorBird denied restart: ' + error);
 				}
 			}
+		}
+		if (comp[2] === 'Motion' && comp[3] === 'getSnapshot') {
+			if (!this.authorized) {
+				this.log.warn('Cannot Restart DoorBird because not authorized!');
+			} else {
+				this.log.debug('Trying to get snapshot..');
+				this.downloadFileAsync(this.buildURL('image'), this.jpgpath, 'Motion');
+			}
 		} else if (comp[2] === 'Relays') {
 			if (!this.authorized) {
 				this.log.warn('Cannot trigger relay because not authorized!');
@@ -863,13 +871,11 @@ class Doorbird extends utils.Adapter {
 		try {
 			const response = await Axios.head(url);
 			await Axios.get(url, { responseType: 'stream' }).then(async (res) => {
-				res.data.pipe(fs.createWriteStream(filename)).on('close', () => {
-					this.log.debug(`File downloaded successfully!`);
-					this.log.debug(`Response status code: ${response.status}`);
-					this.log.debug(`Response headers: ${response.headers}`);
+				res.data.pipe(fs.createWriteStream(filename)).on('close', async () => {
+					this.log.debug(`File downloaded successfully! Response: ${response.statusText}`);
+					this.log.info(`Snapshot available at: ${this.jpgpath}`);
 				});
 			});
-
 			await this.sendToStateAsync(cmd);
 		} catch (error) {
 			console.log('Error downloading file:', error);

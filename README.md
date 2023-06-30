@@ -52,6 +52,7 @@ The Adapter should now restart, and you are ready to go!
 ### **WORK IN PROGRESS**
 
 -   (Schmakus) Re-new with adapter creator
+-   (Schmakus) Changed snapshot handling! Find snapshot at ioBroker Files now!
 
 ### 0.2.0 (2023-06-25)
 
