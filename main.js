@@ -112,7 +112,7 @@ class Doorbird extends utils.Adapter {
 								this.log.debug('Received Ring-alert (ID: ' + id + ') from Doorbird!');
 								await Promise.all([
 									this.setStateAsync('Doorbell.' + id + '.trigger', true, true),
-									this.downloadFileAsync(this.buildURL('image'), this.jpgpath, `Doorbell.${id}`),
+									this.downloadFileAsync(this.buildURL('image'), this.jpgpath, `Doorbell_${id}`),
 								]);
 
 								this.setTimeout(async () => {
@@ -704,24 +704,6 @@ class Doorbird extends utils.Adapter {
 				write: false,
 				def: false,
 			});
-
-			await this.createObjectsAsync(`Doorbell.${value}.snapshot`, 'meta', {
-				name: {
-					en: 'JPG File',
-					de: 'JPG Datei',
-					ru: 'ДЖП Файл',
-					pt: 'JPG Arquivo',
-					nl: 'JPG Veld',
-					fr: 'JPG Fichier',
-					it: 'JPG File',
-					es: 'JPG Archivo',
-					pl: 'JPG File',
-					uk: 'JPG Головна',
-					'zh-cn': 'J. 导 言 导 言',
-				},
-				// @ts-ignore
-				type: 'meta.user',
-			});
 		}
 
 		await this.createMotionScheduleAsync();
@@ -869,8 +851,8 @@ class Doorbird extends utils.Adapter {
 		let fileData;
 		try {
 			fileData = fs.readFileSync(this.jpgpath);
-			await this.writeFileAsync(`${this.namespace}.${cmd}.snapshot`, 'snapshot.jpg', fileData);
-			//await this.readFileAsync('doorbird.0.Motion.snapshot', 'snapshot.jpg');
+			await this.writeFileAsync(`${this.namespace}.snapshots`, `snapshot_${cmd}.jpg`, fileData);
+			//await this.readFileAsync('doorbird.0.snapshots', 'snapshot_Doorbell_1.jpg');
 			this.log.debug('Snapshot sent to State!');
 			return true;
 		} catch (e) {

@@ -267,12 +267,12 @@
 			"native": {}
 		},
 		{
-			"_id": "Motion.snapshot",
+			"_id": "Snapshots",
 			"type": "meta",
 			"common": {
 				"name": {
-					"en": "JPG File",
-					"de": "JPG Datei",
+					"en": "JPG Files",
+					"de": "JPG Dateien",
 					"ru": "ДЖП Файл",
 					"pt": "JPG Arquivo",
 					"nl": "JPG Veld",
@@ -283,7 +283,8 @@
 					"uk": "JPG Головна",
 					"zh-cn": "J. 导 言 导 言"
 				},
-				"type": "meta.user"
+				"type": "meta.user",
+				"desc": "Access Snapshots via ioBroker Files"
 			},
 			"native": {}
 		},
