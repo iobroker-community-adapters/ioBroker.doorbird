@@ -178,7 +178,7 @@ class Doorbird extends utils.Adapter {
 			if (!this.authorized) {
 				this.log.warn('Cannot Restart DoorBird because not authorized!');
 			} else {
-				this.log.debug('Trying to get snapshot..');
+				this.log.info('Trying to get snapshot..');
 				this.downloadFileAsync(this.buildURL('image'), this.jpgpath, 'Motion');
 			}
 		} else if (comp[2] === 'Relays') {
@@ -848,18 +848,6 @@ class Doorbird extends utils.Adapter {
 		}, 60000);
 	}
 
-	/*
-	async download(url, filename, callback) {
-		try {
-			request.head(url, function () {
-				request(url).pipe(fs.createWriteStream(filename)).on('close', callback);
-			});
-		} catch (error) {
-			this.log.warn(`Error by downloading file! ${error}`);
-		}
-	}
-	*/
-
 	/**
 	 * Download File from Doorbird
 	 * @async
@@ -893,6 +881,7 @@ class Doorbird extends utils.Adapter {
 		try {
 			fileData = fs.readFileSync(this.jpgpath);
 			await this.writeFileAsync(`${this.namespace}.${cmd}.snapshot`, 'snapshot.jpg', fileData);
+			//await this.readFileAsync('doorbird.0.Motion.snapshot', 'snapshot.jpg');
 			this.log.debug('Snapshot sent to State!');
 			return true;
 		} catch (e) {
