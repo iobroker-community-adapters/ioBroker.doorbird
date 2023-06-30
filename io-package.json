@@ -120,6 +120,42 @@
 		"compact": true,
 		"connectionType": "local",
 		"dataSource": "push",
+		"messages": [
+			{
+				"condition": {
+					"operand": "and",
+					"rules": ["oldVersion<0.3.0", "newVersion>=0.3.0"]
+				},
+				"title": {
+					"en": "Breaking change by usage of snapshots",
+					"de": "Änderung durch Verwendung von Snapshots",
+					"ru": "Перерыв изменения с помощью снимков",
+					"pt": "Quebrando a mudança pelo uso de instantâneos",
+					"nl": "Verandering door het gebruik van foto's",
+					"fr": "Changement de rupture par utilisation de snapshots",
+					"it": "Cambiamento di rottura mediante l'utilizzo di snapshot",
+					"es": "Cambio de ruptura por el uso de instantáneas",
+					"pl": "Zmiana strzałów poprzez użycie strzałów",
+					"uk": "Зміна розривів за допомогою знімків",
+					"zh-cn": "D. 使用绑架器的断裂变化"
+				},
+				"text": {
+					"en": "Storage location of the snapshots has been moved to the ioBroker files!",
+					"de": "Speicherort der Snapshots wurde in die ioBroker Dateien verschoben!",
+					"ru": "Место хранения снимков было перемещено в файлы ioBroker!",
+					"pt": "Localização de armazenamento dos instantâneos foi movido para os arquivos ioBroker!",
+					"nl": "De locatie van de foto's is verplaatst naar de ioBroker bestanden!",
+					"fr": "L'emplacement de stockage des snapshots a été déplacé vers les fichiers ioBroker!",
+					"it": "La posizione di archiviazione delle snapshot è stata spostata nei file ioBroker!",
+					"es": "Ubicación de almacenamiento de las instantáneas se ha trasladado a los archivos ioBroker!",
+					"pl": "Lokalizacja postrzałów została przeniesiona do plików ioBroker!",
+					"uk": "Місце зберігання знімків було перенесено на файли ioBroker!",
+					"zh-cn": "偷窃者地点已移到OioBroker案!"
+				},
+				"level": "warn",
+				"buttons": ["agree", "cancel"]
+			}
+		],
 		"dependencies": [
 			{
 				"js-controller": ">=3.3.22"

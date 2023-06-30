@@ -17,7 +17,7 @@ const udpserver = dgram.createSocket('udp4');
 // var _sodium = require('libsodium-wrappers'); - Not needed for now (DEP << "libsodium-wrappers": "^0.7.3" >> ALSO REMOVED IN PACKAGE FILE!!)
 // var ringActive = false; - Not needed for now .. Just saving it for later .. maybe ...
 
-const devMode = true;
+const devMode = false;
 
 class Doorbird extends utils.Adapter {
 	/**
@@ -384,8 +384,6 @@ class Doorbird extends utils.Adapter {
 					for (const key in favorites.http) {
 						if (!Object.hasOwnProperty.call(favorites.http, key)) continue;
 						const obj = favorites.http[key];
-						//toDelete
-						this.log.debug(`FavoritesHTTP: ${JSON.stringify(favorites.http)}`);
 						if (
 							obj.title.indexOf('ioBroker ' + this.namespace) !== -1 &&
 							obj.value.indexOf(this.config.adapterAddress + ':' + this.config.adapterport) === -1
@@ -404,12 +402,6 @@ class Doorbird extends utils.Adapter {
 								this.favoriteState[obj.title.split(' ')[2]] = {};
 								this.favoriteState[obj.title.split(' ')[2]]['ID'] = key;
 								this.favoriteState[obj.title.split(' ')[2]]['URL'] = obj.value;
-								//toDelete
-								this.log.debug(
-									`Create FavoriteState: ID: ${
-										this.favoriteState[obj.title.split(' ')[2]]['ID']
-									}, URL: ${this.favoriteState[obj.title.split(' ')[2]]['URL']}`,
-								);
 							} else {
 								this.log.warn(
 									`Found a duplicate favorite! (ID : '${key}') Split ${
@@ -472,9 +464,6 @@ class Doorbird extends utils.Adapter {
 			/(http:\/\/)(.*)(\/.*)/,
 			'$1' + this.config.adapterAddress + ':' + this.config.adapterport + '$3',
 		);
-
-		//toDelete
-		this.log.debug(`new for update: key: ${key}, title: ${obj.title}, url: ${newURL}`);
 
 		try {
 			const url =
