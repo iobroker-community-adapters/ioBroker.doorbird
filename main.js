@@ -886,12 +886,7 @@ class Doorbird extends utils.Adapter {
 		let fileData;
 		try {
 			fileData = fs.readFileSync(this.jpgpath);
-
-			await this.writeFileAsync(this.namespace, `${cmd}.snapshot.snapshot.jpg}`, fileData, 'snapshot.jpg');
-
-			//await this.writeFileAsync(`${this.namespace}.${cmd}`, fileData, '');
-
-			//await this.setForeignBinaryStateAsync(this.namespace + '.' + cmd + '.snapshot', fileData);
+			await this.writeFileAsync(`${this.namespace}.${cmd}.snapshot`, 'snapshot.jpg', fileData);
 			this.log.debug('Snapshot sent to State!');
 			return true;
 		} catch (e) {
