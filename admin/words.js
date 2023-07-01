@@ -1,12 +1,8 @@
-/* eslint-disable quotes */
-/* eslint-disable no-unused-vars */
-/* eslint-disable indent */
 /*global systemDictionary:true */
 'use strict';
 
 /* Not done yet .... */
 
-// @ts-ignore
 systemDictionary = {
 	'Adapter IP': {
 		en: 'Adapter IP',
