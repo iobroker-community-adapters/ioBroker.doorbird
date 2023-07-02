@@ -10,12 +10,8 @@ const utils = require('@iobroker/adapter-core');
 
 const dgram = require('dgram');
 const Axios = require('axios').default;
-const fs = require('fs');
 const http = require('http');
-const path = require('path');
 const udpserver = dgram.createSocket('udp4');
-// var _sodium = require('libsodium-wrappers'); - Not needed for now (DEP << "libsodium-wrappers": "^0.7.3" >> ALSO REMOVED IN PACKAGE FILE!!)
-// var ringActive = false; - Not needed for now .. Just saving it for later .. maybe ...
 
 const devMode = false;
 
@@ -33,8 +29,6 @@ class Doorbird extends utils.Adapter {
 		this.on('message', this.onMessage.bind(this));
 		this.on('unload', this.onUnload.bind(this));
 
-		this.instanceDir = utils.getAbsoluteInstanceDataDir(this);
-		this.jpgpath = path.join(utils.getAbsoluteInstanceDataDir(this), 'snap.jpg');
 		this.sockets = [];
 		this.bellCount = 0;
 		this.scheduleState = {};
@@ -47,10 +41,6 @@ class Doorbird extends utils.Adapter {
 		this.birdConCheck = null;
 		this.wizard = false;
 		this.wizardTimeout = null;
-
-		if (!fs.existsSync(this.instanceDir)) {
-			fs.mkdirSync(this.instanceDir);
-		}
 	}
 
 	/**
@@ -59,9 +49,6 @@ class Doorbird extends utils.Adapter {
 	async onReady() {
 		// Reset the connection indicator during startup
 		await this.setStateAsync('info.connection', false, true);
-
-		this.log.debug(this.instanceDir);
-		this.log.debug(this.jpgpath);
 
 		const systemConfig = await this.getForeignObjectAsync('system.config');
 
@@ -100,7 +87,7 @@ class Doorbird extends utils.Adapter {
 								this.log.debug('Received Motion-alert from Doorbird!');
 								await Promise.all([
 									this.setStateAsync('Motion.trigger', true, true),
-									this.downloadFileAsync(this.buildURL('image'), this.jpgpath, 'Motion'),
+									this.downloadFileAsync(this.buildURL('image'), 'Motion'),
 								]);
 
 								this.setTimeout(async () => {
@@ -112,7 +99,7 @@ class Doorbird extends utils.Adapter {
 								this.log.debug('Received Ring-alert (ID: ' + id + ') from Doorbird!');
 								await Promise.all([
 									this.setStateAsync('Doorbell.' + id + '.trigger', true, true),
-									this.downloadFileAsync(this.buildURL('image'), this.jpgpath, `Doorbell_${id}`),
+									this.downloadFileAsync(this.buildURL('image'), `Doorbell_${id}`),
 								]);
 
 								this.setTimeout(async () => {
@@ -152,10 +139,14 @@ class Doorbird extends utils.Adapter {
 	async onStateChange(id, state) {
 		if (!state || state.ack) return;
 		const comp = id.split('.');
-		if (comp[2] === 'Restart') {
-			if (!this.authorized) {
-				this.log.warn('Cannot Restart DoorBird because not authorized!');
-			} else {
+
+		if (!this.authorized) {
+			this.log.warn('Cannot do that because not authorized! Check you config!');
+			return;
+		}
+
+		switch (comp[2]) {
+			case 'Restart':
 				this.log.debug('Trying to restart DoorBird Device..');
 				try {
 					const url = this.buildURL('restart');
@@ -172,19 +163,12 @@ class Doorbird extends utils.Adapter {
 				} catch (error) {
 					this.log.warn('DoorBird denied restart: ' + error);
 				}
-			}
-		}
-		if (comp[2] === 'Motion' && comp[3] === 'getSnapshot') {
-			if (!this.authorized) {
-				this.log.warn('Cannot Restart DoorBird because not authorized!');
-			} else {
-				this.log.info('Trying to get snapshot..');
-				this.downloadFileAsync(this.buildURL('image'), this.jpgpath, 'Motion');
-			}
-		} else if (comp[2] === 'Relays') {
-			if (!this.authorized) {
-				this.log.warn('Cannot trigger relay because not authorized!');
-			} else {
+				break;
+			case 'TakeSnapshot':
+				this.log.info('Trying to take snapshot..');
+				this.downloadFileAsync(this.buildURL('image'), 'Motion');
+				break;
+			case 'Relays':
 				try {
 					const url =
 						'http://' +
@@ -211,7 +195,7 @@ class Doorbird extends utils.Adapter {
 				} catch (error) {
 					this.log.warn('Error in triggering Relay: ' + error);
 				}
-			}
+				break;
 		}
 	}
 	/**
@@ -403,11 +387,7 @@ class Doorbird extends utils.Adapter {
 								this.favoriteState[obj.title.split(' ')[2]]['ID'] = key;
 								this.favoriteState[obj.title.split(' ')[2]]['URL'] = obj.value;
 							} else {
-								this.log.warn(
-									`Found a duplicate favorite! (ID : '${key}') Split ${
-										this.favoriteState[obj.title.split(' ')]
-									}`,
-								);
+								this.log.warn(`Found a duplicate favorite! (ID : '${key}') URL ${obj.value}`);
 
 								if (devMode) {
 									this.log.warn(
@@ -823,41 +803,24 @@ class Doorbird extends utils.Adapter {
 	 * Download File from Doorbird
 	 * @async
 	 * @param {string} url
-	 * @param {string} filename
 	 * @param {string} cmd
 	 */
-	async downloadFileAsync(url, filename, cmd) {
+	async downloadFileAsync(url, cmd) {
 		try {
-			const response = await Axios.head(url);
-			await Axios.get(url, { responseType: 'stream' }).then(async (res) => {
-				res.data.pipe(fs.createWriteStream(filename)).on('close', async () => {
-					this.log.debug(`File downloaded successfully! Response: ${response.statusText}`);
-					this.log.info(`Snapshot available at: ${this.jpgpath}`);
-				});
-			});
-			await this.sendToStateAsync(cmd);
-		} catch (error) {
-			console.log('Error downloading file:', error);
-		}
-	}
+			const response = await Axios.get(url, { responseType: 'stream' });
+			const chunks = [];
 
-	/**
-	 * Send File to Meta State
-	 * @async
-	 * @param {string} cmd
-	 * @returns
-	 */
-	async sendToStateAsync(cmd) {
-		let fileData;
-		try {
-			fileData = fs.readFileSync(this.jpgpath);
-			await this.writeFileAsync(`${this.namespace}.Snapshots`, `${cmd}_current.jpg`, fileData);
-			//await this.readFileAsync('doorbird.0.snapshots', 'snapshot_Doorbell_1.jpg');
-			this.log.debug('Snapshot sent to State!');
-			return true;
-		} catch (e) {
-			this.log.warn('Cannot upload JPG to State: ' + e);
-			return;
+			response.data.on('data', (chunk) => {
+				chunks.push(chunk);
+			});
+
+			response.data.on('end', async () => {
+				const fileData = Buffer.concat(chunks);
+				await this.writeFileAsync(`${this.namespace}.Snapshots`, `${cmd}_current.jpg`, fileData);
+				this.log.debug('Snapshot saved successfully!');
+			});
+		} catch (error) {
+			this.log.warn(`Error in downloading file: ${error}`);
 		}
 	}
 

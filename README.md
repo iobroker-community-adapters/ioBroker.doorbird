@@ -42,6 +42,21 @@
 After you entered all required information to the config dialog click "Save & Close".
 The Adapter should now restart, and you are ready to go!
 
+# Access to the Snapshots of Motion and DoorBell
+
+Use the following URL to get the current snapshot:
+
+```
+http://<ioBroker-IP>:<Port>/files/doorbird.<instance>.Snapshots/Doorbell_<number>_current.jpg
+http://<ioBroker-IP>:<Port>/files/doorbird.<instance>.Snapshots/Motion_current.jpg
+```
+
+Exampble:
+
+```
+http://192.168.0.2:8081/files/doorbird.0.Snapshots/Doorbell_1_current.jpg
+```
+
 ## Changelog
 
 <!--

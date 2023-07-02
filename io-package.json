@@ -289,7 +289,7 @@
 			"native": {}
 		},
 		{
-			"_id": "Motion.getSnapshot",
+			"_id": "TakeSnapshot",
 			"type": "state",
 			"common": {
 				"name": {
