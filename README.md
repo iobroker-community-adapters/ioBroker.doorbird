@@ -42,7 +42,7 @@
 After you entered all required information to the config dialog click "Save & Close".
 The Adapter should now restart, and you are ready to go!
 
-# Access to the Snapshots of Motion and DoorBell
+## Access to the Snapshots of Motion and DoorBell
 
 Use the following URL to get the current snapshot:
 
