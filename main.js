@@ -148,21 +148,7 @@ class Doorbird extends utils.Adapter {
 		switch (comp[2]) {
 			case 'Restart':
 				this.log.debug('Trying to restart DoorBird Device..');
-				try {
-					const url = this.buildURL('restart');
-					const response = await Axios.get(url);
-
-					if (response.status === 200) {
-						this.log.debug('DoorBird Device is now restarting!!');
-						await this.setStateAsync(id, state, true);
-					} else if (response.status === 503) {
-						this.log.warn('DoorBird denied restart! (Device is busy and cannot restart now!)');
-					} else {
-						this.log.warn('DoorBird denied restart! (Statuscode: ' + response.status + ')');
-					}
-				} catch (error) {
-					this.log.warn('DoorBird denied restart: ' + error);
-				}
+				await this.restartDoorbirdAsync();
 				break;
 			case 'TakeSnapshot':
 				this.log.info('Trying to take snapshot..');
@@ -170,35 +156,10 @@ class Doorbird extends utils.Adapter {
 				break;
 			case 'Light':
 				this.log.info('Trying to turn on light..');
-				await this.turnOnLight();
+				await this.turnOnLightAsync();
 				break;
 			case 'Relays':
-				try {
-					const url =
-						'http://' +
-						this.config.birdip +
-						'/bha-api/open-door.cgi?http-user=' +
-						this.config.birduser +
-						'&http-password=' +
-						this.config.birdpw +
-						'&r=' +
-						comp[3];
-
-					const response = await Axios.get(url);
-
-					if (response.status === 200) {
-						this.log.debug('Relay ' + comp[3] + ' triggered successfully!');
-						await this.setStateAsync(id, state, true);
-					} else if (response.status === 204) {
-						this.log.warn('Could not trigger relay ' + comp[3] + '! (Insufficient permissions)');
-					} else {
-						this.log.warn(
-							'Could not trigger relay ' + comp[3] + '. (Got Statuscode ' + response.status + ')',
-						);
-					}
-				} catch (error) {
-					this.log.warn('Error in triggering Relay: ' + error);
-				}
+				await this.relaysAsync(comp[3]);
 				break;
 		}
 	}
@@ -803,7 +764,11 @@ class Doorbird extends utils.Adapter {
 		}, 60000);
 	}
 
-	async turnOnLight() {
+	/**
+	 * Turn on light
+	 * @async
+	 */
+	async turnOnLightAsync() {
 		try {
 			const url = this.buildURL('light-on');
 			const response = await Axios.get(url);
@@ -815,6 +780,58 @@ class Doorbird extends utils.Adapter {
 			}
 		} catch (error) {
 			this.log.warn('Error in triggering Light: ' + error);
+		}
+	}
+
+	/**
+	 * Restart Doorbird
+	 * @async
+	 */
+	async restartDoorbirdAsync() {
+		try {
+			const url = this.buildURL('restart');
+			const response = await Axios.get(url);
+
+			if (response.status === 200) {
+				this.log.debug('DoorBird Device is now restarting!!');
+			} else if (response.status === 503) {
+				this.log.warn('DoorBird denied restart! (Device is busy and cannot restart now!)');
+			} else {
+				this.log.warn('DoorBird denied restart! (Statuscode: ' + response.status + ')');
+			}
+		} catch (error) {
+			this.log.warn('DoorBird denied restart: ' + error);
+		}
+	}
+
+	/**
+	 * Trigger Relays
+	 * @async
+	 * @param {string} comp
+	 */
+	async relaysAsync(comp) {
+		try {
+			const url =
+				'http://' +
+				this.config.birdip +
+				'/bha-api/open-door.cgi?http-user=' +
+				this.config.birduser +
+				'&http-password=' +
+				this.config.birdpw +
+				'&r=' +
+				comp;
+
+			const response = await Axios.get(url);
+
+			if (response.status === 200) {
+				this.log.debug('Relay ' + comp + ' triggered successfully!');
+			} else if (response.status === 204) {
+				this.log.warn('Could not trigger relay ' + comp + '! (Insufficient permissions)');
+			} else {
+				this.log.warn('Could not trigger relay ' + comp + '. (Got Statuscode ' + response.status + ')');
+			}
+		} catch (error) {
+			this.log.warn('Error in triggering Relay: ' + error);
 		}
 	}
 
