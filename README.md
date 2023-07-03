@@ -24,6 +24,10 @@
 ![Stable](http://iobroker.live/badges/doorbird-stable.svg)
 ![Installed](http://iobroker.live/badges/doorbird-installed.svg)
 
+## What is Doorbird?
+
+DoorBird is a door intercom that functions both as a doorbell and security system. The product goes on the outside of a house, where a doorbell would typically be, and features a doorbell push button with a camera above.
+
 ## Configuration
 
 1. Enter the IP on which the Adapter should listen to Events from the Doorbird Device.
@@ -55,6 +59,16 @@ Exampble:
 ```
 http://192.168.0.2:8081/files/doorbird.0/Doorbell1_1.jpg
 ```
+
+## Compatible Devices
+
+| Device                           | Hardware version | Firmware version |
+| -------------------------------- | ---------------- | ---------------- |
+| DoorBird Video Door Station D10x | 1.00 and above   | 000099 and above |
+| DoorBird Video Door Station D20x | 1.00 and above   | 000099 and above |
+| DoorBird Video Door Station D21x | 1.00 and above   | 000108 and above |
+| BirdGuard B10x                   | 1.00 and above   | 000099 and above |
+| DoorBird Video Door Station D11x | 1.00 and above   | 000130 and above |
 
 ## Changelog
 
