@@ -1,5 +1,11 @@
 {
-	"doorbird adapter settings": "doorbird的适配器设置",
-	"option1": "选项1",
-	"option2": "选项2"
+    "(Click search Icon for automatic detection)": "（点击搜索图标自动检测）",
+    "Adapter IP": "",
+    "DoorBird Device IP": "DoorBird设备IP",
+    "Password": "密码",
+    "Press the RING Button on your DoorBird and wait a few seconds.": "按 DoorBird 上的 RING 按钮并等待几秒钟。",
+    "Username": "用户名",
+    "doorbird adapter settings": "doorbird的适配器设置",
+    "option1": "选项1",
+    "option2": "选项2"
 }

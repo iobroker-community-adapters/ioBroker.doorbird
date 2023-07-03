@@ -1,387 +1,419 @@
 {
-	"common": {
-		"name": "doorbird",
-		"version": "0.2.0",
-		"news": {
-			"0.2.0": {
-				"en": "Adapter has been moved into iobroker-community-adapters-area\nGithub actions and testing has been added\nstandard development tools have been added\ndependencies have been upgraded",
-				"de": "Adapter wurde in iobroker-community-adapter-area bewegt\nGithub-Aktionen und Tests wurden hinzugefügt\nstandard-entwicklungswerkzeuge wurden hinzugefügt\nabhängigkeiten wurden verbessert",
-				"ru": "Адаптер переехал в iobroker-community-adapters-area\nДобавлены действия Github и тестирование\nдобавлены стандартные инструменты разработки\nзависимости были обновлены",
-				"pt": "Adapter foi transferido para iobroker-community-adapters-area\nAcções e testes do Github foram adicionados\nferramentas de desenvolvimento padrão foram adicionadas\ndependências foram atualizadas",
-				"nl": "Adapter is verhuisd naar iobroker-community-apters-areaters\nGithub acties en testen zijn toegevoegd\nstandaard ontwikkelingsmiddelen zijn toegevoegd\nafhankelijkheid is geüpgradeerd",
-				"fr": "Adaptateur a été déplacé dans iobroker-community-adapters-area\nLes actions et les tests Github ont été ajoutés\ndes outils de développement standard ont été ajoutés\nles dépendances ont été améliorées",
-				"it": "L'adattatore è stato spostato in zona iobroker-community-adapters-\nAzioni Github e test sono stati aggiunti\nstrumenti di sviluppo standard sono stati aggiunti\nle dipendenze sono state aggiornate",
-				"es": "Adaptador ha sido trasladado a iobroker-community-adapters-area\nGithub acciones y pruebas se han añadido\nse han añadido instrumentos de desarrollo estándar\nse han mejorado las dependencias",
-				"pl": "Adapter został przeniesiony do iobroker-kommunity-areaa-reakcja\nDodano działania i testy\ndodano standardowe narzędzia rozwoju\nzależności zostały zmodernizowane",
-				"uk": "Переміщено перехід на iobroker-community-adapters-area\nДодано дії Github та тестування\nдодано стандартні інструменти розробки\nбуло оновлено залежності",
-				"zh-cn": "现已进入加勒比妓院。\n增加了白色行动和试验\n增加标准开发工具\n依赖性升级"
-			},
-			"0.2.0-alpha.0": {
-				"en": "Adapter has been moved into iobroker-community-adapters-area\nGithub actions and testing has been added\nstandard development tools have been added\ndependencies have been upgraded",
-				"de": "Adapter wurde in iobroker-community-adapter-area bewegt\nGithub-Aktionen und Tests wurden hinzugefügt\nstandard-entwicklungswerkzeuge wurden hinzugefügt\nabhängigkeiten wurden verbessert",
-				"ru": "Адаптер переехал в iobroker-community-adapters-area\nДобавлены действия Github и тестирование\nдобавлены стандартные инструменты разработки\nзависимости были обновлены",
-				"pt": "Adapter foi transferido para iobroker-community-adapters-area\nAcções e testes do Github foram adicionados\nferramentas de desenvolvimento padrão foram adicionadas\ndependências foram atualizadas",
-				"nl": "Adapter is verhuisd naar iobroker-community-apters-areaters\nGithub acties en testen zijn toegevoegd\nstandaard ontwikkelingsmiddelen zijn toegevoegd\nafhankelijkheid is geüpgradeerd",
-				"fr": "Adaptateur a été déplacé dans iobroker-community-adapters-area\nLes actions et les tests Github ont été ajoutés\ndes outils de développement standard ont été ajoutés\nles dépendances ont été améliorées",
-				"it": "L'adattatore è stato spostato in zona iobroker-community-adapters-\nAzioni Github e test sono stati aggiunti\nstrumenti di sviluppo standard sono stati aggiunti\nle dipendenze sono state aggiornate",
-				"es": "Adaptador ha sido trasladado a iobroker-community-adapters-area\nGithub acciones y pruebas se han añadido\nse han añadido instrumentos de desarrollo estándar\nse han mejorado las dependencias",
-				"pl": "Adapter został przeniesiony do iobroker-kommunity-areaa-reakcja\nDodano działania i testy\ndodano standardowe narzędzia rozwoju\nzależności zostały zmodernizowane",
-				"uk": "Переміщено перехід на iobroker-community-adapters-area\nДодано дії Github та тестування\nдодано стандартні інструменти розробки\nбуло оновлено залежності",
-				"zh-cn": "现已进入加勒比妓院。\n增加了白色行动和试验\n增加标准开发工具\n依赖性升级"
-			},
-			"0.1.7": {
-				"en": "Fixed js-controller 5 issue",
-				"de": "Problem mit js-controller 5 behoben"
-			},
-			"0.1.5": {
-				"en": "Just some changes under the hood",
-				"de": "Nur ein paar Änderungen unter der Haube",
-				"ru": "Просто некоторые изменения под капотом",
-				"pt": "Apenas algumas mudanças sob o capô",
-				"nl": "Slechts enkele veranderingen onder de motorkap",
-				"fr": "Juste quelques changements sous le capot",
-				"it": "Solo alcuni cambiamenti sotto il cofano",
-				"es": "Solo algunos cambios bajo el capó",
-				"pl": "Tylko niektóre zmiany pod maską"
-			},
-			"0.1.2": {
-				"en": "Initial release to the ioBroker repo",
-				"de": "Erstveröffentlichung im ioBroker Repo",
-				"ru": "Первоначальный выпуск в репозиторий ioBroker",
-				"pt": "Lançamento inicial no repositório ioBroker",
-				"nl": "Initiële vrijgave voor de repro van ioBroker",
-				"fr": "Version initiale du référentiel ioBroker",
-				"it": "Versione iniziale del repository ioBroker",
-				"es": "Versión inicial para el repositorio ioBroker",
-				"pl": "Pierwsze wydanie do repozytu ioBroker"
-			},
-			"0.1.1": {
-				"en": "Initial release to the ioBroker repo",
-				"de": "Erstveröffentlichung im ioBroker Repo",
-				"ru": "Первоначальный выпуск в репозиторий ioBroker",
-				"pt": "Lançamento inicial no repositório ioBroker",
-				"nl": "Initiële vrijgave voor de repro van ioBroker",
-				"fr": "Version initiale du référentiel ioBroker",
-				"it": "Versione iniziale del repository ioBroker",
-				"es": "Versión inicial para el repositorio ioBroker",
-				"pl": "Pierwsze wydanie do repozytu ioBroker"
-			},
-			"0.1.0": {
-				"en": "Initial release to the ioBroker repo",
-				"de": "Erstveröffentlichung im ioBroker Repo",
-				"ru": "Первоначальный выпуск в репозиторий ioBroker",
-				"pt": "Lançamento inicial no repositório ioBroker",
-				"nl": "Initiële vrijgave voor de repro van ioBroker",
-				"fr": "Version initiale du référentiel ioBroker",
-				"it": "Versione iniziale del repository ioBroker",
-				"es": "Versión inicial para el repositorio ioBroker",
-				"pl": "Pierwsze wydanie do repozytu ioBroker"
-			}
-		},
-		"titleLang": {
-			"en": "DoorBird",
-			"de": "Türvogel",
-			"ru": "ДверьПтица",
-			"pt": "DoorBird",
-			"nl": "DoorBird",
-			"fr": "PorteOiseau",
-			"it": "Uccello della porta",
-			"es": "PuertaPájaro",
-			"pl": "DrzwiPtak",
-			"zh-cn": "门鸟"
-		},
-		"desc": {
-			"en": "Connects DoorBird doorbells to ioBroker",
-			"de": "Verbindet DoorBird-Türklingeln mit ioBroker",
-			"ru": "Подключает дверные звонки DoorBird к ioBroker",
-			"pt": "Conecta as campainhas DoorBird ao ioBroker",
-			"nl": "Verbindt DoorBird deurbellen met ioBroker",
-			"fr": "Connecte les sonnettes DoorBird à ioBroker",
-			"it": "Collega i campanelli DoorBird a ioBroker",
-			"es": "Conecta los timbres DoorBird a ioBroker",
-			"pl": "Łączy dzwonki DoorBird z ioBroker",
-			"zh-cn": "将 DoorBird 门铃连接到 ioBroker"
-		},
-		"authors": ["BuZZy1337 <buzzy1337@outlook.de>", "Schmakus <schmakus@gmail.com>"],
-		"keywords": ["doorbird", "VIS", "GUI"],
-		"license": "MIT",
-		"platform": "Javascript/Node.js",
-		"main": "main.js",
-		"icon": "doorbird.png",
-		"materialize": true,
-		"messagebox": true,
-		"subscribe": "messagebox",
-		"enabled": true,
-		"extIcon": "https://raw.githubusercontent.com/iobroker-community-adapters/ioBroker.doorbird/master/admin/doorbird.png",
-		"readme": "https://github.com/iobroker-community-adapters/ioBroker.doorbird/blob/master/README.md",
-		"loglevel": "info",
-		"mode": "daemon",
-		"type": "iot-systems",
-		"compact": true,
-		"connectionType": "local",
-		"dataSource": "push",
-		"messages": [
-			{
-				"condition": {
-					"operand": "and",
-					"rules": ["oldVersion<0.3.0", "newVersion>=0.3.0"]
-				},
-				"title": {
-					"en": "Breaking change by usage of snapshots",
-					"de": "Änderung durch Verwendung von Snapshots",
-					"ru": "Перерыв изменения с помощью снимков",
-					"pt": "Quebrando a mudança pelo uso de instantâneos",
-					"nl": "Verandering door het gebruik van foto's",
-					"fr": "Changement de rupture par utilisation de snapshots",
-					"it": "Cambiamento di rottura mediante l'utilizzo di snapshot",
-					"es": "Cambio de ruptura por el uso de instantáneas",
-					"pl": "Zmiana strzałów poprzez użycie strzałów",
-					"uk": "Зміна розривів за допомогою знімків",
-					"zh-cn": "D. 使用绑架器的断裂变化"
-				},
-				"text": {
-					"en": "Storage location of the snapshots has been moved to the ioBroker files!",
-					"de": "Speicherort der Snapshots wurde in die ioBroker Dateien verschoben!",
-					"ru": "Место хранения снимков было перемещено в файлы ioBroker!",
-					"pt": "Localização de armazenamento dos instantâneos foi movido para os arquivos ioBroker!",
-					"nl": "De locatie van de foto's is verplaatst naar de ioBroker bestanden!",
-					"fr": "L'emplacement de stockage des snapshots a été déplacé vers les fichiers ioBroker!",
-					"it": "La posizione di archiviazione delle snapshot è stata spostata nei file ioBroker!",
-					"es": "Ubicación de almacenamiento de las instantáneas se ha trasladado a los archivos ioBroker!",
-					"pl": "Lokalizacja postrzałów została przeniesiona do plików ioBroker!",
-					"uk": "Місце зберігання знімків було перенесено на файли ioBroker!",
-					"zh-cn": "偷窃者地点已移到OioBroker案!"
-				},
-				"level": "warn",
-				"buttons": ["agree", "cancel"]
-			}
-		],
-		"dependencies": [
-			{
-				"js-controller": ">=3.3.22"
-			}
-		],
-		"globalDependencies": [
-			{
-				"admin": ">=5.1.13"
-			}
-		]
-	},
-	"native": {
-		"adapterport": 8100,
-		"adapterAddress": "",
-		"birdip": "",
-		"birdid": "",
-		"birduser": "",
-		"birdpw": ""
-	},
-	"objects": [],
-	"instanceObjects": [
-		{
-			"_id": "Restart",
-			"type": "state",
-			"common": {
-				"name": {
-					"en": "Restart DoorBird",
-					"de": "Neustart DoorBird",
-					"ru": "Рестарт DoorBird",
-					"pt": "Reinicie DoorBird",
-					"nl": "Herstart DoorBird",
-					"fr": "Restart DoorBird",
-					"it": "Riavviare DoorBird",
-					"es": "Restart DoorBird",
-					"pl": "Restart DoorBird",
-					"uk": "Решта DoorBird",
-					"zh-cn": "恢复原状 DoorBird"
-				},
-				"type": "boolean",
-				"role": "button",
-				"read": false,
-				"write": true
-			},
-			"native": {}
-		},
-		{
-			"_id": "Doorbell",
-			"type": "channel",
-			"common": {
-				"name": {
-					"en": "Doorbell",
-					"de": "Türklingel",
-					"ru": "Дверной звонок",
-					"pt": "Campainha de porta",
-					"nl": "Deur",
-					"fr": "Doorbell",
-					"it": "Campana porta",
-					"es": "Doorbell",
-					"pl": "Doorbell",
-					"uk": "Рушники",
-					"zh-cn": "Doorbell"
-				}
-			},
-			"native": {}
-		},
-		{
-			"_id": "Motion",
-			"type": "channel",
-			"common": {
-				"name": {
-					"en": "Motion detection",
-					"de": "Bewegungserkennung",
-					"ru": "Обнаружение движения",
-					"pt": "Detecção de movimento",
-					"nl": "Motie detectie",
-					"fr": "Détection des mouvements",
-					"it": "Rilevamento del movimento",
-					"es": "Detección de mociones",
-					"pl": "Wykrywanie",
-					"uk": "Визначення руху",
-					"zh-cn": "B. 侦查"
-				}
-			},
-			"native": {}
-		},
-		{
-			"_id": "Motion.trigger",
-			"type": "state",
-			"common": {
-				"role": "indicator",
-				"name": {
-					"en": "Motion detected",
-					"de": "Bewegung erkannt",
-					"ru": "Движение обнаружено",
-					"pt": "Movimento detectado",
-					"nl": "Motie ontdekt",
-					"fr": "Motion détectée",
-					"it": "Rilevamento del movimento",
-					"es": "Moción detectada",
-					"pl": "Wykryć",
-					"uk": "Виявлено рух",
-					"zh-cn": "目 录"
-				},
-				"type": "boolean",
-				"read": true,
-				"write": false,
-				"def": false
-			},
-			"native": {}
-		},
-		{
-			"_id": "",
-			"type": "meta",
-			"common": {
-				"name": {
-					"en": "JPG Files",
-					"de": "JPG Dateien",
-					"ru": "ДЖП Файл",
-					"pt": "JPG Arquivo",
-					"nl": "JPG Veld",
-					"fr": "JPG Fichier",
-					"it": "JPG File",
-					"es": "JPG Archivo",
-					"pl": "JPG File",
-					"uk": "JPG Головна",
-					"zh-cn": "J. 导 言 导 言"
-				},
-				"type": "meta.user"
-			},
-			"native": {}
-		},
-		{
-			"_id": "TakeSnapshot",
-			"type": "state",
-			"common": {
-				"name": {
-					"en": "Get Snapshot",
-					"de": "Schnappschuss holen",
-					"ru": "Получить снимок",
-					"pt": "Instantâneo",
-					"nl": "Haal Snapshot",
-					"fr": "Snapshot",
-					"it": "Indossando una cinghia",
-					"es": "Captura",
-					"pl": "Get Snapshot (ang.)",
-					"uk": "Отримати Snapshot",
-					"zh-cn": "Get Steshot"
-				},
-				"type": "boolean",
-				"role": "button",
-				"read": false,
-				"write": true
-			},
-			"native": {}
-		},
-		{
-			"_id": "info",
-			"type": "channel",
-			"common": {
-				"name": "Information"
-			},
-			"native": {}
-		},
-		{
-			"_id": "info.connection",
-			"type": "state",
-			"common": {
-				"role": "indicator.connected",
-				"name": {
-					"en": "Connected to DoorBird Device",
-					"de": "Mit DoorBird verbunden",
-					"ru": "Подключен к устройству DoorBird",
-					"pt": "Conectado ao dispositivo DoorBird",
-					"nl": "Verbinding met Device",
-					"fr": "Connecté à DoorBird Device",
-					"it": "Collegato al dispositivo DoorBird",
-					"es": "Conectado al dispositivo DoorBird",
-					"pl": "Oficjalna strona DoorBird Device",
-					"uk": "Підключається до дверних приладів",
-					"zh-cn": "受托人"
-				},
-				"type": "boolean",
-				"read": true,
-				"write": false,
-				"def": false
-			},
-			"native": {}
-		},
-		{
-			"_id": "info.firmware",
-			"type": "state",
-			"common": {
-				"role": "",
-				"name": "DoorBird Firmware version",
-				"type": "string",
-				"read": true,
-				"write": false,
-				"def": ""
-			},
-			"native": {}
-		},
-		{
-			"_id": "info.build",
-			"type": "state",
-			"common": {
-				"role": "",
-				"name": "DoorBird BuildNumber",
-				"type": "string",
-				"read": true,
-				"write": false,
-				"def": ""
-			},
-			"native": {}
-		},
-		{
-			"_id": "info.type",
-			"type": "state",
-			"common": {
-				"role": "",
-				"name": "DoorBird Type",
-				"type": "string",
-				"read": true,
-				"write": false,
-				"def": ""
-			},
-			"native": {}
-		}
-	]
+    "common": {
+        "name": "doorbird",
+        "version": "0.2.0",
+        "news": {
+            "0.2.0": {
+                "en": "Adapter has been moved into iobroker-community-adapters-area\nGithub actions and testing has been added\nstandard development tools have been added\ndependencies have been upgraded",
+                "de": "Adapter wurde in iobroker-community-adapter-area bewegt\nGithub-Aktionen und Tests wurden hinzugefügt\nstandard-entwicklungswerkzeuge wurden hinzugefügt\nabhängigkeiten wurden verbessert",
+                "ru": "Адаптер переехал в iobroker-community-adapters-area\nДобавлены действия Github и тестирование\nдобавлены стандартные инструменты разработки\nзависимости были обновлены",
+                "pt": "Adapter foi transferido para iobroker-community-adapters-area\nAcções e testes do Github foram adicionados\nferramentas de desenvolvimento padrão foram adicionadas\ndependências foram atualizadas",
+                "nl": "Adapter is verhuisd naar iobroker-community-apters-areaters\nGithub acties en testen zijn toegevoegd\nstandaard ontwikkelingsmiddelen zijn toegevoegd\nafhankelijkheid is geüpgradeerd",
+                "fr": "Adaptateur a été déplacé dans iobroker-community-adapters-area\nLes actions et les tests Github ont été ajoutés\ndes outils de développement standard ont été ajoutés\nles dépendances ont été améliorées",
+                "it": "L'adattatore è stato spostato in zona iobroker-community-adapters-\nAzioni Github e test sono stati aggiunti\nstrumenti di sviluppo standard sono stati aggiunti\nle dipendenze sono state aggiornate",
+                "es": "Adaptador ha sido trasladado a iobroker-community-adapters-area\nGithub acciones y pruebas se han añadido\nse han añadido instrumentos de desarrollo estándar\nse han mejorado las dependencias",
+                "pl": "Adapter został przeniesiony do iobroker-kommunity-areaa-reakcja\nDodano działania i testy\ndodano standardowe narzędzia rozwoju\nzależności zostały zmodernizowane",
+                "uk": "Переміщено перехід на iobroker-community-adapters-area\nДодано дії Github та тестування\nдодано стандартні інструменти розробки\nбуло оновлено залежності",
+                "zh-cn": "现已进入加勒比妓院。\n增加了白色行动和试验\n增加标准开发工具\n依赖性升级"
+            },
+            "0.2.0-alpha.0": {
+                "en": "Adapter has been moved into iobroker-community-adapters-area\nGithub actions and testing has been added\nstandard development tools have been added\ndependencies have been upgraded",
+                "de": "Adapter wurde in iobroker-community-adapter-area bewegt\nGithub-Aktionen und Tests wurden hinzugefügt\nstandard-entwicklungswerkzeuge wurden hinzugefügt\nabhängigkeiten wurden verbessert",
+                "ru": "Адаптер переехал в iobroker-community-adapters-area\nДобавлены действия Github и тестирование\nдобавлены стандартные инструменты разработки\nзависимости были обновлены",
+                "pt": "Adapter foi transferido para iobroker-community-adapters-area\nAcções e testes do Github foram adicionados\nferramentas de desenvolvimento padrão foram adicionadas\ndependências foram atualizadas",
+                "nl": "Adapter is verhuisd naar iobroker-community-apters-areaters\nGithub acties en testen zijn toegevoegd\nstandaard ontwikkelingsmiddelen zijn toegevoegd\nafhankelijkheid is geüpgradeerd",
+                "fr": "Adaptateur a été déplacé dans iobroker-community-adapters-area\nLes actions et les tests Github ont été ajoutés\ndes outils de développement standard ont été ajoutés\nles dépendances ont été améliorées",
+                "it": "L'adattatore è stato spostato in zona iobroker-community-adapters-\nAzioni Github e test sono stati aggiunti\nstrumenti di sviluppo standard sono stati aggiunti\nle dipendenze sono state aggiornate",
+                "es": "Adaptador ha sido trasladado a iobroker-community-adapters-area\nGithub acciones y pruebas se han añadido\nse han añadido instrumentos de desarrollo estándar\nse han mejorado las dependencias",
+                "pl": "Adapter został przeniesiony do iobroker-kommunity-areaa-reakcja\nDodano działania i testy\ndodano standardowe narzędzia rozwoju\nzależności zostały zmodernizowane",
+                "uk": "Переміщено перехід на iobroker-community-adapters-area\nДодано дії Github та тестування\nдодано стандартні інструменти розробки\nбуло оновлено залежності",
+                "zh-cn": "现已进入加勒比妓院。\n增加了白色行动和试验\n增加标准开发工具\n依赖性升级"
+            },
+            "0.1.7": {
+                "en": "Fixed js-controller 5 issue",
+                "de": "Problem mit js-controller 5 behoben",
+                "ru": "Исправлена ​​проблема с js-контроллером 5.",
+                "pt": "Problema corrigido do js-controller 5",
+                "nl": "Probleem met js-controller 5 opgelost",
+                "fr": "Correction du problème js-controller 5",
+                "it": "Risolto il problema del controller js 5",
+                "es": "Solucionado el problema del controlador js 5",
+                "pl": "Naprawiono problem z kontrolerem js 5",
+                "uk": "Виправлена ​​проблема js-контролера 5",
+                "zh-cn": "修复了 js-controller 5 问题"
+            },
+            "0.1.5": {
+                "en": "Just some changes under the hood",
+                "de": "Nur ein paar Änderungen unter der Haube",
+                "ru": "Просто некоторые изменения под капотом",
+                "pt": "Apenas algumas mudanças sob o capô",
+                "nl": "Slechts enkele veranderingen onder de motorkap",
+                "fr": "Juste quelques changements sous le capot",
+                "it": "Solo alcuni cambiamenti sotto il cofano",
+                "es": "Solo algunos cambios bajo el capó",
+                "pl": "Tylko niektóre zmiany pod maską",
+                "uk": "Просто деякі зміни під капотом",
+                "zh-cn": "只是一些底层的改变"
+            },
+            "0.1.2": {
+                "en": "Initial release to the ioBroker repo",
+                "de": "Erstveröffentlichung im ioBroker Repo",
+                "ru": "Первоначальный выпуск в репозиторий ioBroker",
+                "pt": "Lançamento inicial no repositório ioBroker",
+                "nl": "Initiële vrijgave voor de repro van ioBroker",
+                "fr": "Version initiale du référentiel ioBroker",
+                "it": "Versione iniziale del repository ioBroker",
+                "es": "Versión inicial para el repositorio ioBroker",
+                "pl": "Pierwsze wydanie do repozytu ioBroker",
+                "uk": "Початковий випуск для репозиторію ioBroker",
+                "zh-cn": "ioBroker 存储库的初始版本"
+            },
+            "0.1.1": {
+                "en": "Initial release to the ioBroker repo",
+                "de": "Erstveröffentlichung im ioBroker Repo",
+                "ru": "Первоначальный выпуск в репозиторий ioBroker",
+                "pt": "Lançamento inicial no repositório ioBroker",
+                "nl": "Initiële vrijgave voor de repro van ioBroker",
+                "fr": "Version initiale du référentiel ioBroker",
+                "it": "Versione iniziale del repository ioBroker",
+                "es": "Versión inicial para el repositorio ioBroker",
+                "pl": "Pierwsze wydanie do repozytu ioBroker",
+                "uk": "Початковий випуск для репозиторію ioBroker",
+                "zh-cn": "ioBroker 存储库的初始版本"
+            },
+            "0.1.0": {
+                "en": "Initial release to the ioBroker repo",
+                "de": "Erstveröffentlichung im ioBroker Repo",
+                "ru": "Первоначальный выпуск в репозиторий ioBroker",
+                "pt": "Lançamento inicial no repositório ioBroker",
+                "nl": "Initiële vrijgave voor de repro van ioBroker",
+                "fr": "Version initiale du référentiel ioBroker",
+                "it": "Versione iniziale del repository ioBroker",
+                "es": "Versión inicial para el repositorio ioBroker",
+                "pl": "Pierwsze wydanie do repozytu ioBroker",
+                "uk": "Початковий випуск для репозиторію ioBroker",
+                "zh-cn": "ioBroker 存储库的初始版本"
+            }
+        },
+        "titleLang": {
+            "en": "DoorBird",
+            "de": "Türvogel",
+            "ru": "ДверьПтица",
+            "pt": "DoorBird",
+            "nl": "DoorBird",
+            "fr": "PorteOiseau",
+            "it": "Uccello della porta",
+            "es": "PuertaPájaro",
+            "pl": "DrzwiPtak",
+            "zh-cn": "门鸟",
+            "uk": "DoorBird"
+        },
+        "desc": {
+            "en": "Connects DoorBird doorbells to ioBroker",
+            "de": "Verbindet DoorBird-Türklingeln mit ioBroker",
+            "ru": "Подключает дверные звонки DoorBird к ioBroker",
+            "pt": "Conecta as campainhas DoorBird ao ioBroker",
+            "nl": "Verbindt DoorBird deurbellen met ioBroker",
+            "fr": "Connecte les sonnettes DoorBird à ioBroker",
+            "it": "Collega i campanelli DoorBird a ioBroker",
+            "es": "Conecta los timbres DoorBird a ioBroker",
+            "pl": "Łączy dzwonki DoorBird z ioBroker",
+            "zh-cn": "将 DoorBird 门铃连接到 ioBroker",
+            "uk": "Підключає дверні дзвінки DoorBird до ioBroker"
+        },
+        "authors": [
+            "BuZZy1337 <buzzy1337@outlook.de>",
+            "Schmakus <schmakus@gmail.com>"
+        ],
+        "keywords": [
+            "doorbird",
+            "VIS",
+            "GUI"
+        ],
+        "license": "MIT",
+        "platform": "Javascript/Node.js",
+        "main": "main.js",
+        "icon": "doorbird.png",
+        "materialize": true,
+        "messagebox": true,
+        "subscribe": "messagebox",
+        "enabled": true,
+        "extIcon": "https://raw.githubusercontent.com/iobroker-community-adapters/ioBroker.doorbird/master/admin/doorbird.png",
+        "readme": "https://github.com/iobroker-community-adapters/ioBroker.doorbird/blob/master/README.md",
+        "loglevel": "info",
+        "mode": "daemon",
+        "type": "iot-systems",
+        "compact": true,
+        "connectionType": "local",
+        "dataSource": "push",
+        "messages": [
+            {
+                "condition": {
+                    "operand": "and",
+                    "rules": [
+                        "oldVersion<0.3.0",
+                        "newVersion>=0.3.0"
+                    ]
+                },
+                "title": {
+                    "en": "Breaking change by usage of snapshots",
+                    "de": "Änderung durch Verwendung von Snapshots",
+                    "ru": "Перерыв изменения с помощью снимков",
+                    "pt": "Quebrando a mudança pelo uso de instantâneos",
+                    "nl": "Verandering door het gebruik van foto's",
+                    "fr": "Changement de rupture par utilisation de snapshots",
+                    "it": "Cambiamento di rottura mediante l'utilizzo di snapshot",
+                    "es": "Cambio de ruptura por el uso de instantáneas",
+                    "pl": "Zmiana strzałów poprzez użycie strzałów",
+                    "uk": "Зміна розривів за допомогою знімків",
+                    "zh-cn": "D. 使用绑架器的断裂变化"
+                },
+                "text": {
+                    "en": "Storage location of the snapshots has been moved to the ioBroker files!",
+                    "de": "Speicherort der Snapshots wurde in die ioBroker Dateien verschoben!",
+                    "ru": "Место хранения снимков было перемещено в файлы ioBroker!",
+                    "pt": "Localização de armazenamento dos instantâneos foi movido para os arquivos ioBroker!",
+                    "nl": "De locatie van de foto's is verplaatst naar de ioBroker bestanden!",
+                    "fr": "L'emplacement de stockage des snapshots a été déplacé vers les fichiers ioBroker!",
+                    "it": "La posizione di archiviazione delle snapshot è stata spostata nei file ioBroker!",
+                    "es": "Ubicación de almacenamiento de las instantáneas se ha trasladado a los archivos ioBroker!",
+                    "pl": "Lokalizacja postrzałów została przeniesiona do plików ioBroker!",
+                    "uk": "Місце зберігання знімків було перенесено на файли ioBroker!",
+                    "zh-cn": "偷窃者地点已移到OioBroker案!"
+                },
+                "level": "warn",
+                "buttons": [
+                    "agree",
+                    "cancel"
+                ]
+            }
+        ],
+        "dependencies": [
+            {
+                "js-controller": ">=3.3.22"
+            }
+        ],
+        "globalDependencies": [
+            {
+                "admin": ">=5.1.13"
+            }
+        ]
+    },
+    "native": {
+        "adapterport": 8100,
+        "adapterAddress": "",
+        "birdip": "",
+        "birdid": "",
+        "birduser": "",
+        "birdpw": ""
+    },
+    "objects": [],
+    "instanceObjects": [
+        {
+            "_id": "Restart",
+            "type": "state",
+            "common": {
+                "name": {
+                    "en": "Restart DoorBird",
+                    "de": "Neustart DoorBird",
+                    "ru": "Рестарт DoorBird",
+                    "pt": "Reinicie DoorBird",
+                    "nl": "Herstart DoorBird",
+                    "fr": "Restart DoorBird",
+                    "it": "Riavviare DoorBird",
+                    "es": "Restart DoorBird",
+                    "pl": "Restart DoorBird",
+                    "uk": "Решта DoorBird",
+                    "zh-cn": "恢复原状 DoorBird"
+                },
+                "type": "boolean",
+                "role": "button",
+                "read": false,
+                "write": true
+            },
+            "native": {}
+        },
+        {
+            "_id": "Doorbell",
+            "type": "channel",
+            "common": {
+                "name": {
+                    "en": "Doorbell",
+                    "de": "Türklingel",
+                    "ru": "Дверной звонок",
+                    "pt": "Campainha de porta",
+                    "nl": "Deur",
+                    "fr": "Doorbell",
+                    "it": "Campana porta",
+                    "es": "Doorbell",
+                    "pl": "Doorbell",
+                    "uk": "Рушники",
+                    "zh-cn": "Doorbell"
+                }
+            },
+            "native": {}
+        },
+        {
+            "_id": "Motion",
+            "type": "channel",
+            "common": {
+                "name": {
+                    "en": "Motion detection",
+                    "de": "Bewegungserkennung",
+                    "ru": "Обнаружение движения",
+                    "pt": "Detecção de movimento",
+                    "nl": "Motie detectie",
+                    "fr": "Détection des mouvements",
+                    "it": "Rilevamento del movimento",
+                    "es": "Detección de mociones",
+                    "pl": "Wykrywanie",
+                    "uk": "Визначення руху",
+                    "zh-cn": "B. 侦查"
+                }
+            },
+            "native": {}
+        },
+        {
+            "_id": "Motion.trigger",
+            "type": "state",
+            "common": {
+                "role": "indicator",
+                "name": {
+                    "en": "Motion detected",
+                    "de": "Bewegung erkannt",
+                    "ru": "Движение обнаружено",
+                    "pt": "Movimento detectado",
+                    "nl": "Motie ontdekt",
+                    "fr": "Motion détectée",
+                    "it": "Rilevamento del movimento",
+                    "es": "Moción detectada",
+                    "pl": "Wykryć",
+                    "uk": "Виявлено рух",
+                    "zh-cn": "目 录"
+                },
+                "type": "boolean",
+                "read": true,
+                "write": false,
+                "def": false
+            },
+            "native": {}
+        },
+        {
+            "_id": "",
+            "type": "meta",
+            "common": {
+                "name": {
+                    "en": "JPG Files",
+                    "de": "JPG Dateien",
+                    "ru": "ДЖП Файл",
+                    "pt": "JPG Arquivo",
+                    "nl": "JPG Veld",
+                    "fr": "JPG Fichier",
+                    "it": "JPG File",
+                    "es": "JPG Archivo",
+                    "pl": "JPG File",
+                    "uk": "JPG Головна",
+                    "zh-cn": "J. 导 言 导 言"
+                },
+                "type": "meta.user"
+            },
+            "native": {}
+        },
+        {
+            "_id": "TakeSnapshot",
+            "type": "state",
+            "common": {
+                "name": {
+                    "en": "Get Snapshot",
+                    "de": "Schnappschuss holen",
+                    "ru": "Получить снимок",
+                    "pt": "Instantâneo",
+                    "nl": "Haal Snapshot",
+                    "fr": "Snapshot",
+                    "it": "Indossando una cinghia",
+                    "es": "Captura",
+                    "pl": "Get Snapshot (ang.)",
+                    "uk": "Отримати Snapshot",
+                    "zh-cn": "Get Steshot"
+                },
+                "type": "boolean",
+                "role": "button",
+                "read": false,
+                "write": true
+            },
+            "native": {}
+        },
+        {
+            "_id": "info",
+            "type": "channel",
+            "common": {
+                "name": "Information"
+            },
+            "native": {}
+        },
+        {
+            "_id": "info.connection",
+            "type": "state",
+            "common": {
+                "role": "indicator.connected",
+                "name": {
+                    "en": "Connected to DoorBird Device",
+                    "de": "Mit DoorBird verbunden",
+                    "ru": "Подключен к устройству DoorBird",
+                    "pt": "Conectado ao dispositivo DoorBird",
+                    "nl": "Verbinding met Device",
+                    "fr": "Connecté à DoorBird Device",
+                    "it": "Collegato al dispositivo DoorBird",
+                    "es": "Conectado al dispositivo DoorBird",
+                    "pl": "Oficjalna strona DoorBird Device",
+                    "uk": "Підключається до дверних приладів",
+                    "zh-cn": "受托人"
+                },
+                "type": "boolean",
+                "read": true,
+                "write": false,
+                "def": false
+            },
+            "native": {}
+        },
+        {
+            "_id": "info.firmware",
+            "type": "state",
+            "common": {
+                "role": "",
+                "name": "DoorBird Firmware version",
+                "type": "string",
+                "read": true,
+                "write": false,
+                "def": ""
+            },
+            "native": {}
+        },
+        {
+            "_id": "info.build",
+            "type": "state",
+            "common": {
+                "role": "",
+                "name": "DoorBird BuildNumber",
+                "type": "string",
+                "read": true,
+                "write": false,
+                "def": ""
+            },
+            "native": {}
+        },
+        {
+            "_id": "info.type",
+            "type": "state",
+            "common": {
+                "role": "",
+                "name": "DoorBird Type",
+                "type": "string",
+                "read": true,
+                "write": false,
+                "def": ""
+            },
+            "native": {}
+        }
+    ]
 }

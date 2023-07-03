@@ -1,5 +1,11 @@
 {
-	"doorbird adapter settings": "Configurações do adaptador para doorbird",
-	"option1": "Opção 1",
-	"option2": "opção 2"
+    "(Click search Icon for automatic detection)": "(Clique no ícone de pesquisa para detecção automática)",
+    "Adapter IP": "IP do adaptador",
+    "DoorBird Device IP": "IP do dispositivo DoorBird",
+    "Password": "Senha",
+    "Press the RING Button on your DoorBird and wait a few seconds.": "Pressione o botão RING no seu DoorBird e aguarde alguns segundos.",
+    "Username": "Nome de usuário",
+    "doorbird adapter settings": "Configurações do adaptador para doorbird",
+    "option1": "Opção 1",
+    "option2": "opção 2"
 }
