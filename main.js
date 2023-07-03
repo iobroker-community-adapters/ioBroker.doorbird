@@ -87,7 +87,7 @@ class Doorbird extends utils.Adapter {
 								this.log.debug('Received Motion-alert from Doorbird!');
 								await Promise.all([
 									this.setStateAsync('Motion.trigger', true, true),
-									this.downloadFileAsync(this.buildURL('image'), 'Motion'),
+									this.downloadFileAsync('Motion'),
 								]);
 
 								this.setTimeout(async () => {
@@ -99,7 +99,7 @@ class Doorbird extends utils.Adapter {
 								this.log.debug('Received Ring-alert (ID: ' + id + ') from Doorbird!');
 								await Promise.all([
 									this.setStateAsync('Doorbell.' + id + '.trigger', true, true),
-									this.downloadFileAsync(this.buildURL('image'), `Doorbell_${id}`),
+									this.downloadFileAsync(`Doorbell${id}`),
 								]);
 
 								this.setTimeout(async () => {
@@ -166,7 +166,7 @@ class Doorbird extends utils.Adapter {
 				break;
 			case 'TakeSnapshot':
 				this.log.info('Trying to take snapshot..');
-				this.downloadFileAsync(this.buildURL('image'), 'Motion');
+				this.downloadFileAsync('TakeSnapshot');
 				break;
 			case 'Relays':
 				try {
@@ -802,11 +802,11 @@ class Doorbird extends utils.Adapter {
 	/**
 	 * Download File from Doorbird
 	 * @async
-	 * @param {string} url
 	 * @param {string} cmd
 	 */
-	async downloadFileAsync(url, cmd) {
+	async downloadFileAsync(cmd) {
 		try {
+			const url = this.buildURL('image');
 			const response = await Axios.get(url, { responseType: 'stream' });
 			const chunks = [];
 
@@ -816,7 +816,7 @@ class Doorbird extends utils.Adapter {
 
 			response.data.on('end', async () => {
 				const fileData = Buffer.concat(chunks);
-				await this.writeFileAsync(`${this.namespace}.Snapshots`, `${cmd}_current.jpg`, fileData);
+				await this.writeFileAsync(this.namespace, `${cmd}_1.jpg`, fileData);
 				this.log.debug('Snapshot saved successfully!');
 			});
 		} catch (error) {

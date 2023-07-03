@@ -267,7 +267,7 @@
 			"native": {}
 		},
 		{
-			"_id": "Snapshots",
+			"_id": "",
 			"type": "meta",
 			"common": {
 				"name": {
@@ -283,8 +283,7 @@
 					"uk": "JPG Головна",
 					"zh-cn": "J. 导 言 导 言"
 				},
-				"type": "meta.user",
-				"desc": "Access Snapshots via ioBroker Files"
+				"type": "meta.user"
 			},
 			"native": {}
 		},
