@@ -166,7 +166,11 @@ class Doorbird extends utils.Adapter {
 				break;
 			case 'TakeSnapshot':
 				this.log.info('Trying to take snapshot..');
-				this.downloadFileAsync('TakeSnapshot');
+				await this.downloadFileAsync('TakeSnapshot');
+				break;
+			case 'Light':
+				this.log.info('Trying to turn on light..');
+				await this.turnOnLight();
 				break;
 			case 'Relays':
 				try {
@@ -225,7 +229,7 @@ class Doorbird extends utils.Adapter {
 
 	/**
 	 * Generate URL
-	 * @param {'restart' | 'schedule' | 'info' | 'favorites' | 'image'} command
+	 * @param {'restart' | 'schedule' | 'info' | 'favorites' | 'image' | 'light-on'} command
 	 */
 	buildURL(command) {
 		return (
@@ -797,6 +801,21 @@ class Doorbird extends utils.Adapter {
 			this.wizard = false;
 			adapter.log.debug('Wizard timeout!');
 		}, 60000);
+	}
+
+	async turnOnLight() {
+		try {
+			const url = this.buildURL('light-on');
+			const response = await Axios.get(url);
+
+			if (response.status === 200) {
+				this.log.debug('Light successfully triggered!');
+			} else {
+				this.log.warn(`Could not trigger light. (Got Statuscode ${response.status})`);
+			}
+		} catch (error) {
+			this.log.warn('Error in triggering Light: ' + error);
+		}
 	}
 
 	/**
