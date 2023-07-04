@@ -4,8 +4,6 @@
 
 [![NPM version](https://img.shields.io/npm/v/iobroker.doorbird.svg)](https://www.npmjs.com/package/iobroker.doorbird)
 [![Downloads](https://img.shields.io/npm/dm/iobroker.doorbird.svg)](https://www.npmjs.com/package/iobroker.doorbird)
-![Snyk Vulnerabilities for npm package](https://img.shields.io/snyk/vulnerabilities/npm/iobroker.doorbird?label=npm%20vulnerabilities&style=flat-square)
-![node-lts](https://img.shields.io/node/v-lts/iobroker.doorbird?style=flat-square)
 ![Libraries.io dependency status for latest release](https://img.shields.io/librariesio/release/npm/iobroker.doorbird?label=npm%20dependencies&style=flat-square)
 
 ![GitHub](https://img.shields.io/github/license/schmakus/iobroker.doorbird?style=flat-square)
