@@ -81,8 +81,8 @@ http://192.168.0.2:8081/files/doorbird.0/Doorbell1_1.jpg
 
 -   (Schmakus) Re-new with adapter creator
 -   (Schmakus) Changed snapshot handling! Find snapshot at ioBroker Files now!
--   (Schmakus) Support take snapshot manually
--   (Schmakus) Support light-On
+-   (Schmakus) Support take snapshot manually has been added
+-   (Schmakus) Support for light-On has been added
 
 ### 0.2.0 (2023-06-25)
 

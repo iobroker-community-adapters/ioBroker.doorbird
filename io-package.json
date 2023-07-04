@@ -143,11 +143,11 @@
 			{
 				"condition": {
 					"operand": "and",
-					"rules": ["oldVersion<0.3.0", "newVersion>=0.3.0"]
+					"rules": ["oldVersion<1.0.0", "newVersion>=1.0.0"]
 				},
 				"title": {
 					"en": "Breaking change by usage of snapshots",
-					"de": "Änderung durch Verwendung von Snapshots",
+					"de": "Änderung bei Verwendung von Snapshots",
 					"ru": "Перерыв изменения с помощью снимков",
 					"pt": "Quebrando a mudança pelo uso de instantâneos",
 					"nl": "Verandering door het gebruik van foto's",
@@ -160,7 +160,7 @@
 				},
 				"text": {
 					"en": "Storage location of the snapshots has been moved to the ioBroker files!",
-					"de": "Speicherort der Snapshots wurde in die ioBroker Dateien verschoben!",
+					"de": "Der Speicherort der Snapshots wurde in die ioBroker Dateien verschoben!",
 					"ru": "Место хранения снимков было перемещено в файлы ioBroker!",
 					"pt": "Localização de armazenamento dos instantâneos foi movido para os arquivos ioBroker!",
 					"nl": "De locatie van de foto's is verplaatst naar de ioBroker bestanden!",
