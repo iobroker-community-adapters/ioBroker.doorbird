@@ -76,8 +76,7 @@ http://192.168.0.2:8081/files/doorbird.0/Doorbell1_1.jpg
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-
-### **WORK IN PROGRESS**
+### 1.0.0 (2023-07-04)
 
 -   (Schmakus) Re-new with adapter creator
 -   (Schmakus) Changed snapshot handling! Find snapshot at ioBroker Files now!

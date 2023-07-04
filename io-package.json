@@ -1,8 +1,21 @@
 {
 	"common": {
 		"name": "doorbird",
-		"version": "0.2.0",
+		"version": "1.0.0",
 		"news": {
+			"1.0.0": {
+				"en": "Re-new with adapter creator\nChanged snapshot handling! Find snapshot at ioBroker Files now!\nSupport take snapshot manually has been added\nSupport for light-On has been added",
+				"de": "Erneut mit Adapter-Ersteller\nGeändertes Snapshot-Handling! Finde Snapshots jetzt unter ioBroker Dateien!\nSupport für manuelle Schnappschüsse hinzugefügt\nUnterstützung für Light-On wurde hinzugefügt",
+				"ru": "Обновление с создателем адаптера\nИзменена обработка снимков! Найдите снимок в ioBroker Files сейчас!\nПоддержка взятия снимка вручную была добавлена\nДобавлена поддержка Light-On",
+				"pt": "Re-nova com criador de adaptador\nManipulação de instantâneos alterado! Encontre instantâneo no ioBroker Files agora!\nSuporte tirar instantâneo manualmente foi adicionado\nSuporte para light-On foi adicionado",
+				"nl": "Hernieuwd met adapter creator\nVeranderde foto's. Zoek foto's bij ioBroker Files!\nSupport pickshot handmatig is toegevoegd\nVersterking voor licht-On is toegevoegd",
+				"fr": "Renouvellement avec l'adaptateur créateur\nManipulation de snapshot modifiée ! Trouvez un instantané sur ioBroker Files maintenant!\nSoutien prise instantané manuellement a été ajouté\nSupport pour la lumière-On a été ajouté",
+				"it": "Nuovo con creatore dell'adattatore\nMovimentazione istantanea modificata! Trova istantanee su iBroker Files ora!\nSupporto prendere snapshot manualmente è stato aggiunto\nSupporto per light-On è stato aggiunto",
+				"es": "Renovar con el creador del adaptador\n¡Cambio de manejo de instantáneas! ¡Encuentra la instantánea de ioBroker Files ahora!\nSoporte toma instantánea manualmente se ha añadido\nSe ha añadido soporte para light-On",
+				"pl": "Nowe z adapterem stwórcą\nChanged snapshot Guide (ang.). Find shot with ioBroker Files (ang.)!\nWspieranie nacisków zostało dodane ręcznie\nDodano wsparcie dla światła",
+				"uk": "Заново з розробником адаптера\nЗмінена обробка знімків! Знайти знімок у файлах ioBroker тепер!\nДодано підтримку знімку вручну\nДодано підтримку Light-On",
+				"zh-cn": "重新配有变暖\n装修! 如今,在OioBroker Fild 绑架!\n已经增添了手册的扫描支助。\n此外还增加了对照明的支助。"
+			},
 			"0.2.0": {
 				"en": "Adapter has been moved into iobroker-community-adapters-area\nGithub actions and testing has been added\nstandard development tools have been added\ndependencies have been upgraded",
 				"de": "Adapter wurde in iobroker-community-adapter-area bewegt\nGithub-Aktionen und Tests wurden hinzugefügt\nstandard-entwicklungswerkzeuge wurden hinzugefügt\nabhängigkeiten wurden verbessert",
@@ -69,19 +82,6 @@
 				"zh-cn": "ioBroker 存储库的初始版本"
 			},
 			"0.1.1": {
-				"en": "Initial release to the ioBroker repo",
-				"de": "Erstveröffentlichung im ioBroker Repo",
-				"ru": "Первоначальный выпуск в репозиторий ioBroker",
-				"pt": "Lançamento inicial no repositório ioBroker",
-				"nl": "Initiële vrijgave voor de repro van ioBroker",
-				"fr": "Version initiale du référentiel ioBroker",
-				"it": "Versione iniziale del repository ioBroker",
-				"es": "Versión inicial para el repositorio ioBroker",
-				"pl": "Pierwsze wydanie do repozytu ioBroker",
-				"uk": "Початковий випуск для репозиторію ioBroker",
-				"zh-cn": "ioBroker 存储库的初始版本"
-			},
-			"0.1.0": {
 				"en": "Initial release to the ioBroker repo",
 				"de": "Erstveröffentlichung im ioBroker Repo",
 				"ru": "Первоначальный выпуск в репозиторий ioBroker",
