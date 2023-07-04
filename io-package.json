@@ -97,15 +97,15 @@
 		},
 		"titleLang": {
 			"en": "DoorBird",
-			"de": "Türvogel",
-			"ru": "ДверьПтица",
+			"de": "DoorBird",
+			"ru": "DoorBird",
 			"pt": "DoorBird",
 			"nl": "DoorBird",
-			"fr": "PorteOiseau",
-			"it": "Uccello della porta",
-			"es": "PuertaPájaro",
-			"pl": "DrzwiPtak",
-			"zh-cn": "门鸟",
+			"fr": "DoorBird",
+			"it": "DoorBird",
+			"es": "DoorBird",
+			"pl": "DoorBird",
+			"zh-cn": "DoorBird",
 			"uk": "DoorBird"
 		},
 		"desc": {
