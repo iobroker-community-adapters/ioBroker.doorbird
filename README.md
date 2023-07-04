@@ -78,7 +78,7 @@ http://192.168.0.2:8081/files/doorbird.0/Doorbell1_1.jpg
 ### **WORK IN PROGRESS**
 
 -   (Schmakus) remove unused packages
--   (Schmakus) added migration from older versions
+-   (Schmakus) added migration from older versions to delete unused snapshot states
 -   (Schmakus) some code improvements
 
 ### 1.0.0 (2023-07-04)

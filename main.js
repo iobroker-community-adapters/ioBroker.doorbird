@@ -13,7 +13,7 @@ const Axios = require('axios').default;
 const http = require('http');
 const udpserver = dgram.createSocket('udp4');
 
-const devMode = false;
+const devMode = true;
 
 class Doorbird extends utils.Adapter {
 	/**
@@ -58,6 +58,7 @@ class Doorbird extends utils.Adapter {
 			this.config.birdpw = await this.decryption('Zgfr56gFe87jJOM', this.config.birdpw || 'empty');
 		}
 
+		await this.migrateAsync();
 		await this.mainAsync();
 	}
 
@@ -888,6 +889,28 @@ class Doorbird extends utils.Adapter {
 				await (foreign ? this.setForeignObjectAsync(dp, obj) : this.setObjectAsync(dp, obj));
 				this.log.debug(`Object: ${dp} updated.`);
 			}
+		}
+	}
+
+	/**
+	 * Migrate versions above 1.0.1
+	 * @async
+	 */
+	async migrateAsync() {
+		try {
+			let migrate = false;
+			const arrayOfStates = await this.getStatesOfAsync();
+			for (const obj of arrayOfStates) {
+				if (obj._id.includes('.snapshot') && obj.type === 'state') {
+					await this.delObjectAsync(obj._id);
+					migrate = true;
+				}
+			}
+			if (migrate) {
+				this.log.info(`Version migrated. Snapshot states deleted.`);
+			}
+		} catch (error) {
+			this.log.warn(`Error on migrate. Error: ${error}`);
 		}
 	}
 }
