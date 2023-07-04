@@ -1,7 +1,4 @@
+.prettierrc.js
 **/.eslintrc.js
 admin/words.js
-
-# must be removed after cleanup
-main.js
 lib/utils.js
-test/**
