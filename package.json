@@ -14,6 +14,10 @@
     {
       "name": "McM1957",
       "email": "mcm57@gmx.at"
+    },
+    {
+      "name": "Schmakus",
+      "email": "schmakus@gmail.com"
     }
   ],
   "homepage": "https://github.com/iobroker-community-adapters/ioBroker.doorbird",
@@ -30,10 +34,7 @@
   },
   "dependencies": {
     "@iobroker/adapter-core": "^2.6.8",
-    "fs": "^0.0.1-security",
-    "http": "^0.0.1-security",
-    "path": "^0.12.7",
-    "request": "^2.88.2"
+    "http": "^0.0.1-security"
   },
   "devDependencies": {
     "@alcalzone/release-script": "^3.6.0",
@@ -78,7 +79,10 @@
     "check": "tsc --noEmit -p tsconfig.check.json",
     "lint": "eslint .",
     "translate": "translate-adapter",
-    "release": "release-script"
+    "release": "release-script",
+    "release-patch": "release-script patch --yes",
+    "release-minor": "release-script minor --yes",
+    "release-major": "release-script major --yes"
   },
   "bugs": {
     "url": "https://github.com/BuZZy1337/ioBroker.doorbird/issues"
