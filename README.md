@@ -74,8 +74,7 @@ http://192.168.0.2:8081/files/doorbird.0/Doorbell1_1.jpg
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-
-### **WORK IN PROGRESS**
+### 1.0.2 (2023-07-04)
 
 -   (Schmakus) Hotfix because dev-mode was active
 
@@ -102,13 +101,6 @@ http://192.168.0.2:8081/files/doorbird.0/Doorbell1_1.jpg
 ### 0.1.7 (2023-05-16)
 
 -   (todde99) Fixed js-controller 5 issue
-
-### 0.1.5 (2018-09-18)
-
--   (BuZZy1337) Check response of Doorbird when triggering relays
--   (BuZZy1337) Check if any favorite has to be updated (For example when adapter address or port changes)
--   (BuZZy1337) Added state for restarting DoorBird Device (There is a bug in DoorBird Firmware. DoorBird will fix it with next FW Update!)
--   (BuZZy1337) Change some Code for working more with responses from DoorBird
 
 ## License
 

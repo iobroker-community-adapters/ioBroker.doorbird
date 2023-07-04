@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "doorbird",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "news": {
+      "1.0.2": {
+        "en": "Hotfix because dev-mode was active",
+        "de": "Hotfix, weil dev-mode aktiv war",
+        "ru": "Hotfix потому, что dev-mode был активен",
+        "pt": "Hotfix porque o dev-mode estava ativo",
+        "nl": "Hotfix omdat Dev-mode actief was",
+        "fr": "Hotfix parce que dev-mode était actif",
+        "it": "Hotfix perché dev-mode era attivo",
+        "es": "Hotfix porque el dev-mode estaba activo",
+        "pl": "Hotfix ze względu na dev-mode był aktywny",
+        "uk": "Hotfix тому що dev-mode був активний",
+        "zh-cn": "霍图夫克斯岛正积极开展活动"
+      },
       "1.0.1": {
         "en": "remove unused packages\nadded migration from older versions to delete unused snapshot states\nsome code improvements",
         "de": "ungenutzte pakete entfernen\nhinzugefügt migration von älteren versionen, um nicht genutzte snapshot-staaten zu löschen\neinige code verbesserungen",
@@ -80,19 +93,6 @@
         "pl": "Tylko niektóre zmiany pod maską",
         "uk": "Просто деякі зміни під капотом",
         "zh-cn": "只是一些底层的改变"
-      },
-      "0.1.2": {
-        "en": "Initial release to the ioBroker repo",
-        "de": "Erstveröffentlichung im ioBroker Repo",
-        "ru": "Первоначальный выпуск в репозиторий ioBroker",
-        "pt": "Lançamento inicial no repositório ioBroker",
-        "nl": "Initiële vrijgave voor de repro van ioBroker",
-        "fr": "Version initiale du référentiel ioBroker",
-        "it": "Versione iniziale del repository ioBroker",
-        "es": "Versión inicial para el repositorio ioBroker",
-        "pl": "Pierwsze wydanie do repozytu ioBroker",
-        "uk": "Початковий випуск для репозиторію ioBroker",
-        "zh-cn": "ioBroker 存储库的初始版本"
       }
     },
     "titleLang": {

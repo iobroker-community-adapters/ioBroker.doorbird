@@ -1,4 +1,11 @@
 # Older changes
+## 0.1.5 (2018-09-18)
+
+-   (BuZZy1337) Check response of Doorbird when triggering relays
+-   (BuZZy1337) Check if any favorite has to be updated (For example when adapter address or port changes)
+-   (BuZZy1337) Added state for restarting DoorBird Device (There is a bug in DoorBird Firmware. DoorBird will fix it with next FW Update!)
+-   (BuZZy1337) Change some Code for working more with responses from DoorBird
+
 ## 0.1.0 (2018-09-08)
 
 -   (BuZZy1337) "public release"
