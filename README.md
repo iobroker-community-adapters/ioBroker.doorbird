@@ -8,13 +8,13 @@
 ![node-lts](https://img.shields.io/node/v-lts/iobroker.doorbird?style=flat-square)
 ![Libraries.io dependency status for latest release](https://img.shields.io/librariesio/release/npm/iobroker.doorbird?label=npm%20dependencies&style=flat-square)
 
-![GitHub](https://img.shields.io/github/license/schmakus/iobroker.doorbird?style=flat-square)
-![GitHub repo size](https://img.shields.io/github/repo-size/schmakus/iobroker.doorbird?logo=github&style=flat-square)
-![GitHub commit activity](https://img.shields.io/github/commit-activity/m/schmakus/iobroker.doorbird?logo=github&style=flat-square)
-![GitHub last commit](https://img.shields.io/github/last-commit/schmakus/iobroker.doorbird?logo=github&style=flat-square)
-![GitHub issues](https://img.shields.io/github/issues/schmakus/iobroker.doorbird?logo=github&style=flat-square)
+![GitHub](https://img.shields.io/github/license/iobroker-community-adapters/iobroker.doorbird?style=flat-square)
+![GitHub repo size](https://img.shields.io/github/repo-size/iobroker-community-adapters/iobroker.doorbird?logo=github&style=flat-square)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/m/iobroker-community-adapters/iobroker.doorbird?logo=github&style=flat-square)
+![GitHub last commit](https://img.shields.io/github/last-commit/iobroker-community-adapters/iobroker.doorbird?logo=github&style=flat-square)
+![GitHub issues](https://img.shields.io/github/issues/iobroker-community-adapters/iobroker.doorbird?logo=github&style=flat-square)
 
-![Test and Release](https://github.com/Schmakus/ioBroker.doorbird/workflows/Test%20and%20Release/badge.svg)
+![Test and Release](https://github.com/iobroker-community-adapters/ioBroker.doorbird/workflows/Test%20and%20Release/badge.svg)
 
 [![NPM](https://nodei.co/npm/iobroker.doorbird.png?downloads=true)](https://nodei.co/npm/iobroker.doorbird/)
 
