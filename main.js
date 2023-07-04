@@ -13,7 +13,7 @@ const Axios = require('axios').default;
 const http = require('http');
 const udpserver = dgram.createSocket('udp4');
 
-const devMode = true;
+const devMode = false;
 
 class Doorbird extends utils.Adapter {
 	/**
