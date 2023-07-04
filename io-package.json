@@ -173,6 +173,40 @@
 				},
 				"level": "warn",
 				"buttons": ["agree", "cancel"]
+			},
+			{
+				"condition": {
+					"operand": "and",
+					"rules": ["oldVersion<=1.0.0", "newVersion>=1.0.1"]
+				},
+				"title": {
+					"en": "New object structure",
+					"de": "Neue Objektstruktur",
+					"ru": "Новая структура объекта",
+					"pt": "Nova estrutura de objeto",
+					"nl": "Nieuw object",
+					"fr": "Nouvelle structure objet",
+					"it": "Nuova struttura oggetti",
+					"es": "Nueva estructura de objetos",
+					"pl": "Nowy obiekt",
+					"uk": "Нова структура об'єкта",
+					"zh-cn": "新目标结构"
+				},
+				"text": {
+					"en": "Please delete all instance objects once and restart the adapter!",
+					"de": "Bitte lösche alle Instanz-Objekte einmalig und starte den Adapter neu!",
+					"ru": "Пожалуйста, удалите все объекты экземпляра один раз и перезагрузите адаптер!",
+					"pt": "Por favor, exclua todos os objetos de instância uma vez e reinicie o adaptador!",
+					"nl": "Verwijder alle voorwerpen eens en herstel de adapter!",
+					"fr": "Veuillez supprimer tous les objets d'instance une fois et redémarrer l'adaptateur!",
+					"it": "Si prega di eliminare tutti gli oggetti di istanza una volta e riavviare l'adattatore!",
+					"es": "Por favor, eliminar todos los objetos de instancia una vez y reiniciar el adaptador!",
+					"pl": "Powiedzmy wszystkie obiekty raz i odwrócimy adapter!",
+					"uk": "Будь ласка, видаліть всі об'єкти екземпляра один раз і перезавантажте адаптер!",
+					"zh-cn": "请删除所有例子,并重订适应者!"
+				},
+				"level": "warn",
+				"buttons": ["agree", "cancel"]
 			}
 		],
 		"dependencies": [
