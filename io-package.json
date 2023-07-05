@@ -1,8 +1,21 @@
 {
 	"common": {
 		"name": "doorbird",
-		"version": "1.0.4",
+		"version": "1.0.5",
 		"news": {
+			"1.0.5": {
+				"en": "Fixed AxiosError (deletion of duplicates) [#55]",
+				"de": "Fixed AxiosError (Löschung von Duplikaten) #[55]",
+				"ru": "Фиксированный AxiosError (отбор дубликатов) #[55]",
+				"pt": "AxiosError fixo (deleção de duplicatas) #[55]",
+				"nl": "Quality over Quantity (QoQ) Releases Vertaling:",
+				"fr": "AxiosError fixe (élimination des doubles) #[55]",
+				"it": "AxiosError fisso (delezione dei duplicati) #[55]",
+				"es": "Axios fijosError (deleción de duplicados) #[55]",
+				"pl": "Fixed AxiosError (delecja duplikacji) #55 (ang.)",
+				"uk": "Фіксований AxiosОхоронець (видалення дублікатів) #[55]",
+				"zh-cn": "Fixed AxiosError(删除重复) #[55]"
+			},
 			"1.0.4": {
 				"en": "Interim solution because deletion of duplicate favorites",
 				"de": "Interim-Lösung, weil das Löschen von doppelten Favoriten",

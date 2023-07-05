@@ -74,8 +74,7 @@ http://192.168.0.2:8081/files/doorbird.0/Doorbell1_1.jpg
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-
-### **WORK IN PROGRESS**
+### 1.0.5 (2023-07-05)
 
 -   (Schmakus) Fixed AxiosError (deletion of duplicates) [#55]
 
@@ -99,13 +98,6 @@ http://192.168.0.2:8081/files/doorbird.0/Doorbell1_1.jpg
 -   (Schmakus) Changed snapshot handling! Find snapshot at ioBroker Files now!
 -   (Schmakus) Support take snapshot manually has been added
 -   (Schmakus) Support for light-On has been added
-
-### 0.2.0 (2023-06-25)
-
--   (mcm1957) Adapter has been moved into iobroker-community-adapters-area
--   (mcm1957) Github actions and testing has been added
--   (mcm1957) standard development tools have been added
--   (mcm1957) dependencies have been upgraded
 
 ## License
 

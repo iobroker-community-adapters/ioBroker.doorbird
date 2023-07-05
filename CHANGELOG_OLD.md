@@ -1,4 +1,11 @@
 # Older changes
+## 0.2.0 (2023-06-25)
+
+-   (mcm1957) Adapter has been moved into iobroker-community-adapters-area
+-   (mcm1957) Github actions and testing has been added
+-   (mcm1957) standard development tools have been added
+-   (mcm1957) dependencies have been upgraded
+
 ## 0.1.7 (2023-05-16)
 
 -   (todde99) Fixed js-controller 5 issue
