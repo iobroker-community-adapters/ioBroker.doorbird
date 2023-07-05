@@ -74,7 +74,8 @@ http://192.168.0.2:8081/files/doorbird.0/Doorbell1_1.jpg
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-### 1.0.3 (2023-07-05)
+
+### **WORK IN PROGRESS**
 
 -   (Schmakus) Interim solution because deletion of duplicate favorites
 
