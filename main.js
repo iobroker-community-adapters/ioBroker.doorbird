@@ -13,7 +13,7 @@ const Axios = require('axios').default;
 const http = require('http');
 const udpserver = dgram.createSocket('udp4');
 
-const InterimSolutionForDeletionOfDuplicates = true;
+const InterimSolutionForDeletionOfDuplicates = false;
 
 class Doorbird extends utils.Adapter {
 	/**
@@ -34,7 +34,7 @@ class Doorbird extends utils.Adapter {
 		this.scheduleState = {};
 		this.motionState = {};
 		this.doorbellsArray = []; // Contains all Doorbell IDs
-		this.favoriteState = {}; // {'ID of Doorbell/Motion': 'ID of Favorite'}
+		this.favoriteState = {}; // {'ID of Doorbell/Motion/RFID': 'ID of Favorite'}
 
 		this.authorized = false;
 
@@ -345,29 +345,25 @@ class Doorbird extends utils.Adapter {
 							return;
 						}
 						if (obj.value.indexOf(this.config.adapterAddress + ':' + this.config.adapterport) !== -1) {
-							this.log.debug('Found a Favorite that belongs to me..');
-							this.log.debug(`(ID: '${key}') ('${obj.title}': '${obj.value}')`);
-
-							/*
-							if (!this.favoriteState[obj.title.split(' ')[2]]) {
-								this.favoriteState[obj.title.split(' ')[2]] = {};
-								this.favoriteState[obj.title.split(' ')[2]]['ID'] = key;
-								this.favoriteState[obj.title.split(' ')[2]]['URL'] = obj.value;
-								//toDelete
-								this.log.debug(`favoriteState: ${JSON.stringify(this.favoriteState)}`);
-								*/
+							this.log.debug(
+								`Found a Favorite that belongs to me.. (ID: '${key}') ('${obj.title}': '${obj.value}')`,
+							);
 
 							const favoriteKey = obj.title.split(' ')[2];
-							const duplicate = Object.values(this.favoriteState).find((item) => item.ID === key);
+							const favoriteUrl = obj.value;
 
-							if (!duplicate) {
-								this.favoriteState[favoriteKey] = {
-									ID: key,
-									URL: obj.value,
-								};
-								//toDelete
-								this.log.debug(`favoriteState: ${JSON.stringify(this.favoriteState)}`);
-							} else {
+							this.favoriteState[favoriteKey] = {
+								ID: key,
+								URL: obj.value,
+							};
+							//toDelete
+							this.log.debug(`favoriteState: ${JSON.stringify(this.favoriteState)}`);
+
+							const duplicate = Object.values(this.favoriteState).find(
+								(item) => item.URL === favoriteUrl && item.ID !== key,
+							);
+
+							if (duplicate) {
 								this.log.warn(`Found a duplicate favorite! (ID : '${key}') URL ${obj.value}`);
 
 								if (InterimSolutionForDeletionOfDuplicates) {
@@ -388,7 +384,10 @@ class Doorbird extends utils.Adapter {
 										key;
 									const deleteResponse = await Axios.get(deleteUrl);
 									if (deleteResponse.status === 200) {
+										delete this.favoriteState[favoriteKey];
 										this.log.debug(`Deleted the duplicate (ID: '${key}') successfully!`);
+										//toDelete
+										this.log.debug(`favoriteState: ${JSON.stringify(this.favoriteState)}`);
 									} else {
 										this.log.warn(`I was unable to delete the duplicate! (ID: ${key})`);
 									}
