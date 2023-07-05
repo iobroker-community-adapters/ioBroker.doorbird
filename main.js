@@ -13,7 +13,7 @@ const Axios = require('axios').default;
 const http = require('http');
 const udpserver = dgram.createSocket('udp4');
 
-const devMode = true;
+const InterimSolutionForDeletionOfDuplicates = true;
 
 class Doorbird extends utils.Adapter {
 	/**
@@ -348,14 +348,29 @@ class Doorbird extends utils.Adapter {
 							this.log.debug('Found a Favorite that belongs to me..');
 							this.log.debug(`(ID: '${key}') ('${obj.title}': '${obj.value}')`);
 
+							/*
 							if (!this.favoriteState[obj.title.split(' ')[2]]) {
 								this.favoriteState[obj.title.split(' ')[2]] = {};
 								this.favoriteState[obj.title.split(' ')[2]]['ID'] = key;
 								this.favoriteState[obj.title.split(' ')[2]]['URL'] = obj.value;
+								//toDelete
+								this.log.debug(`favoriteState: ${JSON.stringify(this.favoriteState)}`);
+								*/
+
+							const favoriteKey = obj.title.split(' ')[2];
+							const duplicate = Object.values(this.favoriteState).find((item) => item.ID === key);
+
+							if (!duplicate) {
+								this.favoriteState[favoriteKey] = {
+									ID: key,
+									URL: obj.value,
+								};
+								//toDelete
+								this.log.debug(`favoriteState: ${JSON.stringify(this.favoriteState)}`);
 							} else {
 								this.log.warn(`Found a duplicate favorite! (ID : '${key}') URL ${obj.value}`);
 
-								if (devMode) {
+								if (InterimSolutionForDeletionOfDuplicates) {
 									this.log.warn(
 										`deleting duplicates is currently in dev-mode. Please delete duplicates yourself via the Doorbird app if nessesary.`,
 									);
@@ -570,6 +585,8 @@ class Doorbird extends utils.Adapter {
 		}
 		if (action) {
 			this.log.debug('Finished creating Favorites.. Checking again - just to be sure!');
+			//toDelete
+			this.log.debug(`favoriteState before check again: ${JSON.stringify(this.favoriteState)}`);
 			await this.checkFavoritesAsync();
 		} else {
 			this.log.debug('Favorites checked successfully. No actions needed!');
