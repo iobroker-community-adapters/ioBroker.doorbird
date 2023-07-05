@@ -74,6 +74,11 @@ http://192.168.0.2:8081/files/doorbird.0/Doorbell1_1.jpg
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+
+### **WORK IN PROGRESS**
+
+-   (Schmakus) Fixed AxiosError (deletion of duplicates) [#55]
+
 ### 1.0.4 (2023-07-05)
 
 -   (Schmakus) Interim solution because deletion of duplicate favorites
