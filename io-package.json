@@ -1,11 +1,11 @@
 {
 	"common": {
 		"name": "doorbird",
-		"version": "1.0.3",
+		"version": "1.0.4",
 		"news": {
-			"1.0.3": {
+			"1.0.4": {
 				"en": "Interim solution because deletion of duplicate favorites",
-				"de": "Interim-Lösung, um das Löschen von doppelten Favoriten zu verhindern",
+				"de": "Interim-Lösung, weil das Löschen von doppelten Favoriten",
 				"ru": "Интерим решение, потому что удаление дубликатов фаворитов",
 				"pt": "Solução interina porque a exclusão de favoritos duplicados",
 				"nl": "Interim oplossing, want verwijdering van duplicaat favorieten",
@@ -80,19 +80,6 @@
 				"pl": "Adapter został przeniesiony do iobroker-kommunity-areaa-reakcja\nDodano działania i testy\ndodano standardowe narzędzia rozwoju\nzależności zostały zmodernizowane",
 				"uk": "Переміщено перехід на iobroker-community-adapters-area\nДодано дії Github та тестування\nдодано стандартні інструменти розробки\nбуло оновлено залежності",
 				"zh-cn": "现已进入加勒比妓院。\n增加了白色行动和试验\n增加标准开发工具\n依赖性升级"
-			},
-			"0.1.7": {
-				"en": "Fixed js-controller 5 issue",
-				"de": "Problem mit js-controller 5 behoben",
-				"ru": "Исправлена ​​проблема с js-контроллером 5.",
-				"pt": "Problema corrigido do js-controller 5",
-				"nl": "Probleem met js-controller 5 opgelost",
-				"fr": "Correction du problème js-controller 5",
-				"it": "Risolto il problema del controller js 5",
-				"es": "Solucionado el problema del controlador js 5",
-				"pl": "Naprawiono problem z kontrolerem js 5",
-				"uk": "Виправлена ​​проблема js-контролера 5",
-				"zh-cn": "修复了 js-controller 5 问题"
 			}
 		},
 		"titleLang": {
