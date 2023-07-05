@@ -13,7 +13,7 @@ const Axios = require('axios').default;
 const http = require('http');
 const udpserver = dgram.createSocket('udp4');
 
-const devMode = false;
+const devMode = true;
 
 class Doorbird extends utils.Adapter {
 	/**
@@ -357,7 +357,7 @@ class Doorbird extends utils.Adapter {
 
 								if (devMode) {
 									this.log.warn(
-										`deleting duplicates is currently in dev-mode. Please delete duplicates yourself via the Doorbird app.`,
+										`deleting duplicates is currently in dev-mode. Please delete duplicates yourself via the Doorbird app if nessesary.`,
 									);
 								} else {
 									this.log.debug(`Trying to delete the duplicate..`);
