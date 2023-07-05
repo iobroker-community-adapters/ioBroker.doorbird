@@ -58,8 +58,7 @@ class Doorbird extends utils.Adapter {
 			this.config.birdpw = await this.decryption('Zgfr56gFe87jJOM', this.config.birdpw || 'empty');
 		}
 
-		await this.migrateAsync();
-		await this.mainAsync();
+		await Promise.all([this.migrateAsync(), this.mainAsync()]);
 	}
 
 	async mainAsync() {
