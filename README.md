@@ -74,8 +74,7 @@ http://192.168.0.2:8081/files/doorbird.0/Doorbell1_1.jpg
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-
-### **WORK IN PROGRESS**
+### 1.0.3 (2023-07-05)
 
 -   (Schmakus) Interim solution because deletion of duplicate favorites
 
@@ -102,10 +101,6 @@ http://192.168.0.2:8081/files/doorbird.0/Doorbell1_1.jpg
 -   (mcm1957) Github actions and testing has been added
 -   (mcm1957) standard development tools have been added
 -   (mcm1957) dependencies have been upgraded
-
-### 0.1.7 (2023-05-16)
-
--   (todde99) Fixed js-controller 5 issue
 
 ## License
 

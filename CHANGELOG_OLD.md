@@ -1,4 +1,8 @@
 # Older changes
+## 0.1.7 (2023-05-16)
+
+-   (todde99) Fixed js-controller 5 issue
+
 ## 0.1.5 (2018-09-18)
 
 -   (BuZZy1337) Check response of Doorbird when triggering relays

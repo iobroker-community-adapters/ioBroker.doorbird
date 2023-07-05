@@ -1,6 +1,6 @@
 {
   "name": "iobroker.doorbird",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "ioBroker doorbird Adapter",
   "author": {
     "name": "BuZZy1337",
