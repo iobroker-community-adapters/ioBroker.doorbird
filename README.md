@@ -80,10 +80,10 @@ or
 ```
 setState('doorbird.0.TakeSnapshot'/*Schnappschuss holen*/, true);
 timeout = setTimeout(function () {
-      sendTo('telegram.0', {
-         text: '/opt/iobroker/iobroker-data/files/doorbird.0/TakeSnapshot_1.jpg',
-         type: 'Foto'
-      });
+   sendTo('telegram.0', {
+      text: '/opt/iobroker/iobroker-data/files/doorbird.0/TakeSnapshot_1.jpg',
+      type: 'Foto'
+   });
 }, 1000);
 ```
 
