@@ -31,10 +31,14 @@ class Doorbird extends utils.Adapter {
 
 		this.sockets = [];
 		this.bellCount = 0;
+		this.rfidCount = 0;
 		this.scheduleState = {};
 		this.motionState = {};
+		this.rfidState = {};
 		this.doorbellsArray = []; // Contains all Doorbell IDs
+		this.rfidArray = []; // Contains all RFID IDs
 		this.favoriteState = {}; // {'ID of Doorbell/Motion/RFID': 'ID of Favorite'}
+		this.action = false;
 
 		this.authorized = false;
 
@@ -190,7 +194,7 @@ class Doorbird extends utils.Adapter {
 
 	/**
 	 * Generate URL
-	 * @param {'restart' | 'schedule' | 'info' | 'favorites' | 'image' | 'light-on'} command
+	 * @param {'restart' | 'schedule' | 'info' | 'favorites' | 'image' | 'light-on' | 'rfid'} command
 	 */
 	buildURL(command) {
 		return (
@@ -464,7 +468,6 @@ class Doorbird extends utils.Adapter {
 			if (response.status === 200) {
 				try {
 					const schedules = response.data;
-					this.bellCount = 0;
 					this.log.debug(`Following schedules found: ${JSON.stringify(schedules)}`);
 					this.log.debug('Looping through the Schedules..');
 
@@ -493,6 +496,25 @@ class Doorbird extends utils.Adapter {
 								this.log.debug(`Entry "${k}" is: ${JSON.stringify(schedules[i].output[k])}`);
 							}
 						}
+
+						if (schedules[i].input === 'rfid') {
+							this.rfidCount++;
+							this.log.debug('Detected a RFID Schedule!');
+
+							//this.scheduleState[schedules[i].param] = schedules[i].output;
+							this.log.debug(`The Param of the actual Schedule is: ${schedules[i].param}`);
+							const input = schedules[i].param;
+							const output = input.replace(',', '_');
+							this.rfidArray.push({ origin: input, name: output });
+							this.rfidState[schedules[i].param] = schedules[i].output;
+							this.log.debug(`The Output contains ${schedules[i].output.length} entries!`);
+
+							for (let k = 0; k < schedules[i].output.length; k++) {
+								this.log.debug(`Entry "${k}" is: ${JSON.stringify(schedules[i].output[k])}`);
+							}
+
+							this.log.debug(`Counted ${this.rfidCount} RFID Keys: ${JSON.stringify(this.rfidArray)}`);
+						}
 					}
 
 					await this.createFavoritesAsync(0);
@@ -508,20 +530,24 @@ class Doorbird extends utils.Adapter {
 	/**
 	 * @async
 	 * @param {number} i
-	 * @param {boolean} [action = false]
-	 * @param {boolean} [motion = false]
+	 * @param {boolean} doorbell
+	 * @param {boolean} motion
+	 * @param {boolean} rfid
 	 * @returns
 	 */
-	async createFavoritesAsync(i, action, motion) {
+	async createFavoritesAsync(i, doorbell = false, motion = false, rfid = false) {
 		this.log.debug('Checking if we need to create any favorites..');
-		if (i < this.doorbellsArray.length && !motion) {
-			this.log.debug('Cheking if Favorite for Doorbell ID ' + this.doorbellsArray[i] + ' exists.');
+
+		if (i < this.doorbellsArray.length && !doorbell && !motion && !rfid) {
+			this.log.debug('Checking if Favorite for Doorbell ID ' + this.doorbellsArray[i] + ' exists.');
+
 			if (this.favoriteState[this.doorbellsArray[i]]) {
 				this.log.debug(`Favorite for Doorbell ID ${this.doorbellsArray[i]} exists!`);
 				i++;
-				await this.createFavoritesAsync(i, false, false);
+				await this.createFavoritesAsync(i, false, false, false);
 				return;
 			}
+
 			try {
 				this.log.debug(`Favorite for Doorbell ID ${this.doorbellsArray[i]} has to be created!`);
 				const createUrl =
@@ -546,15 +572,63 @@ class Doorbird extends utils.Adapter {
 				if (response.status === 200) {
 					i++;
 					this.log.debug(`Favorite created successfully..`);
-					await this.createFavoritesAsync(i, true, false);
+					this.action = true;
+					await this.createFavoritesAsync(i, false, false, false);
+					return;
 				}
 			} catch (error) {
 				this.log.warn(`Error in creating Favorite: ${error}`);
 			}
-		}
-		if (typeof this.favoriteState['Motion'] === 'undefined' && !motion) {
+		} else if (i >= this.doorbellsArray.length && !doorbell && !motion && !rfid) {
+			this.log.debug(`Checking Doorbell finished.. Next check Motion`);
+			await this.createFavoritesAsync(0, true, false, false);
+			return;
+		} else if (doorbell && !motion && !rfid) {
+			if (typeof this.favoriteState['Motion'] === 'undefined') {
+				try {
+					const url =
+						'http://' +
+						this.config.birdip +
+						'/bha-api/favorites.cgi?http-user=' +
+						this.config.birduser +
+						'&http-password=' +
+						this.config.birdpw +
+						'&action=save&type=http&title=ioBroker ' +
+						this.namespace +
+						' Motion&value=http://' +
+						this.config.adapterAddress +
+						':' +
+						this.config.adapterport +
+						'/motion';
+
+					const response = await Axios.get(url);
+
+					if (response.status === 200) {
+						this.log.debug('Favorite for Motionsensor created. Next check RFID');
+						this.action = true;
+						await this.createFavoritesAsync(0, true, true, false);
+						return;
+					}
+				} catch (error) {
+					this.log.warn('Error creating favorite for Motionsensor: ' + error);
+				}
+			} else {
+				//await this.createFavoritesAsync(0, true, true, false);
+				return;
+			}
+		} else if (doorbell && motion && !rfid && i < this.rfidArray.length) {
+			this.log.debug('Checking if Favorite for RFID Key ' + this.rfidArray[i] + ' exists.');
+			/*
+			if (this.favoriteState[this.rfidArray[i]?.name]) {
+				this.log.debug(`Favorite for RFID Key ${this.rfidArray[i].origin} exists!`);
+				i++;
+				await this.createFavoritesAsync(i, true, true, false);
+				return;
+			}
+
 			try {
-				const url =
+				this.log.debug(`Favorite for RFID Key ${this.rfidArray[i].origin} has to be created!`);
+				const createUrl =
 					'http://' +
 					this.config.birdip +
 					'/bha-api/favorites.cgi?http-user=' +
@@ -563,27 +637,31 @@ class Doorbird extends utils.Adapter {
 					this.config.birdpw +
 					'&action=save&type=http&title=ioBroker ' +
 					this.namespace +
-					' Motion&value=http://' +
+					' ' +
+					this.rfidArray[i].name +
+					' RFID&value=http://' +
 					this.config.adapterAddress +
 					':' +
 					this.config.adapterport +
-					'/motion';
-
-				const response = await Axios.get(url);
+					'/rfid?' +
+					this.rfidArray[i].name;
+				const response = await Axios.get(createUrl);
 
 				if (response.status === 200) {
-					this.log.debug('Favorite for Motionsensor created.');
-					await this.createFavoritesAsync(i, true, true);
+					i++;
+					this.log.debug(`Favorite created successfully..`);
+					this.action = true;
+					await this.createFavoritesAsync(i, true, true, false);
+					return;
 				}
 			} catch (error) {
-				this.log.warn('Error creating favorite for Motionsensor: ' + error);
+				this.log.warn(`Error in creating Favorite: ${error}`);
 			}
-
-			return;
+			*/
 		}
-		if (action) {
+
+		if (this.action) {
 			this.log.debug('Finished creating Favorites.. Checking again - just to be sure!');
-			//toDelete
 			this.log.debug(`favoriteState before check again: ${JSON.stringify(this.favoriteState)}`);
 			await this.checkFavoritesAsync();
 		} else {
@@ -593,7 +671,7 @@ class Doorbird extends utils.Adapter {
 	}
 
 	/**
-	 * Create Schedules
+	 * Create Doorbell Schedules
 	 * @async
 	 */
 	async createSchedulesAsync() {
@@ -675,6 +753,7 @@ class Doorbird extends utils.Adapter {
 	 * @async
 	 */
 	async createMotionScheduleAsync() {
+		this.log.debug('Checking if we need to create Motion Schedules on DoorBird Device..');
 		for (const key in this.motionState) {
 			if (Object.hasOwnProperty.call(this.motionState, key)) {
 				let actionNeeded = true;
@@ -710,8 +789,79 @@ class Doorbird extends utils.Adapter {
 					} catch (error) {
 						this.log.warn(`Error in setting Motion schedule: ${error}`);
 					}
+				} else {
+					this.log.debug('Okay we dont need to create any Schedules for Motion Sensor');
 				}
 			}
+		}
+		await this.createRFIDSchedulesAsync();
+	}
+
+	/**
+	 * Create RFI Schedules
+	 * @async
+	 */
+	async createRFIDSchedulesAsync() {
+		this.log.debug('Checking if we need to create RFID Schedules on DoorBird Device..');
+		for (const key in this.scheduleState) {
+			if (Object.hasOwnProperty.call(this.rfidState, key)) {
+				let actionNeeded = true;
+				for (let i = 0; i < this.rfidState[key].length; i++) {
+					if (this.rfidState[key][i].event !== 'http') {
+						continue;
+					}
+					if (this.rfidState[key][i].param === this.favoriteState[key]['ID']) {
+						actionNeeded = false;
+					}
+				}
+				if (actionNeeded) {
+					const array = this.rfidState[key];
+					this.log.debug('We need to create a Schedule for RFID Key: ' + key);
+					array.push({
+						event: 'http',
+						param: this.favoriteState[key]['ID'],
+						enabled: '1',
+						schedule: { weekdays: [{ from: '79200', to: '79199' }] },
+					});
+					this.toCreate = { input: 'rfid', param: key, output: array };
+					try {
+						const createUrl = this.buildURL('rfid');
+						const response = await Axios.post(createUrl, this.toCreate);
+
+						if (response.status === 200) {
+							this.log.debug('Schedule created successfully!');
+						} else {
+							this.log.warn(
+								`There was an Error while creating the schedule. Status: ${response.status}, Text: ${response.statusText}`,
+							);
+						}
+					} catch (error) {
+						this.log.warn(`Error in creating rfid schedule: ${error}`);
+					}
+				} else {
+					this.log.debug('Okay we dont need to create any RFID-Schedules..');
+				}
+			}
+		}
+
+		for (const value of this.rfidArray) {
+			await this.createObjectsAsync(`RFID`, 'channel', {
+				name: 'RFID',
+			});
+
+			await this.createObjectsAsync(`RFID.${value.name}`, 'channel', {
+				name: 'RFID',
+				desc: `Key: ${value.origin}`,
+			});
+			//create State
+			await this.createObjectsAsync(`RFID.${value.name}.trigger`, 'state', {
+				role: 'indicator',
+				name: "RFID Key '" + value.origin + "' triggert",
+				type: 'boolean',
+				read: true,
+				write: false,
+				def: false,
+			});
 		}
 	}
 

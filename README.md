@@ -52,10 +52,27 @@ http://<ioBroker-IP>:<Port>/files/doorbird.<instance>.Doorbell<number>_1.jpg
 http://<ioBroker-IP>:<Port>/files/doorbird.<instance>.Motion_1.jpg
 ```
 
-Exampble:
+or
+
+```
+/opt/iobroker/iobroker-data/files/doorbird.<instance>/Doorbell<number>_1.jpg'
+```
+
+### Example:
 
 ```
 http://192.168.0.2:8081/files/doorbird.0/Doorbell1_1.jpg
+```
+
+### Send Snapshot per Telegram
+
+#### Example
+
+```
+sendTo('telegram.0', {
+   text: '/opt/iobroker/iobroker-data/files/doorbird.0/Doorbell1_1.jpg',
+   type: 'Foto'
+});
 ```
 
 ## Compatible Devices
@@ -74,6 +91,11 @@ http://192.168.0.2:8081/files/doorbird.0/Doorbell1_1.jpg
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+
+### **WORK IN PROGRESS**
+
+-   (Schmakus) Update documentation
+
 ### 1.0.5 (2023-07-05)
 
 -   (Schmakus) Fixed AxiosError (deletion of duplicates) [#55]
