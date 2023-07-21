@@ -107,6 +107,7 @@ timeout = setTimeout(function () {
 ### **WORK IN PROGRESS**
 
 -   (Schmakus) Update documentation
+-   (Schmakus) Update dependencies
 
 ### 1.0.5 (2023-07-05)
 
