@@ -71,7 +71,7 @@ http://192.168.0.2:8081/files/doorbird.0/Doorbell1_1.jpg
 ```
 sendTo('telegram.0', {
    text: '/opt/iobroker/iobroker-data/files/doorbird.0/Doorbell1_1.jpg',
-   type: 'Foto'
+   type: 'photo'
 });
 ```
 
@@ -82,7 +82,7 @@ setState('doorbird.0.TakeSnapshot'/*Schnappschuss holen*/, true);
 timeout = setTimeout(function () {
    sendTo('telegram.0', {
       text: '/opt/iobroker/iobroker-data/files/doorbird.0/TakeSnapshot_1.jpg',
-      type: 'Foto'
+      type: 'photo'
    });
 }, 1000);
 ```
