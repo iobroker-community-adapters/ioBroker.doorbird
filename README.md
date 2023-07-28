@@ -69,22 +69,28 @@ http://192.168.0.2:8081/files/doorbird.0/Doorbell1_1.jpg
 #### Example
 
 ```
-sendTo('telegram.0', {
-   text: '/opt/iobroker/iobroker-data/files/doorbird.0/Doorbell1_1.jpg',
-   type: 'photo'
+readFile("doorbird.0", "TakeSnapshot_1.jpg", function (error, data) {
+  if (error) {
+    console.error(error);
+  } else {
+    sendTo("telegram.0", {
+      text: data,
+      type: "photo",
+    });
+  }
 });
 ```
 
-or
+or since js-controller 4.1.x
 
 ```
-setState('doorbird.0.TakeSnapshot'/*Schnappschuss holen*/, true);
-timeout = setTimeout(function () {
-   sendTo('telegram.0', {
-      text: '/opt/iobroker/iobroker-data/files/doorbird.0/TakeSnapshot_1.jpg',
-      type: 'photo'
-   });
-}, 1000);
+setState('doorbird.0.TakeSnapshot', true);
+onFile("doorbird.0", "TakeSnapshot_1.jpg", false, function (id, fileName, size, fileData, mimeType) {
+    sendTo('telegram.0', {
+        text: fileData,
+        type: 'photo'
+    });
+});
 ```
 
 ## Compatible Devices
