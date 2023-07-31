@@ -114,11 +114,9 @@ class Doorbird extends utils.Adapter {
 					}
 				});
 
-				this.server.listen(this.config.adapterport || 8081, this.config.adapterAddress, () => {
+				this.server.listen(this.config.adapterport || 8081, '0.0.0.0', () => {
 					this.log.debug(
-						`Server gestartet auf Port ${this.config.adapterport || 8100} und IP ${
-							this.config.adapterAddress
-						}`,
+						`Server gestartet auf allen Interfaces auf Port ${this.config.adapterport || 8100},
 					);
 				});
 			} catch (e) {
