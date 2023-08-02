@@ -112,6 +112,7 @@ onFile("doorbird.0", "TakeSnapshot_1.jpg", false, function (id, fileName, size, 
 
 ### **WORK IN PROGRESS**
 
+-   (Schmakus) Hotfix #66 Error in parsing schedules 
 -   (Schmakus) Update documentation
 -   (Schmakus) Update dependencies
 
