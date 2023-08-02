@@ -33,7 +33,7 @@
     "url": "https://github.com/iobroker-community-adapters/ioBroker.doorbird"
   },
   "dependencies": {
-    "@iobroker/adapter-core": "^2.6.8",
+    "@iobroker/adapter-core": "^3.0.3",
     "@tsconfig/node16": "^16.1.0",
     "http": "^0.0.1-security"
   },
