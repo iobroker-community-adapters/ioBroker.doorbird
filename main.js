@@ -237,12 +237,11 @@ class Doorbird extends utils.Adapter {
 			}
 		}
 
-		(() => {
-			if (this.birdConCheck) {
-				this.clearTimeout(this.birdConCheck);
-				this.birdConCheck = null;
-			}
-		})();
+		if (this.birdConCheck) {
+			this.clearTimeout(this.birdConCheck);
+			this.birdConCheck = null;
+		}
+		
 		this.birdConCheck = this.setTimeout(async () => {
 			this.log.debug(`Refresh connection check...`);
 			await this.testBirdAsync();
@@ -721,7 +720,10 @@ class Doorbird extends utils.Adapter {
 	 */
 	onUnload(callback) {
 		try {
-			if (this.birdConCheck) this.clearTimeout(this.birdConCheck);
+			if (this.birdConCheck) {
+				this.clearTimeout(this.birdConCheck);
+				this.birdConCheck = null;
+			}
 			if (this.server)
 				this.server.close(() => {
 					this.log.debug(`Server closed`);
