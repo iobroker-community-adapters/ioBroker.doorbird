@@ -109,6 +109,11 @@ onFile("doorbird.0", "TakeSnapshot_1.jpg", false, function (id, fileName, size, 
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+
+### **WORK IN PROGRESS**
+
+-   (Schmakus) fixed js-controler dependency
+
 ### 1.1.0 (2023-08-03)
 
 -   (Schmakus/Stefan592) support 'listen on all interfaces' (e.g. for Docker)
