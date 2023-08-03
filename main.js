@@ -14,6 +14,7 @@ const http = require('http');
 const udpserver = dgram.createSocket('udp4');
 
 const InterimSolutionForDeletionOfDuplicates = false;
+const MAX_SCHEDULES = 200;
 
 class Doorbird extends utils.Adapter {
 	/**
@@ -241,7 +242,7 @@ class Doorbird extends utils.Adapter {
 			this.clearTimeout(this.birdConCheck);
 			this.birdConCheck = null;
 		}
-		
+
 		this.birdConCheck = this.setTimeout(async () => {
 			this.log.debug(`Refresh connection check...`);
 			await this.testBirdAsync();
@@ -467,7 +468,7 @@ class Doorbird extends utils.Adapter {
 					this.log.debug(`Following schedules found: ${JSON.stringify(schedules)}`);
 					this.log.debug('Looping through the Schedules..');
 
-					for (let i = 0; i < schedules.length; i++) {
+					for (let i = 0; i < schedules.length && i < MAX_SCHEDULES; i++) {
 						if (schedules[i].input === 'doorbell') {
 							this.bellCount++;
 							this.log.debug('Detected a Doorbell Schedule!');
