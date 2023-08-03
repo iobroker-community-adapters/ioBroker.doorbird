@@ -109,8 +109,7 @@ onFile("doorbird.0", "TakeSnapshot_1.jpg", false, function (id, fileName, size, 
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-
-### **WORK IN PROGRESS**
+### 1.1.0 (2023-08-03)
 
 -   (Schmakus/Stefan592) support 'listen on all interfaces' (e.g. for Docker)
 
@@ -131,12 +130,6 @@ onFile("doorbird.0", "TakeSnapshot_1.jpg", false, function (id, fileName, size, 
 ### 1.0.2 (2023-07-04)
 
 -   (Schmakus) Hotfix because dev-mode was active
-
-### 1.0.1 (2023-07-04)
-
--   (Schmakus) remove unused packages
--   (Schmakus) added migration from older versions to delete unused snapshot states
--   (Schmakus) some code improvements
 
 ## License
 

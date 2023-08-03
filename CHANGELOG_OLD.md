@@ -1,4 +1,10 @@
 # Older changes
+## 1.0.1 (2023-07-04)
+
+-   (Schmakus) remove unused packages
+-   (Schmakus) added migration from older versions to delete unused snapshot states
+-   (Schmakus) some code improvements
+
 ## 1.0.0 (2023-07-04)
 
 -   (Schmakus) Re-new with adapter creator
