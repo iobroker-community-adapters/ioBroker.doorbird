@@ -1,8 +1,21 @@
 {
 	"common": {
 		"name": "doorbird",
-		"version": "1.1.0",
+		"version": "1.1.1",
 		"news": {
+			"1.1.1": {
+				"en": "fixed js-controller dependency",
+				"de": "fix js-controller Abhängigkeit",
+				"ru": "фиксированная зависимость js-контроллера",
+				"pt": "dependência fixa js-controller",
+				"nl": "js-controller afhankelijkheid",
+				"fr": "js-contrôleur de dépendance",
+				"it": "dipendenza del controllore fisso",
+				"es": "dependencia fija js-controller",
+				"pl": "zmodyfikowana zależność js-kontrolacyjna",
+				"uk": "фіксована залежність js-controler",
+				"zh-cn": "固定控制者"
+			},
 			"1.1.0": {
 				"en": "support 'listen on all interfaces' (e.g. for Docker)",
 				"de": "Unterstützung 'hören auf allen Schnittstellen' (z.B. für Docker)",
@@ -80,19 +93,6 @@
 				"pl": "usunąć nieużywane pakiety\ndodanie migracji z starszych wersji do usunięcia nieużywanych stanów złamań\nulepszenia kodu",
 				"uk": "видалити невикористані пакети\nдодана міграція від старших версій для видалення невикористаних станів знімків\nдеякі покращення коду",
 				"zh-cn": "取消未用包\n从旧版本中增加移民,以删除未用的绑架州\n某些守则的改进"
-			},
-			"1.0.0": {
-				"en": "Re-new with adapter creator\nChanged snapshot handling! Find snapshot at ioBroker Files now!\nSupport take snapshot manually has been added\nSupport for light-On has been added",
-				"de": "Erneut mit Adapter-Creator\nGeändertes Snapshot-Handling! Finde Snapshots jetzt unter ioBroker Dateien!\nSupport für manuelle Schnappschüsse hinzugefügt\nUnterstützung für Light-On wurde hinzugefügt",
-				"ru": "Обновление с создателем адаптера\nИзменена обработка снимков! Найдите снимок в ioBroker Files сейчас!\nПоддержка взятия снимка вручную была добавлена\nДобавлена поддержка Light-On",
-				"pt": "Re-nova com criador de adaptador\nManipulação de instantâneos alterado! Encontre instantâneo no ioBroker Files agora!\nSuporte tirar instantâneo manualmente foi adicionado\nSuporte para light-On foi adicionado",
-				"nl": "Hernieuwd met adapter creator\nVeranderde foto's. Zoek foto's bij ioBroker Files!\nSupport pickshot handmatig is toegevoegd\nVersterking voor licht-On is toegevoegd",
-				"fr": "Renouvellement avec l'adaptateur créateur\nManipulation de snapshot modifiée ! Trouvez un instantané sur ioBroker Files maintenant!\nSoutien prise instantané manuellement a été ajouté\nSupport pour la lumière-On a été ajouté",
-				"it": "Nuovo con creatore dell'adattatore\nMovimentazione istantanea modificata! Trova istantanee su iBroker Files ora!\nSupporto prendere snapshot manualmente è stato aggiunto\nSupporto per light-On è stato aggiunto",
-				"es": "Renovar con el creador del adaptador\n¡Cambio de manejo de instantáneas! ¡Encuentra la instantánea de ioBroker Files ahora!\nSoporte toma instantánea manualmente se ha añadido\nSe ha añadido soporte para light-On",
-				"pl": "Nowe z adapterem stwórcą\nChanged snapshot Guide (ang.). Find shot with ioBroker Files (ang.)!\nWspieranie nacisków zostało dodane ręcznie\nDodano wsparcie dla światła",
-				"uk": "Заново з розробником адаптера\nЗмінена обробка знімків! Знайти знімок у файлах ioBroker тепер!\nДодано підтримку знімку вручну\nДодано підтримку Light-On",
-				"zh-cn": "重新配有变暖\n装修! 如今,在OioBroker Fild 绑架!\n已经增添了手册的扫描支助。\n此外还增加了对照明的支助。"
 			}
 		},
 		"titleLang": {

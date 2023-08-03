@@ -1,4 +1,8 @@
 # Older changes
+## 1.0.2 (2023-07-04)
+
+-   (Schmakus) Hotfix because dev-mode was active
+
 ## 1.0.1 (2023-07-04)
 
 -   (Schmakus) remove unused packages

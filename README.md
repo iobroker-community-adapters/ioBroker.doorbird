@@ -110,9 +110,9 @@ onFile("doorbird.0", "TakeSnapshot_1.jpg", false, function (id, fileName, size, 
     ### **WORK IN PROGRESS**
 -->
 
-### **WORK IN PROGRESS**
+### 1.1.1 (2023-08-03)
 
--   (Schmakus) fixed js-controler dependency
+-   (Schmakus) fixed js-controller dependency [#69]
 
 ### 1.1.0 (2023-08-03)
 
@@ -131,10 +131,6 @@ onFile("doorbird.0", "TakeSnapshot_1.jpg", false, function (id, fileName, size, 
 ### 1.0.4 (2023-07-05)
 
 -   (Schmakus) Interim solution because deletion of duplicate favorites
-
-### 1.0.2 (2023-07-04)
-
--   (Schmakus) Hotfix because dev-mode was active
 
 ## License
 
