@@ -1,4 +1,11 @@
 # Older changes
+## 1.0.0 (2023-07-04)
+
+-   (Schmakus) Re-new with adapter creator
+-   (Schmakus) Changed snapshot handling! Find snapshot at ioBroker Files now!
+-   (Schmakus) Support take snapshot manually has been added
+-   (Schmakus) Support for light-On has been added
+
 ## 0.2.0 (2023-06-25)
 
 -   (mcm1957) Adapter has been moved into iobroker-community-adapters-area

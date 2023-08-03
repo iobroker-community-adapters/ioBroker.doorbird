@@ -109,8 +109,7 @@ onFile("doorbird.0", "TakeSnapshot_1.jpg", false, function (id, fileName, size, 
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-
-### **WORK IN PROGRESS**
+### 1.0.6 (2023-08-03)
 
 -   (Schmakus) Hotfix #66 Error in parsing schedules 
 -   (Schmakus) Update documentation
@@ -133,13 +132,6 @@ onFile("doorbird.0", "TakeSnapshot_1.jpg", false, function (id, fileName, size, 
 -   (Schmakus) remove unused packages
 -   (Schmakus) added migration from older versions to delete unused snapshot states
 -   (Schmakus) some code improvements
-
-### 1.0.0 (2023-07-04)
-
--   (Schmakus) Re-new with adapter creator
--   (Schmakus) Changed snapshot handling! Find snapshot at ioBroker Files now!
--   (Schmakus) Support take snapshot manually has been added
--   (Schmakus) Support for light-On has been added
 
 ## License
 
