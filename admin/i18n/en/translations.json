@@ -1,11 +1,12 @@
 {
-    "(Click search Icon for automatic detection)": "(Click search Icon for automatic detection)",
-    "Adapter IP": "Adapter IP",
-    "DoorBird Device IP": "DoorBird Device IP",
-    "Password": "Password",
-    "Press the RING Button on your DoorBird and wait a few seconds.": "Press the RING Button on your DoorBird and wait a few seconds.",
-    "Username": "Username",
-    "doorbird adapter settings": "Adapter settings for doorbird",
-    "option1": "",
-    "option2": ""
+	"(Click search Icon for automatic detection)": "(Click search Icon for automatic detection)",
+	"Adapter IP": "Adapter IP",
+	"DoorBird Device IP": "DoorBird Device IP",
+	"Password": "Password",
+	"Press the RING Button on your DoorBird and wait a few seconds.": "Press the RING Button on your DoorBird and wait a few seconds.",
+	"Username": "Username",
+	"doorbird adapter settings": "Adapter settings for doorbird",
+	"option1": "",
+	"option2": "",
+	"Listen on all interfaces": "Listen on all interfaces"
 }
