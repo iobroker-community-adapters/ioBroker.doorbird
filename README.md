@@ -113,6 +113,7 @@ onFile("doorbird.0", "TakeSnapshot_1.jpg", false, function (id, fileName, size, 
 ### **WORK IN PROGRESS**
 
 -   (Schmakus) Update package.json (Node.js v16 or higher and NPM v7 or higher is required!)
+-   (Stefan592/Schmakus) bugfix 'listen on all interfaces'
 
 ### 1.1.1 (2023-08-03)
 

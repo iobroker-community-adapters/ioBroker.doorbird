@@ -79,10 +79,23 @@ class Doorbird extends utils.Adapter {
 		// udpserver.bind(35344);
 		if (this.config.adapterAddress) {
 			try {
+				let ip;
+				let msg;
+
+				if (this.config.listenOnAllInterfaces) {
+					ip = '0.0.0.0';
+					msg = `Server gestartet auf allen Interfaces auf Port ${this.config.adapterport || 8100}`;
+				} else {
+					ip = this.config.adapterAddress;
+					msg = `Server gestartet auf Port ${this.config.adapterport || 8100} und IP ${
+						this.config.adapterAddress
+					}`;
+				}
+
 				this.server = http.createServer(async (req, res) => {
 					if (res.socket && res.socket.remoteAddress) {
 						const remoteAddress = res.socket.remoteAddress.replace(/^.*:/, '');
-						if (remoteAddress === this.config.birdip || remoteAddress === '192.168.30.47') {
+						if (remoteAddress === this.config.birdip || remoteAddress === ip) {
 							res.writeHead(204, { 'Content-Type': 'text/plain' });
 							if (req.url == '/motion') {
 								this.log.debug('Received Motion-alert from Doorbird!');
@@ -114,19 +127,6 @@ class Doorbird extends utils.Adapter {
 						res.end();
 					}
 				});
-
-				let ip;
-				let msg;
-
-				if (this.config.listenOnAllInterfaces) {
-					ip = '0.0.0.0';
-					msg = `Server gestartet auf allen Interfaces auf Port ${this.config.adapterport || 8100}`;
-				} else {
-					ip = this.config.adapterAddress;
-					msg = `Server gestartet auf Port ${this.config.adapterport || 8100} und IP ${
-						this.config.adapterAddress
-					}`;
-				}
 
 				this.server.listen(this.config.adapterport || 8081, ip, () => {
 					this.log.debug(msg);
