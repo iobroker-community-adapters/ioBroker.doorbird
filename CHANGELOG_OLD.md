@@ -1,4 +1,8 @@
 # Older changes
+## 1.0.4 (2023-07-05)
+
+-   (Schmakus) Interim solution because deletion of duplicate favorites
+
 ## 1.0.2 (2023-07-04)
 
 -   (Schmakus) Hotfix because dev-mode was active

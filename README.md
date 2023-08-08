@@ -109,8 +109,7 @@ onFile("doorbird.0", "TakeSnapshot_1.jpg", false, function (id, fileName, size, 
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-
-### **WORK IN PROGRESS**
+### 1.2.0 (2023-08-08)
 
 -   (Schmakus) Update package.json (Node.js v16 or higher and NPM v7 or higher is required!)
 -   (Stefan592/Schmakus) bugfix 'listen on all interfaces'
@@ -132,10 +131,6 @@ onFile("doorbird.0", "TakeSnapshot_1.jpg", false, function (id, fileName, size, 
 ### 1.0.5 (2023-07-05)
 
 -   (Schmakus) Fixed AxiosError (deletion of duplicates) [#55]
-
-### 1.0.4 (2023-07-05)
-
--   (Schmakus) Interim solution because deletion of duplicate favorites
 
 ## License
 
