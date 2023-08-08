@@ -82,7 +82,7 @@ class Doorbird extends utils.Adapter {
 				this.server = http.createServer(async (req, res) => {
 					if (res.socket && res.socket.remoteAddress) {
 						const remoteAddress = res.socket.remoteAddress.replace(/^.*:/, '');
-						if (remoteAddress === this.config.birdip || remoteAddress === '192.168.30.47') {
+						if (remoteAddress === this.config.birdip || this.config.listenOnAllInterfaces) {
 							res.writeHead(204, { 'Content-Type': 'text/plain' });
 							if (req.url == '/motion') {
 								this.log.debug('Received Motion-alert from Doorbird!');
