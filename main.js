@@ -39,7 +39,6 @@ class Doorbird extends utils.Adapter {
 
 		this.authorized = false;
 
-		this.birdConCheck = null;
 		this.wizard = false;
 		this.wizardTimeout = null;
 	}
@@ -54,9 +53,9 @@ class Doorbird extends utils.Adapter {
 		const systemConfig = await this.getForeignObjectAsync('system.config');
 
 		if (systemConfig && systemConfig.native && systemConfig.native.secret) {
-			this.config.birdpw = await this.decryption(systemConfig.native.secret, this.config.birdpw || 'empty');
+			this.config.birdpw = this.decryption(systemConfig.native.secret, this.config.birdpw || 'empty');
 		} else {
-			this.config.birdpw = await this.decryption('Zgfr56gFe87jJOM', this.config.birdpw || 'empty');
+			this.config.birdpw = this.decryption('Zgfr56gFe87jJOM', this.config.birdpw || 'empty');
 		}
 
 		await Promise.all([this.migrateAsync(), this.mainAsync()]);
@@ -65,6 +64,10 @@ class Doorbird extends utils.Adapter {
 	async mainAsync() {
 		if (this.config.birdip && this.config.birdpw && this.config.birduser) {
 			await this.testBirdAsync();
+			this.birdConCheck = this.setInterval(() => {
+				this.log.debug(`Refresh connection check...`);
+				this.testBirdAsync();
+			}, 180000);
 		}
 
 		try {
@@ -246,16 +249,7 @@ class Doorbird extends utils.Adapter {
 				this.log.warn('Error in testBird() Request: ' + error);
 			}
 		}
-
-		if (this.birdConCheck) {
-			this.clearTimeout(this.birdConCheck);
-			this.birdConCheck = null;
-		}
-
-		this.birdConCheck = this.setTimeout(async () => {
-			this.log.debug(`Refresh connection check...`);
-			await this.testBirdAsync();
-		}, 180000);
+		return true;
 	}
 
 	/**
@@ -337,87 +331,81 @@ class Doorbird extends utils.Adapter {
 			const response = await Axios.get(url);
 
 			if (response.status === 200) {
-				try {
-					const favorites = response.data;
-					for (const key in favorites.http) {
-						if (!Object.hasOwnProperty.call(favorites.http, key)) continue;
-						const obj = favorites.http[key];
-						if (
-							obj.title.indexOf('ioBroker ' + this.namespace) !== -1 &&
-							obj.value.indexOf(this.config.adapterAddress + ':' + this.config.adapterport) === -1
-						) {
-							this.log.warn(
-								`The Favorite ID '${key}' contains a wrong URL ('${obj.value}').. I will update that..`,
-							);
-							await this.updateFavoriteAsync(key, obj);
-							return;
-						}
-						if (obj.value.indexOf(this.config.adapterAddress + ':' + this.config.adapterport) !== -1) {
-							this.log.debug(
-								`Found a Favorite that belongs to me.. (ID: '${key}') ('${obj.title}': '${obj.value}')`,
-							);
+				const favorites = response.data;
+				for (const [key, obj] of Object.entries(favorites.http)) {
+					if (
+						obj.title.includes('ioBroker ' + this.namespace) &&
+						!obj.value.includes(this.config.adapterAddress + ':' + this.config.adapterport)
+					) {
+						this.log.warn(
+							`The Favorite ID '${key}' contains a wrong URL ('${obj.value}').. I will update that..`,
+						);
 
-							const favoriteKey = obj.title.split(' ')[2];
-							const favoriteUrl = obj.value;
+						await this.updateFavoriteAsync(key, obj);
+						return;
+					}
 
-							this.favoriteState[favoriteKey] = {
-								ID: key,
-								URL: obj.value,
-							};
-							//toDelete
-							this.log.debug(`favoriteState: ${JSON.stringify(this.favoriteState)}`);
+					if (obj.value.includes(this.config.adapterAddress + ':' + this.config.adapterport)) {
+						this.log.debug(
+							`Found a Favorite that belongs to me.. (ID: '${key}') ('${obj.title}': '${obj.value}')`,
+						);
 
-							const duplicate = Object.values(this.favoriteState).find(
-								(item) => item.URL === favoriteUrl && item.ID !== key,
-							);
+						const favoriteKey = obj.title.split(' ')[2];
+						const favoriteUrl = obj.value;
 
-							if (duplicate) {
-								this.log.warn(`Found a duplicate favorite! (ID : '${key}') URL ${obj.value}`);
+						this.favoriteState[favoriteKey] = {
+							ID: key,
+							URL: obj.value,
+						};
 
-								if (InterimSolutionForDeletionOfDuplicates) {
-									this.log.warn(
-										`deleting duplicates is currently in dev-mode. Please delete duplicates yourself via the Doorbird app if nessesary.`,
-									);
-								} else {
-									this.log.debug(`Trying to delete the duplicate..`);
+						const duplicate = Object.values(this.favoriteState).find(
+							(item) => item.URL === favoriteUrl && item.ID !== key,
+						);
 
-									const deleteUrl =
-										'http://' +
-										this.config.birdip +
-										'/bha-api/favorites.cgi?http-user=' +
-										this.config.birduser +
-										'&http-password=' +
-										this.config.birdpw +
-										'&action=remove&type=http&id=' +
-										key;
+						if (duplicate) {
+							this.log.warn(`Found a duplicate favorite! (ID : '${key}') URL ${obj.value}`);
+
+							if (InterimSolutionForDeletionOfDuplicates) {
+								this.log.warn(
+									`deleting duplicates is currently in dev-mode. Please delete duplicates yourself via the Doorbird app if necessary.`,
+								);
+							} else {
+								this.log.debug(`Trying to delete the duplicate..`);
+
+								const deleteUrl = `http://${this.config.birdip}/bha-api/favorites.cgi?http-user=${this.config.birduser}&http-password=${this.config.birdpw}&action=remove&type=http&id=${key}`;
+
+								try {
 									const deleteResponse = await Axios.get(deleteUrl);
+
 									if (deleteResponse.status === 200) {
 										delete this.favoriteState[favoriteKey];
 										this.log.debug(`Deleted the duplicate (ID: '${key}') successfully!`);
-										//toDelete
+										// toDelete
 										this.log.debug(`favoriteState: ${JSON.stringify(this.favoriteState)}`);
 									} else {
 										this.log.warn(`I was unable to delete the duplicate! (ID: ${key})`);
 									}
+								} catch (error) {
+									this.log.error(
+										`An error occurred while trying to delete the duplicate (ID: ${key}): ${error}`,
+									);
 								}
 							}
 						}
 					}
-					if (Object.keys(this.favoriteState).length === 0) {
-						this.log.debug('I did not find any Favorite on the DoorBird Device that belongs to me.');
-					} else {
-						this.log.debug(`Result of Favorites: ${JSON.stringify(this.favoriteState)}`);
-					}
-					await this.getSchedulesAsync();
-					return true;
-				} catch (error) {
-					this.log.warn(`Error in Parsing favorites: ${error}`);
-					return;
 				}
+
+				if (Object.keys(this.favoriteState).length === 0) {
+					this.log.debug('I did not find any Favorite on the DoorBird Device that belongs to me.');
+				} else {
+					this.log.debug(`Result of Favorites: ${JSON.stringify(this.favoriteState)}`);
+				}
+
+				await this.getSchedulesAsync();
+				return true;
 			}
 		} catch (error) {
-			this.log.warn(`Error in getFavorites(): ${error}`);
-			return;
+			this.log.warn(`Error in checkFavoritesAsync(): ${error}`);
 		}
 	}
 
@@ -730,10 +718,7 @@ class Doorbird extends utils.Adapter {
 	 */
 	onUnload(callback) {
 		try {
-			if (this.birdConCheck) {
-				this.clearTimeout(this.birdConCheck);
-				this.birdConCheck = null;
-			}
+			if (this.birdConCheck) this.clearInterval(this.birdConCheck), (this.birdConCheck = null);
 			if (this.server)
 				this.server.close(() => {
 					this.log.debug(`Server closed`);
