@@ -1,4 +1,10 @@
 # Older changes
+## 1.0.6 (2023-08-03)
+
+-   (Schmakus) Hotfix #66 Error in parsing schedules
+-   (Schmakus) Update documentation
+-   (Schmakus) Update dependencies
+
 ## 1.0.5 (2023-07-05)
 
 -   (Schmakus) Fixed AxiosError (deletion of duplicates) [#55]
