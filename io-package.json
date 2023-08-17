@@ -5,7 +5,7 @@
     "news": {
       "1.2.3": {
         "en": "changed schedule handling. (fix status code 400)",
-        "de": "geänderte fahrplanbearbeitung. (standardstatuscode 400)",
+        "de": "geänderte schedule bearbeitung. (fix status code 400)",
         "ru": "измененный график обработки. (фикс код состояния 400)",
         "pt": "mudança de horário. (fixar código de status 400)",
         "nl": "veranderde schema. (fix status code 400)",
