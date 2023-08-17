@@ -109,8 +109,7 @@ onFile("doorbird.0", "TakeSnapshot_1.jpg", false, function (id, fileName, size, 
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-
-### **WORK IN PROGRESS**
+### 1.2.1 (2023-08-17)
 
 -   (Schmakus) Issue 'Maximum call stack size exceeded' - try to fix
 
@@ -132,10 +131,6 @@ onFile("doorbird.0", "TakeSnapshot_1.jpg", false, function (id, fileName, size, 
 -   (Schmakus) Hotfix #66 Error in parsing schedules
 -   (Schmakus) Update documentation
 -   (Schmakus) Update dependencies
-
-### 1.0.5 (2023-07-05)
-
--   (Schmakus) Fixed AxiosError (deletion of duplicates) [#55]
 
 ## License
 

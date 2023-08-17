@@ -1,4 +1,8 @@
 # Older changes
+## 1.0.5 (2023-07-05)
+
+-   (Schmakus) Fixed AxiosError (deletion of duplicates) [#55]
+
 ## 1.0.4 (2023-07-05)
 
 -   (Schmakus) Interim solution because deletion of duplicate favorites
