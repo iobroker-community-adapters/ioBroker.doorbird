@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "doorbird",
-    "version": "1.2.2",
+    "version": "1.2.3",
     "news": {
+      "1.2.3": {
+        "en": "changed schedule handling. (fix status code 400)",
+        "de": "geänderte fahrplanbearbeitung. (standardstatuscode 400)",
+        "ru": "измененный график обработки. (фикс код состояния 400)",
+        "pt": "mudança de horário. (fixar código de status 400)",
+        "nl": "veranderde schema. (fix status code 400)",
+        "fr": "changement d'horaire. (fix status code 400)",
+        "it": "modifica la gestione degli orari. (fisso codice di stato 400)",
+        "es": "cambió el manejo de horarios. (código de estado fijo 400)",
+        "pl": "zmienione procedury. (król nr 400)",
+        "uk": "змінений графік роботи. (код статусуфікса 400)",
+        "zh-cn": "修改时间表。 (九) 身份守则400)"
+      },
       "1.2.2": {
         "en": "some code improvements",
         "de": "einige code verbesserungen",
@@ -80,19 +93,6 @@
         "pl": "Hotfix #66 Error in parsing schedule (ang.)\nAktualizacja\nZależności aktualnej",
         "uk": "Hotfix #66 Помилка в розкладах\nДокументи\nОновлення залежності",
         "zh-cn": "假释时间表\n最新文件\n最新依赖"
-      },
-      "1.0.5": {
-        "en": "Fixed AxiosError (deletion of duplicates) [#55]",
-        "de": "Fixed AxiosError (Löschung von Duplikaten) #[55]",
-        "ru": "Фиксированный AxiosError (отбор дубликатов) #[55]",
-        "pt": "AxiosError fixo (deleção de duplicatas) #[55]",
-        "nl": "Quality over Quantity (QoQ) Releases Vertaling:",
-        "fr": "AxiosError fixe (élimination des doubles) #[55]",
-        "it": "AxiosError fisso (delezione dei duplicati) #[55]",
-        "es": "Axios fijosError (deleción de duplicados) #[55]",
-        "pl": "Fixed AxiosError (delecja duplikacji) #55 (ang.)",
-        "uk": "Фіксований AxiosОхоронець (видалення дублікатів) #[55]",
-        "zh-cn": "Fixed AxiosError(删除重复) #[55]"
       }
     },
     "titleLang": {

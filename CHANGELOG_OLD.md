@@ -1,4 +1,8 @@
 # Older changes
+## 1.1.0 (2023-08-03)
+
+-   (Schmakus/Stefan592) support 'listen on all interfaces' (e.g. for Docker)
+
 ## 1.0.6 (2023-08-03)
 
 -   (Schmakus) Hotfix #66 Error in parsing schedules
