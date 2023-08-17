@@ -598,14 +598,19 @@ class Doorbird extends utils.Adapter {
 		this.log.debug('Checking if we need to create Schedules on DoorBird Device..');
 
 		for (const key of Object.keys(this.scheduleState)) {
-			const scheduleArray = this.scheduleState[key];
-			const actionNeeded = scheduleArray.some(
-				(schedule) => schedule.event === 'http' && schedule.param === this.favoriteState[key]['ID'],
-			);
+			let actionNeeded = true;
+			for (let i = 0; i < this.scheduleState[key].length; i++) {
+				if (this.scheduleState[key][i].event !== 'http') {
+					continue;
+				}
+				if (this.scheduleState[key][i].param === this.favoriteState[key]['ID']) {
+					actionNeeded = false;
+				}
+			}
 
 			if (actionNeeded) {
 				this.log.debug('We need to create a Schedule for Doorbell ID: ' + key);
-
+				const scheduleArray = this.scheduleState[key];
 				scheduleArray.push({
 					event: 'http',
 					param: this.favoriteState[key]['ID'],
@@ -665,13 +670,19 @@ class Doorbird extends utils.Adapter {
 	 */
 	async createMotionScheduleAsync() {
 		for (const key of Object.keys(this.motionState)) {
-			const motionArray = this.motionState[key];
-			const actionNeeded = motionArray.some(
-				(motion) => motion.event === 'http' && motion.param === this.favoriteState['Motion']['ID'],
-			);
+			let actionNeeded = true;
+			for (let i = 0; i < this.motionState[key].length; i++) {
+				if (this.motionState[key][i].event !== 'http') {
+					continue;
+				}
+				if (this.motionState[key][i].param === this.favoriteState['Motion']['ID']) {
+					actionNeeded = false;
+				}
+			}
 
 			if (actionNeeded) {
 				this.log.debug('We need to create a Schedule for the Motion Sensor!');
+				const motionArray = this.motionState[key];
 				motionArray.push({
 					event: 'http',
 					param: this.favoriteState['Motion']['ID'],
