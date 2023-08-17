@@ -110,10 +110,13 @@ onFile("doorbird.0", "TakeSnapshot_1.jpg", false, function (id, fileName, size, 
     ### **WORK IN PROGRESS**
 -->
 
+### **WORK IN PROGRESS**
+
+-   (Schmakus) some code improvements
+
 ### 1.2.1 (2023-08-17)
 
 -   (Schmakus) Issue 'Maximum call stack size exceeded' - try to fix
--   (Schmakus) some code improvements
 
 ### 1.2.0 (2023-08-08)
 
