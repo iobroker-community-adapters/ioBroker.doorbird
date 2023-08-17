@@ -587,6 +587,7 @@ class Doorbird extends utils.Adapter {
 			this.log.debug('Favorites checked successfully. No actions needed!');
 			await this.createSchedulesAsync();
 		}
+		return true;
 	}
 
 	/**
@@ -595,44 +596,41 @@ class Doorbird extends utils.Adapter {
 	 */
 	async createSchedulesAsync() {
 		this.log.debug('Checking if we need to create Schedules on DoorBird Device..');
-		for (const key in this.scheduleState) {
-			if (Object.hasOwnProperty.call(this.scheduleState, key)) {
-				let actionNeeded = true;
-				for (let i = 0; i < this.scheduleState[key].length; i++) {
-					if (this.scheduleState[key][i].event !== 'http') {
-						continue;
-					}
-					if (this.scheduleState[key][i].param === this.favoriteState[key]['ID']) {
-						actionNeeded = false;
-					}
-				}
-				if (actionNeeded) {
-					const array = this.scheduleState[key];
-					this.log.debug('We need to create a Schedule for Doorbell ID: ' + key);
-					array.push({
-						event: 'http',
-						param: this.favoriteState[key]['ID'],
-						enabled: '1',
-						schedule: { weekdays: [{ from: '79200', to: '79199' }] },
-					});
-					this.toCreate = { input: 'doorbell', param: key, output: array };
-					try {
-						const createUrl = this.buildURL('schedule');
-						const response = await Axios.post(createUrl, this.toCreate);
 
-						if (response.status === 200) {
-							this.log.debug('Schedule created successfully!');
-						} else {
-							this.log.warn(
-								`There was an Error while creating the schedule. Status: ${response.status}, Text: ${response.statusText}`,
-							);
-						}
-					} catch (error) {
-						this.log.warn(`Error in creating schedule: ${error}`);
+		for (const key of Object.keys(this.scheduleState)) {
+			const scheduleArray = this.scheduleState[key];
+			const actionNeeded = scheduleArray.some(
+				(schedule) => schedule.event === 'http' && schedule.param === this.favoriteState[key]['ID'],
+			);
+
+			if (actionNeeded) {
+				this.log.debug('We need to create a Schedule for Doorbell ID: ' + key);
+
+				scheduleArray.push({
+					event: 'http',
+					param: this.favoriteState[key]['ID'],
+					enabled: '1',
+					schedule: { weekdays: [{ from: '79200', to: '79199' }] },
+				});
+
+				this.toCreate = { input: 'doorbell', param: key, output: scheduleArray };
+
+				try {
+					const createUrl = this.buildURL('schedule');
+					const response = await Axios.post(createUrl, this.toCreate);
+
+					if (response.status === 200) {
+						this.log.debug('Schedule created successfully!');
+					} else {
+						this.log.warn(
+							`There was an Error while creating the schedule. Status: ${response.status}, Text: ${response.statusText}`,
+						);
 					}
-				} else {
-					this.log.debug('Okay we dont need to create any Doorbell-Schedules..');
+				} catch (error) {
+					this.log.warn(`Error in creating schedule: ${error}`);
 				}
+			} else {
+				this.log.debug('Okay we dont need to create any Doorbell-Schedules..');
 			}
 		}
 
@@ -641,19 +639,12 @@ class Doorbird extends utils.Adapter {
 				name: {
 					en: 'Doorbell',
 					de: 'Türklingel',
-					ru: 'Дверной звонок',
-					pt: 'Campainha de porta',
-					nl: 'Deur',
-					fr: 'Doorbell',
-					it: 'Campana porta',
-					es: 'Doorbell',
-					pl: 'Doorbell',
-					uk: 'Рушники',
-					'zh-cn': 'Doorbell',
+					// ...
 				},
 				desc: `ID: ${value}`,
 			});
-			//create State
+
+			// create State
 			await this.createObjectsAsync(`Doorbell.${value}.trigger`, 'state', {
 				role: 'indicator',
 				name: "Doorbell ID '" + value + "' pressed",
@@ -665,6 +656,7 @@ class Doorbird extends utils.Adapter {
 		}
 
 		await this.createMotionScheduleAsync();
+		return true;
 	}
 
 	/**
@@ -672,44 +664,40 @@ class Doorbird extends utils.Adapter {
 	 * @async
 	 */
 	async createMotionScheduleAsync() {
-		for (const key in this.motionState) {
-			if (Object.hasOwnProperty.call(this.motionState, key)) {
-				let actionNeeded = true;
-				for (let i = 0; i < this.motionState[key].length; i++) {
-					if (this.motionState[key][i].event !== 'http') {
-						continue;
-					}
-					if (this.motionState[key][i].param === this.favoriteState['Motion']['ID']) {
-						actionNeeded = false;
-					}
-				}
-				if (actionNeeded) {
-					const array = this.motionState[key];
-					this.log.debug('We need to create a Schedule for the Motion Sensor!');
-					array.push({
-						event: 'http',
-						param: this.favoriteState['Motion']['ID'],
-						enabled: '1',
-						schedule: { weekdays: [{ from: '79200', to: '79199' }] },
-					});
-					const toCreate = { input: 'motion', param: '', output: array };
-					try {
-						const createUrl = this.buildURL('schedule');
-						const response = await Axios.post(createUrl, toCreate);
+		for (const key of Object.keys(this.motionState)) {
+			const motionArray = this.motionState[key];
+			const actionNeeded = motionArray.some(
+				(motion) => motion.event === 'http' && motion.param === this.favoriteState['Motion']['ID'],
+			);
 
-						if (response.status === 200) {
-							this.log.debug('Schedule for Motion Sensor set successfully!');
-						} else {
-							this.log.warn(
-								`There was an Error while setting the Motion schedule. (Statuscode: ${response.status}), (Statustext: ${response.statusText}`,
-							);
-						}
-					} catch (error) {
-						this.log.warn(`Error in setting Motion schedule: ${error}`);
+			if (actionNeeded) {
+				this.log.debug('We need to create a Schedule for the Motion Sensor!');
+				motionArray.push({
+					event: 'http',
+					param: this.favoriteState['Motion']['ID'],
+					enabled: '1',
+					schedule: { weekdays: [{ from: '79200', to: '79199' }] },
+				});
+
+				const toCreate = { input: 'motion', param: '', output: motionArray };
+
+				try {
+					const createUrl = this.buildURL('schedule');
+					const response = await Axios.post(createUrl, toCreate);
+
+					if (response.status === 200) {
+						this.log.debug('Schedule for Motion Sensor set successfully!');
+					} else {
+						this.log.warn(
+							`There was an Error while setting the Motion schedule. (Statuscode: ${response.status}), (Statustext: ${response.statusText}`,
+						);
 					}
+				} catch (error) {
+					this.log.warn(`Error in setting Motion schedule: ${error}`);
 				}
 			}
 		}
+		return true;
 	}
 
 	/**
