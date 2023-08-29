@@ -90,15 +90,13 @@ class Doorbird extends utils.Adapter {
 					msg = `Server gestartet auf allen Interfaces auf Port ${this.config.adapterport || 8100}`;
 				} else {
 					ip = this.config.adapterAddress;
-					msg = `Server gestartet auf Port ${this.config.adapterport || 8100} und IP ${
-						this.config.adapterAddress
-					}`;
+					msg = `Server gestartet auf Port ${this.config.adapterport || 8100} und IP ${this.config.adapterAddress}`;
 				}
 
 				this.server = http.createServer(async (req, res) => {
 					if (res.socket && res.socket.remoteAddress) {
 						const remoteAddress = res.socket.remoteAddress.replace(/^.*:/, '');
-						if (remoteAddress === this.config.birdip || remoteAddress === ip) {
+						if (remoteAddress === this.config.birdip || this.config.listenOnAllInterfaces) {
 							res.writeHead(204, { 'Content-Type': 'text/plain' });
 							if (req.url == '/motion') {
 								this.log.debug('Received Motion-alert from Doorbird!');
