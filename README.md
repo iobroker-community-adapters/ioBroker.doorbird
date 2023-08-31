@@ -108,6 +108,11 @@ onFile("doorbird.0", "TakeSnapshot_1.jpg", false, function (id, fileName, size, 
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+
+### **WORK IN PROGRESS**
+
+-   (Schmakus) Hotfix [#73] Maximum call stack size exceeded
+
 ### 1.2.3 (2023-08-17)
 
 -   (Schmakus) changed schedule handling. (fix status code 400)
