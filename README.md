@@ -111,7 +111,7 @@ onFile("doorbird.0", "TakeSnapshot_1.jpg", false, function (id, fileName, size, 
 
 ### **WORK IN PROGRESS**
 
--   (Schmakus) fixed [#73] Maximum call stack size exceeded
+-   (Schmakus) tryed to fixed [#73] Maximum call stack size exceeded
 -   (Stefan592) fixed 'listen on all interfaces'
 
 ### 1.2.3 (2023-08-17)
