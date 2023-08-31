@@ -10,6 +10,7 @@ const utils = require('@iobroker/adapter-core');
 
 const dgram = require('dgram');
 const Axios = require('axios').default;
+Axios.defaults.timeout = 5000;
 const http = require('http');
 const udpserver = dgram.createSocket('udp4');
 
@@ -63,11 +64,7 @@ class Doorbird extends utils.Adapter {
 
 	async mainAsync() {
 		if (this.config.birdip && this.config.birdpw && this.config.birduser) {
-			await this.testBirdAsync();
-			this.birdConCheck = this.setInterval(() => {
-				this.log.debug(`Refresh connection check...`);
-				this.testBirdAsync();
-			}, 180000);
+			this.testBirdAsync(); // no await because code should run parallel
 		}
 
 		try {
@@ -90,7 +87,9 @@ class Doorbird extends utils.Adapter {
 					msg = `Server gestartet auf allen Interfaces auf Port ${this.config.adapterport || 8100}`;
 				} else {
 					ip = this.config.adapterAddress;
-					msg = `Server gestartet auf Port ${this.config.adapterport || 8100} und IP ${this.config.adapterAddress}`;
+					msg = `Server gestartet auf Port ${this.config.adapterport || 8100} und IP ${
+						this.config.adapterAddress
+					}`;
 				}
 
 				this.server = http.createServer(async (req, res) => {
@@ -241,13 +240,23 @@ class Doorbird extends utils.Adapter {
 				this.authorized = false;
 				await this.setStateAsync('info.connection', false, true);
 				this.log.warn('DoorBird Device is offline!!');
+			} else if (error.code === 'ECONNABORTED') {
+				this.authorized = false;
+				await this.setStateAsync('info.connection', false, true);
+				this.log.warn('Error in testBird() Request timed out: ' + error);
 			} else {
 				this.authorized = false;
 				await this.setStateAsync('info.connection', false, true);
 				this.log.warn('Error in testBird() Request: ' + error);
 			}
 		}
-		return true;
+
+		if (this.birdConCheck) this.clearTimeout(this.birdConCheck), (this.birdConCheck = null);
+		this.birdConCheck = this.setTimeout(() => {
+			this.log.debug(`Refresh connection check...`);
+			this.birdConCheck = null;
+			this.testBirdAsync();
+		}, 180000);
 	}
 
 	/**
@@ -443,7 +452,11 @@ class Doorbird extends utils.Adapter {
 				this.log.warn(`There was an error while updating the Favorite! ${response.status}`);
 			}
 		} catch (error) {
-			this.log.warn('There was an error while updating the Favorite! (' + error + ')');
+			if (error.code === 'ECONNABORTED') {
+				this.log.warn('Error in testBird() Request timed out: ' + error);
+			} else {
+				this.log.warn('There was an error while updating the Favorite! (' + error + ')');
+			}
 		}
 	}
 
@@ -492,7 +505,11 @@ class Doorbird extends utils.Adapter {
 
 					await this.createFavoritesAsync(0);
 				} catch (error) {
-					this.log.warn(`Error in Parsing Schedules: ${error}`);
+					if (error.code === 'ECONNABORTED') {
+						this.log.warn('Error in testBird() Request timed out: ' + error);
+					} else {
+						this.log.warn(`Error in Parsing Schedules: ${error}`);
+					}
 				}
 			}
 		} catch (error) {
