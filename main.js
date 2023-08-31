@@ -218,6 +218,7 @@ class Doorbird extends utils.Adapter {
 	/**
 	 * Check Doorbird Connection
 	 * @async
+	 * @returns {Promise<void>}
 	 */
 	async testBirdAsync() {
 		try {
@@ -262,6 +263,7 @@ class Doorbird extends utils.Adapter {
 	/**
 	 * Get Doorbird Info
 	 * @async
+	 * @returns {Promise<void>}
 	 */
 	async getInfoAsync() {
 		if (this.authorized) {
@@ -330,6 +332,7 @@ class Doorbird extends utils.Adapter {
 	/**
 	 * Check Favorites
 	 * @async
+	 * @returns {Promise<void>}
 	 */
 	async checkFavoritesAsync() {
 		this.log.debug('Checking favorites on DoorBird Device..');
@@ -409,7 +412,7 @@ class Doorbird extends utils.Adapter {
 				}
 
 				await this.getSchedulesAsync();
-				return true;
+				return;
 			}
 		} catch (error) {
 			this.log.warn(`Error in checkFavoritesAsync(): ${error}`);
@@ -421,6 +424,7 @@ class Doorbird extends utils.Adapter {
 	 * @async
 	 * @param {number | string} key
 	 * @param {object} obj
+	 * @returns {Promise<void>}
 	 */
 	async updateFavoriteAsync(key, obj) {
 		const newURL = obj.value.replace(
@@ -463,6 +467,7 @@ class Doorbird extends utils.Adapter {
 	/**
 	 * Get Schedules
 	 * @async
+	 * @returns {Promise<void>}
 	 */
 	async getSchedulesAsync() {
 		try {
@@ -505,11 +510,7 @@ class Doorbird extends utils.Adapter {
 
 					await this.createFavoritesAsync(0);
 				} catch (error) {
-					if (error.code === 'ECONNABORTED') {
-						this.log.warn('Error in testBird() Request timed out: ' + error);
-					} else {
-						this.log.warn(`Error in Parsing Schedules: ${error}`);
-					}
+					this.log.warn(`Error in Parsing Schedules: ${error}`);
 				}
 			}
 		} catch (error) {
@@ -522,7 +523,7 @@ class Doorbird extends utils.Adapter {
 	 * @param {number} i
 	 * @param {boolean} [action = false]
 	 * @param {boolean} [motion = false]
-	 * @returns
+	 * @returns {Promise<void>}
 	 */
 	async createFavoritesAsync(i, action, motion) {
 		this.log.debug('Checking if we need to create any favorites..');
@@ -559,6 +560,7 @@ class Doorbird extends utils.Adapter {
 					i++;
 					this.log.debug(`Favorite created successfully..`);
 					await this.createFavoritesAsync(i, true, false);
+					return;
 				}
 			} catch (error) {
 				this.log.warn(`Error in creating Favorite: ${error}`);
@@ -586,12 +588,12 @@ class Doorbird extends utils.Adapter {
 				if (response.status === 200) {
 					this.log.debug('Favorite for Motionsensor created.');
 					await this.createFavoritesAsync(i, true, true);
+					return;
 				}
 			} catch (error) {
 				this.log.warn('Error creating favorite for Motionsensor: ' + error);
+				return;
 			}
-
-			return;
 		}
 		if (action) {
 			this.log.debug('Finished creating Favorites.. Checking again - just to be sure!');
@@ -602,12 +604,12 @@ class Doorbird extends utils.Adapter {
 			this.log.debug('Favorites checked successfully. No actions needed!');
 			await this.createSchedulesAsync();
 		}
-		return true;
 	}
 
 	/**
 	 * Create Schedules
 	 * @async
+	 * @returns {Promise<void>}
 	 */
 	async createSchedulesAsync() {
 		this.log.debug('Checking if we need to create Schedules on DoorBird Device..');
@@ -676,12 +678,12 @@ class Doorbird extends utils.Adapter {
 		}
 
 		await this.createMotionScheduleAsync();
-		return true;
 	}
 
 	/**
 	 * Create Motion Schedule
 	 * @async
+	 * @returns {Promise<void>}
 	 */
 	async createMotionScheduleAsync() {
 		for (const key of Object.keys(this.motionState)) {
@@ -723,7 +725,6 @@ class Doorbird extends utils.Adapter {
 				}
 			}
 		}
-		return true;
 	}
 
 	/**
@@ -732,7 +733,7 @@ class Doorbird extends utils.Adapter {
 	 */
 	onUnload(callback) {
 		try {
-			if (this.birdConCheck) this.clearInterval(this.birdConCheck), (this.birdConCheck = null);
+			if (this.birdConCheck) this.clearTimeout(this.birdConCheck), (this.birdConCheck = null);
 			if (this.server)
 				this.server.close(() => {
 					this.log.debug(`Server closed`);
@@ -892,7 +893,7 @@ class Doorbird extends utils.Adapter {
 	 * @async
 	 * @param {string} dp path to datapoint
 	 * @param {'device' | 'channel' | 'state' | 'meta'} type type of object
-	 * @param {ioBroker.StateCommon | ioBroker.ChannelCommon | ioBroker.DeviceCommon} common common part of object
+	 * @param {object} common common part of object
 	 * @param {boolean} [foreign = false] set adapter states = false; set foreign states = true
 	 */
 	async createObjectsAsync(dp, type, common, foreign) {
@@ -905,7 +906,6 @@ class Doorbird extends utils.Adapter {
 				common: common,
 				native: {},
 			};
-			// @ts-expect-error
 			await (foreign ? this.setForeignObjectAsync(dp, obj) : this.setObjectAsync(dp, obj));
 			this.log.debug(`Object: ${dp} created.`);
 		} else {
