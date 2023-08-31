@@ -108,8 +108,7 @@ onFile("doorbird.0", "TakeSnapshot_1.jpg", false, function (id, fileName, size, 
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-
-### **WORK IN PROGRESS**
+### 1.2.4 (2023-08-31)
 
 -   (Schmakus) tryed to fixed [#73] Maximum call stack size exceeded
 -   (Stefan592) fixed 'listen on all interfaces'
@@ -130,10 +129,6 @@ onFile("doorbird.0", "TakeSnapshot_1.jpg", false, function (id, fileName, size, 
 
 -   (Schmakus) Update package.json (Node.js v16 or higher and NPM v7 or higher is required!)
 -   (Stefan592/Schmakus) bugfix 'listen on all interfaces'
-
-### 1.1.1 (2023-08-03)
-
--   (Schmakus) fixed js-controller dependency [#69]
 
 ## License
 

@@ -1,4 +1,8 @@
 # Older changes
+## 1.1.1 (2023-08-03)
+
+-   (Schmakus) fixed js-controller dependency [#69]
+
 ## 1.1.0 (2023-08-03)
 
 -   (Schmakus/Stefan592) support 'listen on all interfaces' (e.g. for Docker)
