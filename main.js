@@ -16,6 +16,7 @@ const udpserver = dgram.createSocket('udp4');
 
 const InterimSolutionForDeletionOfDuplicates = false;
 const MAX_SCHEDULES = 200;
+let COUNT_SCHEDULES = 0;
 
 class Doorbird extends utils.Adapter {
 	/**
@@ -470,6 +471,9 @@ class Doorbird extends utils.Adapter {
 	 * @returns {Promise<void>}
 	 */
 	async getSchedulesAsync() {
+		this.log.debug(`[ getSchedulesAsync ] Schedule call count: ${COUNT_SCHEDULES}`);
+		COUNT_SCHEDULES++;
+
 		try {
 			const url = this.buildURL('schedule');
 			const response = await Axios.get(url);
@@ -510,7 +514,7 @@ class Doorbird extends utils.Adapter {
 
 					await this.createFavoritesAsync(0);
 				} catch (error) {
-					this.log.warn(`Error in Parsing Schedules: ${error}`);
+					this.log.warn(`Error in Parsing Schedules: ${error}. Error-Stack: ${error.stack}`);
 				}
 			}
 		} catch (error) {
