@@ -108,6 +108,12 @@ onFile("doorbird.0", "TakeSnapshot_1.jpg", false, function (id, fileName, size, 
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+
+### **WORK IN PROGRESS**
+
+-   (Schmakus) add debug logs to find out "Maximum call stack size exceeded"
+-   (Schmakus) update dependencies
+
 ### 1.2.4 (2023-08-31)
 
 -   (Schmakus) tryed to fixed [#73] Maximum call stack size exceeded
