@@ -65,7 +65,8 @@ class Doorbird extends utils.Adapter {
 
 	async mainAsync() {
 		if (this.config.birdip && this.config.birdpw && this.config.birduser) {
-			this.testBirdAsync(); // no await because code should run parallel
+			const result = await this.testBirdAsync();
+			if (result) await this.getInfoAsync();
 		}
 
 		try {
@@ -77,7 +78,6 @@ class Doorbird extends utils.Adapter {
 			this.log.error(`address already in use ${this.config.adapterAddress}:${this.config.adapterport}: ${error}`);
 		}
 
-		// udpserver.bind(35344);
 		if (this.config.adapterAddress) {
 			try {
 				let ip;
@@ -219,9 +219,10 @@ class Doorbird extends utils.Adapter {
 	/**
 	 * Check Doorbird Connection
 	 * @async
-	 * @returns {Promise<void>}
+	 * @returns {Promise<boolean>}
 	 */
 	async testBirdAsync() {
+		let result = false;
 		try {
 			const url = this.buildURL('schedule');
 			const response = await Axios.get(url);
@@ -235,7 +236,7 @@ class Doorbird extends utils.Adapter {
 				this.authorized = true;
 				await this.setStateAsync('info.connection', true, true);
 				this.log.debug('Authorization with User ' + this.config.birduser + ' successful!');
-				await this.getInfoAsync();
+				result = true;
 			}
 		} catch (error) {
 			if (error.code === 'EHOSTUNREACH') {
@@ -259,6 +260,8 @@ class Doorbird extends utils.Adapter {
 			this.birdConCheck = null;
 			this.testBirdAsync();
 		}, 180000);
+
+		return result;
 	}
 
 	/**
