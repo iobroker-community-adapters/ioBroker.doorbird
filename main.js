@@ -9,10 +9,8 @@
 const utils = require('@iobroker/adapter-core');
 
 const dgram = require('dgram');
-const Axios = require('axios').default;
-Axios.defaults.timeout = 5000;
+const doorbird = require('doorbird');
 const http = require('http');
-const udpserver = dgram.createSocket('udp4');
 
 const InterimSolutionForDeletionOfDuplicates = false;
 const MAX_SCHEDULES = 200;
@@ -68,16 +66,6 @@ class Doorbird extends utils.Adapter {
 			this.testBirdAsync(); // no await because code should run parallel
 		}
 
-		try {
-			udpserver.on('listening', () => {
-				const address = udpserver.address();
-				this.log.debug('Adapter listening on IP: ' + address + ' - UDP Port 35344');
-			});
-		} catch (error) {
-			this.log.error(`address already in use ${this.config.adapterAddress}:${this.config.adapterport}: ${error}`);
-		}
-
-		// udpserver.bind(35344);
 		if (this.config.adapterAddress) {
 			try {
 				let ip;
@@ -199,21 +187,13 @@ class Doorbird extends utils.Adapter {
 		return result;
 	}
 
-	/**
-	 * Generate URL
-	 * @param {'restart' | 'schedule' | 'info' | 'favorites' | 'image' | 'light-on'} command
-	 */
-	buildURL(command) {
-		return (
-			'http://' +
-			this.config.birdip +
-			'/bha-api/' +
-			command +
-			'.cgi?http-user=' +
-			this.config.birduser +
-			'&http-password=' +
-			this.config.birdpw
-		);
+	getDoorbirdClient() {
+		return new doorbird.default({
+			scheme: doorbird.Scheme.http,
+			host: this.config.birdip,
+			username: this.config.birduser,
+			password: this.config.birdpw
+		});
 	}
 
 	/**
@@ -222,36 +202,26 @@ class Doorbird extends utils.Adapter {
 	 * @returns {Promise<void>}
 	 */
 	async testBirdAsync() {
-		try {
-			const url = this.buildURL('schedule');
-			const response = await Axios.get(url);
-
-			if (response.status === 401) {
-				this.authorized = false;
-				await this.setStateAsync('info.connection', false, true);
-				this.log.warn('Whooops.. DoorBird says User ' + this.config.birduser + ' is unauthorized!!');
-				this.log.warn('Check Username + Password and enable the "API-Operator" Permission for the User!!');
-			} else if (response.status === 200) {
-				this.authorized = true;
-				await this.setStateAsync('info.connection', true, true);
-				this.log.debug('Authorization with User ' + this.config.birduser + ' successful!');
-				await this.getInfoAsync();
-			}
-		} catch (error) {
+		this.getDoorbirdClient().getSchedule().then(_ => {
+			this.authorized = true;
+			this.setStateAsync('info.connection', true, true);
+			this.log.debug('Authorization with User ' + this.config.birduser + ' successful!');
+			this.getInfoAsync();
+		}, error => {
 			if (error.code === 'EHOSTUNREACH') {
 				this.authorized = false;
-				await this.setStateAsync('info.connection', false, true);
+				this.setStateAsync('info.connection', false, true);
 				this.log.warn('DoorBird Device is offline!!');
 			} else if (error.code === 'ECONNABORTED') {
 				this.authorized = false;
-				await this.setStateAsync('info.connection', false, true);
+				this.setStateAsync('info.connection', false, true);
 				this.log.warn('Error in testBird() Request timed out: ' + error);
 			} else {
 				this.authorized = false;
-				await this.setStateAsync('info.connection', false, true);
+				this.setStateAsync('info.connection', false, true);
 				this.log.warn('Error in testBird() Request: ' + error);
 			}
-		}
+		});
 
 		if (this.birdConCheck) this.clearTimeout(this.birdConCheck), (this.birdConCheck = null);
 		this.birdConCheck = this.setTimeout(() => {
@@ -268,65 +238,56 @@ class Doorbird extends utils.Adapter {
 	 */
 	async getInfoAsync() {
 		if (this.authorized) {
-			try {
-				const url = this.buildURL('info');
-				const response = await Axios.get(url);
+			this.getDoorbirdClient().getInfo().then(info => {
+				this.setStateAsync('info.firmware', info.BHA.VERSION[0].FIRMWARE, true);
+				this.setStateAsync('info.build', info.BHA.VERSION[0].BUILD_NUMBER, true);
+				this.setStateAsync('info.type', info.BHA.VERSION[0]['DEVICE-TYPE'], true);
 
-				if (response.status === 200) {
-					const info = response.data;
-					await this.setStateAsync('info.firmware', info.BHA.VERSION[0].FIRMWARE, true);
-					await this.setStateAsync('info.build', info.BHA.VERSION[0].BUILD_NUMBER, true);
-					await this.setStateAsync('info.type', info.BHA.VERSION[0]['DEVICE-TYPE'], true);
+				const relays = info.BHA.VERSION[0].RELAYS;
 
-					const relays = info.BHA.VERSION[0].RELAYS;
-
-					for (const value of relays) {
-						//create channel
-						await this.createObjectsAsync('Relays', 'channel', {
-							name: {
-								en: 'Available Relays',
-								de: 'Verfügbare Relais',
-								ru: 'Доступные реле',
-								pt: 'Relés disponíveis',
-								nl: 'Available Relay',
-								fr: 'Relais disponibles',
-								it: 'Relè disponibili',
-								es: 'Relés disponibles',
-								pl: 'Dostępny Relay',
-								uk: 'Доступні реле',
-								'zh-cn': '现有费用',
-							},
-						});
-						//create State
-						await this.createObjectsAsync(`Relays.${value}`, 'state', {
-							name: {
-								en: 'Activate relay',
-								de: 'Relais aktivieren',
-								ru: 'Активировать реле',
-								pt: 'Activar o relé',
-								nl: 'Activeer relay',
-								fr: 'Activer le relais',
-								it: 'Attiva relè',
-								es: 'Activar el relé',
-								pl: 'Aktywacja',
-								uk: 'Активувати реле',
-								'zh-cn': '法 律 法 律 律 律 律 律 律 律 律 律 律 律 律 律 律 律 律 律 律 律 重',
-							},
-							type: 'boolean',
-							role: 'button',
-							read: false,
-							write: true,
-							desc: `ID: ${value}`,
-						});
-					}
+				for (const value of relays) {
+					//create channel
+					this.createObjectsAsync('Relays', 'channel', {
+						name: {
+							en: 'Available Relays',
+							de: 'Verfügbare Relais',
+							ru: 'Доступные реле',
+							pt: 'Relés disponíveis',
+							nl: 'Available Relay',
+							fr: 'Relais disponibles',
+							it: 'Relè disponibili',
+							es: 'Relés disponibles',
+							pl: 'Dostępny Relay',
+							uk: 'Доступні реле',
+							'zh-cn': '现有费用',
+						},
+					});
+					//create State
+					this.createObjectsAsync(`Relays.${value}`, 'state', {
+						name: {
+							en: 'Activate relay',
+							de: 'Relais aktivieren',
+							ru: 'Активировать реле',
+							pt: 'Activar o relé',
+							nl: 'Activeer relay',
+							fr: 'Activer le relais',
+							it: 'Attiva relè',
+							es: 'Activar el relé',
+							pl: 'Aktywacja',
+							uk: 'Активувати реле',
+							'zh-cn': '法 律 法 律 律 律 律 律 律 律 律 律 律 律 律 律 律 律 律 律 律 律 重',
+						},
+						type: 'boolean',
+						role: 'button',
+						read: false,
+						write: true,
+						desc: `ID: ${value}`,
+					});
 				}
-			} catch (error) {
+				this.checkFavoritesAsync();
+			}, error => {
 				this.log.warn('Error in getInfo(): ' + error);
-			}
-
-			await this.checkFavoritesAsync();
-		} else {
-			this.log.warn('Execution of getInfo not allowed because not authorized!');
+			});
 		}
 	}
 
@@ -337,44 +298,43 @@ class Doorbird extends utils.Adapter {
 	 */
 	async checkFavoritesAsync() {
 		this.log.debug('Checking favorites on DoorBird Device..');
-		try {
-			const url = this.buildURL('favorites');
-			const response = await Axios.get(url);
 
-			if (response.status === 200) {
-				const favorites = response.data;
-				for (const [key, obj] of Object.entries(favorites.http)) {
+		const doorbirdClient = this.getDoorbirdClient();
+
+		doorbirdClient.listFavorites().then(favorites => {
+			if (favorites.http) {
+				for (const [id, fav] of Object.entries(favorites.http)) {
 					if (
-						obj.title.includes('ioBroker ' + this.namespace) &&
-						!obj.value.includes(this.config.adapterAddress + ':' + this.config.adapterport)
+						fav.title.includes('ioBroker ' + this.namespace) &&
+						!fav.value.includes(this.config.adapterAddress + ':' + this.config.adapterport)
 					) {
 						this.log.warn(
-							`The Favorite ID '${key}' contains a wrong URL ('${obj.value}').. I will update that..`,
+							`The Favorite ID '${id}' contains a wrong URL ('${fav.value}').. I will update that..`,
 						);
 
-						await this.updateFavoriteAsync(key, obj);
+						this.updateFavoriteAsync(id, fav);
 						return;
 					}
 
-					if (obj.value.includes(this.config.adapterAddress + ':' + this.config.adapterport)) {
+					if (fav.value.includes(this.config.adapterAddress + ':' + this.config.adapterport)) {
 						this.log.debug(
-							`Found a Favorite that belongs to me.. (ID: '${key}') ('${obj.title}': '${obj.value}')`,
+							`Found a Favorite that belongs to me.. (ID: '${id}') ('${fav.title}': '${fav.value}')`,
 						);
 
-						const favoriteKey = obj.title.split(' ')[2];
-						const favoriteUrl = obj.value;
+						const favoriteKey = fav.title.split(' ')[2];
+						const favoriteUrl = fav.value;
 
 						this.favoriteState[favoriteKey] = {
-							ID: key,
-							URL: obj.value,
+							ID: id,
+							URL: fav.value,
 						};
 
 						const duplicate = Object.values(this.favoriteState).find(
-							(item) => item.URL === favoriteUrl && item.ID !== key,
+							(item) => item.URL === favoriteUrl && item.ID !== id,
 						);
 
 						if (duplicate) {
-							this.log.warn(`Found a duplicate favorite! (ID : '${key}') URL ${obj.value}`);
+							this.log.warn(`Found a duplicate favorite! (ID : '${id}') URL ${fav.value}`);
 
 							if (InterimSolutionForDeletionOfDuplicates) {
 								this.log.warn(
@@ -383,24 +343,11 @@ class Doorbird extends utils.Adapter {
 							} else {
 								this.log.debug(`Trying to delete the duplicate..`);
 
-								const deleteUrl = `http://${this.config.birdip}/bha-api/favorites.cgi?http-user=${this.config.birduser}&http-password=${this.config.birdpw}&action=remove&type=http&id=${key}`;
-
-								try {
-									const deleteResponse = await Axios.get(deleteUrl);
-
-									if (deleteResponse.status === 200) {
-										delete this.favoriteState[favoriteKey];
-										this.log.debug(`Deleted the duplicate (ID: '${key}') successfully!`);
-										// toDelete
-										this.log.debug(`favoriteState: ${JSON.stringify(this.favoriteState)}`);
-									} else {
-										this.log.warn(`I was unable to delete the duplicate! (ID: ${key})`);
-									}
-								} catch (error) {
-									this.log.error(
-										`An error occurred while trying to delete the duplicate (ID: ${key}): ${error}`,
-									);
-								}
+								doorbirdClient.deleteFavorite(id, doorbird.FavoriteType.http).then(_ => {
+									this.log.debug(`Deleted the duplicate (ID: '${id}') successfully!`);
+								}, error => {
+									this.log.warn(`I was unable to delete the duplicate! (ID: ${id}): ${error}`);
+								});
 							}
 						}
 					}
@@ -412,18 +359,15 @@ class Doorbird extends utils.Adapter {
 					this.log.debug(`Result of Favorites: ${JSON.stringify(this.favoriteState)}`);
 				}
 
-				await this.getSchedulesAsync();
-				return;
+				this.getSchedulesAsync();
 			}
-		} catch (error) {
-			this.log.warn(`Error in checkFavoritesAsync(): ${error}`);
-		}
+		});
 	}
 
 	/**
 	 * Update Favorites
 	 * @async
-	 * @param {number | string} key
+	 * @param {string} key
 	 * @param {object} obj
 	 * @returns {Promise<void>}
 	 */
@@ -433,36 +377,15 @@ class Doorbird extends utils.Adapter {
 			'$1' + this.config.adapterAddress + ':' + this.config.adapterport + '$3',
 		);
 
-		try {
-			const url =
-				'http://' +
-				this.config.birdip +
-				'/bha-api/favorites.cgi?http-user=' +
-				this.config.birduser +
-				'&http-password=' +
-				this.config.birdpw +
-				'&action=save&type=http&id=' +
-				key +
-				'&title=' +
-				obj.title +
-				'&value=' +
-				newURL;
-
-			const response = await Axios.get(url);
-
-			if (response.status === 200) {
-				this.log.debug('Favorite Updated successfully..');
-				await this.checkFavoritesAsync();
-			} else {
-				this.log.warn(`There was an error while updating the Favorite! ${response.status}`);
-			}
-		} catch (error) {
-			if (error.code === 'ECONNABORTED') {
-				this.log.warn('Error in testBird() Request timed out: ' + error);
-			} else {
-				this.log.warn('There was an error while updating the Favorite! (' + error + ')');
-			}
-		}
+		this.getDoorbirdClient().updateFavorite(key, doorbird.FavoriteType.http, {
+			title: obj.title,
+			value: newURL
+		}).then(_ => {
+			this.log.debug('Favorite Updated successfully..');
+			this.checkFavoritesAsync();
+		}, error => {
+			this.log.warn('There was an error while updating the Favorite! (' + error + ')');
+		});
 	}
 
 	/**
@@ -474,52 +397,41 @@ class Doorbird extends utils.Adapter {
 		this.log.debug(`[ getSchedulesAsync ] Schedule call count: ${COUNT_SCHEDULES}`);
 		COUNT_SCHEDULES++;
 
-		try {
-			const url = this.buildURL('schedule');
-			const response = await Axios.get(url);
+		this.getDoorbirdClient().getSchedule().then(schedules => {
+			this.bellCount = 0;
+			this.log.debug(`Following schedules found: ${JSON.stringify(schedules)}`);
+			this.log.debug('Looping through the Schedules..');
 
-			if (response.status === 200) {
-				try {
-					const schedules = response.data;
-					this.bellCount = 0;
-					this.log.debug(`Following schedules found: ${JSON.stringify(schedules)}`);
-					this.log.debug('Looping through the Schedules..');
+			for (let i = 0; i < schedules.length && i < MAX_SCHEDULES; i++) {
+				if (schedules[i].input === 'doorbell') {
+					this.bellCount++;
+					this.log.debug('Detected a Doorbell Schedule!');
+					this.scheduleState[schedules[i].param] = schedules[i].output;
+					this.log.debug(`The Param of the actual Schedule is: ${schedules[i].param}`);
+					this.doorbellsArray.push(schedules[i].param);
+					this.log.debug(`The Output contains ${schedules[i].output.length} entries!`);
 
-					for (let i = 0; i < schedules.length && i < MAX_SCHEDULES; i++) {
-						if (schedules[i].input === 'doorbell') {
-							this.bellCount++;
-							this.log.debug('Detected a Doorbell Schedule!');
-							this.scheduleState[schedules[i].param] = schedules[i].output;
-							this.log.debug(`The Param of the actual Schedule is: ${schedules[i].param}`);
-							this.doorbellsArray.push(schedules[i].param);
-							this.log.debug(`The Output contains ${schedules[i].output.length} entries!`);
-
-							for (let k = 0; k < schedules[i].output.length; k++) {
-								this.log.debug(`Entry "${k}" is: ${JSON.stringify(schedules[i].output[k])}`);
-							}
-
-							this.log.debug(`Counted ${this.bellCount} Doorbells.`);
-						}
-
-						if (schedules[i].input === 'motion') {
-							this.log.debug('Detected Motion Schedule!');
-							this.motionState.output = schedules[i].output;
-							this.log.debug(`The Output contains ${schedules[i].output.length} entries!`);
-
-							for (let k = 0; k < schedules[i].output.length; k++) {
-								this.log.debug(`Entry "${k}" is: ${JSON.stringify(schedules[i].output[k])}`);
-							}
-						}
+					for (let k = 0; k < schedules[i].output.length; k++) {
+						this.log.debug(`Entry "${k}" is: ${JSON.stringify(schedules[i].output[k])}`);
 					}
 
-					await this.createFavoritesAsync(0);
-				} catch (error) {
-					this.log.warn(`Error in Parsing Schedules: ${error}. Error-Stack: ${error.stack}`);
+					this.log.debug(`Counted ${this.bellCount} Doorbells.`);
+				}
+
+				if (schedules[i].input === 'motion') {
+					this.log.debug('Detected Motion Schedule!');
+					this.motionState.output = schedules[i].output;
+					this.log.debug(`The Output contains ${schedules[i].output.length} entries!`);
+
+					for (let k = 0; k < schedules[i].output.length; k++) {
+						this.log.debug(`Entry "${k}" is: ${JSON.stringify(schedules[i].output[k])}`);
+					}
 				}
 			}
-		} catch (error) {
+			this.createFavoritesAsync(0);
+		}, error => {
 			this.log.warn('Error in getSchedules(): ' + error);
-		}
+		});
 	}
 
 	/**
@@ -539,65 +451,29 @@ class Doorbird extends utils.Adapter {
 				await this.createFavoritesAsync(i, false, false);
 				return;
 			}
-			try {
-				this.log.debug(`Favorite for Doorbell ID ${this.doorbellsArray[i]} has to be created!`);
-				const createUrl =
-					'http://' +
-					this.config.birdip +
-					'/bha-api/favorites.cgi?http-user=' +
-					this.config.birduser +
-					'&http-password=' +
-					this.config.birdpw +
-					'&action=save&type=http&title=ioBroker ' +
-					this.namespace +
-					' ' +
-					this.doorbellsArray[i] +
-					' Ring&value=http://' +
-					this.config.adapterAddress +
-					':' +
-					this.config.adapterport +
-					'/ring?' +
-					this.doorbellsArray[i];
-				const response = await Axios.get(createUrl);
 
-				if (response.status === 200) {
-					i++;
-					this.log.debug(`Favorite created successfully..`);
-					await this.createFavoritesAsync(i, true, false);
-					return;
-				}
-			} catch (error) {
+			this.log.debug(`Favorite for Doorbell ID ${this.doorbellsArray[i]} has to be created!`);
+			this.getDoorbirdClient().createFavorite(doorbird.FavoriteType.http, {
+				title: `iobroker ${this.namespace} ${this.doorbellsArray[i]} Ring`,
+				value: `http://${this.config.adapterAddress}:${this.config.adapterport}/ring?${this.doorbellsArray[i]}`
+			}).then(_ => {
+				i++;
+				this.log.debug(`Favorite created successfully..`);
+				this.createFavoritesAsync(i, true, false);
+			}, error => {
 				this.log.warn(`Error in creating Favorite: ${error}`);
-			}
+			});
 		}
 		if (typeof this.favoriteState['Motion'] === 'undefined' && !motion) {
-			try {
-				const url =
-					'http://' +
-					this.config.birdip +
-					'/bha-api/favorites.cgi?http-user=' +
-					this.config.birduser +
-					'&http-password=' +
-					this.config.birdpw +
-					'&action=save&type=http&title=ioBroker ' +
-					this.namespace +
-					' Motion&value=http://' +
-					this.config.adapterAddress +
-					':' +
-					this.config.adapterport +
-					'/motion';
-
-				const response = await Axios.get(url);
-
-				if (response.status === 200) {
-					this.log.debug('Favorite for Motionsensor created.');
-					await this.createFavoritesAsync(i, true, true);
-					return;
-				}
-			} catch (error) {
+			this.getDoorbirdClient().createFavorite(doorbird.FavoriteType.http, {
+				title: `ioBroker ${this.namespace} Motion`,
+				value: `http://${this.config.adapterAddress}:${this.config.adapterport}/motion`
+			}).then(_ => {
+				this.log.debug('Favorite for Motionsensor created.');
+				this.createFavoritesAsync(i, true, true);
+			}, error => {
 				this.log.warn('Error creating favorite for Motionsensor: ' + error);
-				return;
-			}
+			});
 		}
 		if (action) {
 			this.log.debug('Finished creating Favorites.. Checking again - just to be sure!');
@@ -639,22 +515,17 @@ class Doorbird extends utils.Adapter {
 					schedule: { weekdays: [{ from: '79200', to: '79199' }] },
 				});
 
-				this.toCreate = { input: 'doorbell', param: key, output: scheduleArray };
-
-				try {
-					const createUrl = this.buildURL('schedule');
-					const response = await Axios.post(createUrl, this.toCreate);
-
-					if (response.status === 200) {
-						this.log.debug('Schedule created successfully!');
-					} else {
-						this.log.warn(
-							`There was an Error while creating the schedule. Status: ${response.status}, Text: ${response.statusText}`,
-						);
-					}
-				} catch (error) {
-					this.log.warn(`Error in creating schedule: ${error}`);
-				}
+				this.getDoorbirdClient().createScheduleEntry({
+					input: 'doorbell',
+					output: scheduleArray,
+					param: key
+				}).then(_ => {
+					this.log.debug('Schedule created successfully!');
+				}, error => {
+					this.log.warn(
+						`There was an Error while creating the schedule: ${error}`,
+					);
+				});
 			} else {
 				this.log.debug('Okay we dont need to create any Doorbell-Schedules..');
 			}
@@ -711,22 +582,14 @@ class Doorbird extends utils.Adapter {
 					schedule: { weekdays: [{ from: '79200', to: '79199' }] },
 				});
 
-				const toCreate = { input: 'motion', param: '', output: motionArray };
-
-				try {
-					const createUrl = this.buildURL('schedule');
-					const response = await Axios.post(createUrl, toCreate);
-
-					if (response.status === 200) {
-						this.log.debug('Schedule for Motion Sensor set successfully!');
-					} else {
-						this.log.warn(
-							`There was an Error while setting the Motion schedule. (Statuscode: ${response.status}), (Statustext: ${response.statusText}`,
-						);
-					}
-				} catch (error) {
+				this.getDoorbirdClient().createScheduleEntry({
+					input: 'motion',
+					output: motionArray
+				}).then(_ => {
+					this.log.debug('Schedule for Motion Sensor set successfully!');
+				}, error => {
 					this.log.warn(`Error in setting Motion schedule: ${error}`);
-				}
+				});
 			}
 		}
 	}
@@ -801,18 +664,11 @@ class Doorbird extends utils.Adapter {
 	 * @async
 	 */
 	async turnOnLightAsync() {
-		try {
-			const url = this.buildURL('light-on');
-			const response = await Axios.get(url);
-
-			if (response.status === 200) {
-				this.log.debug('Light successfully triggered!');
-			} else {
-				this.log.warn(`Could not trigger light. (Got Statuscode ${response.status})`);
-			}
-		} catch (error) {
+		this.getDoorbirdClient().lightOn().then(_ => {
+			this.log.debug('Light successfully triggered!');
+		}, error => {
 			this.log.warn('Error in triggering Light: ' + error);
-		}
+		});
 	}
 
 	/**
@@ -820,20 +676,11 @@ class Doorbird extends utils.Adapter {
 	 * @async
 	 */
 	async restartDoorbirdAsync() {
-		try {
-			const url = this.buildURL('restart');
-			const response = await Axios.get(url);
-
-			if (response.status === 200) {
-				this.log.debug('DoorBird Device is now restarting!!');
-			} else if (response.status === 503) {
-				this.log.warn('DoorBird denied restart! (Device is busy and cannot restart now!)');
-			} else {
-				this.log.warn('DoorBird denied restart! (Statuscode: ' + response.status + ')');
-			}
-		} catch (error) {
+		this.getDoorbirdClient().restart().then(_ => {
+			this.log.debug('DoorBird Device is now restarting!!');
+		}, error => {
 			this.log.warn('DoorBird denied restart: ' + error);
-		}
+		});
 	}
 
 	/**
@@ -842,29 +689,11 @@ class Doorbird extends utils.Adapter {
 	 * @param {string} comp
 	 */
 	async relaysAsync(comp) {
-		try {
-			const url =
-				'http://' +
-				this.config.birdip +
-				'/bha-api/open-door.cgi?http-user=' +
-				this.config.birduser +
-				'&http-password=' +
-				this.config.birdpw +
-				'&r=' +
-				comp;
-
-			const response = await Axios.get(url);
-
-			if (response.status === 200) {
-				this.log.debug('Relay ' + comp + ' triggered successfully!');
-			} else if (response.status === 204) {
-				this.log.warn('Could not trigger relay ' + comp + '! (Insufficient permissions)');
-			} else {
-				this.log.warn('Could not trigger relay ' + comp + '. (Got Statuscode ' + response.status + ')');
-			}
-		} catch (error) {
+		this.getDoorbirdClient().toggleRelay(comp).then(_ => {
+			this.log.debug('Relay ' + comp + ' triggered successfully!');
+		}, error => {
 			this.log.warn('Error in triggering Relay: ' + error);
-		}
+		});
 	}
 
 	/**
@@ -873,23 +702,13 @@ class Doorbird extends utils.Adapter {
 	 * @param {string} cmd
 	 */
 	async downloadFileAsync(cmd) {
-		try {
-			const url = this.buildURL('image');
-			const response = await Axios.get(url, { responseType: 'stream' });
-			const chunks = [];
-
-			response.data.on('data', (chunk) => {
-				chunks.push(chunk);
-			});
-
-			response.data.on('end', async () => {
-				const fileData = Buffer.concat(chunks);
-				await this.writeFileAsync(this.namespace, `${cmd}_1.jpg`, fileData);
+		this.getDoorbirdClient().getImage().then(imgData => {
+			this.writeFileAsync(this.namespace, `${cmd}_1.jpg`, imgData).then(_ => {
 				this.log.debug('Snapshot saved successfully!');
 			});
-		} catch (error) {
+		}, error => {
 			this.log.warn(`Error in downloading file: ${error}`);
-		}
+		});
 	}
 
 	/**
