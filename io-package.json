@@ -1,8 +1,21 @@
 {
 	"common": {
 		"name": "doorbird",
-		"version": "1.3.0",
+		"version": "1.3.1",
 		"news": {
+			"1.3.1": {
+				"en": "update dependencies",
+				"de": "Aktualisierung der Abhängigkeiten",
+				"ru": "обновление зависимостей",
+				"pt": "dependências",
+				"nl": "afhankelijkheden bijwerken",
+				"fr": "mettre à jour les dépendances",
+				"it": "aggiornamento dipendenze",
+				"es": "dependencias de actualización",
+				"pl": "aktualizacji zależności",
+				"uk": "оновлення залежності",
+				"zh-cn": "更新依赖关系"
+			},
 			"1.3.0": {
 				"en": "add debug logs to find out \"Maximum call stack size exceeded\"\nupdate dependencies",
 				"de": "debug-Logs hinzugefügt\naktualisierung der abhängigkeiten",
@@ -80,19 +93,6 @@
 				"pl": "Update package.json (Node.js v16, NPM v7) (ang.)\nbugfix 'listen on all interfaces (ang.). '",
 				"uk": "Оновлення пакета.json (Node.js v16 або вище і NPM v7 або вище потрібно)\nвиправлення помилок р",
 				"zh-cn": "新的一揽子计划(第Ijs诉16号或更高职等的和国家预防计划诉7号或更高的)\nb 每个接口的名单 评 注"
-			},
-			"1.1.1": {
-				"en": "fixed js-controller dependency",
-				"de": "fix js-controller Abhängigkeit",
-				"ru": "фиксированная зависимость js-контроллера",
-				"pt": "dependência fixa js-controller",
-				"nl": "js-controller afhankelijkheid",
-				"fr": "js-contrôleur de dépendance",
-				"it": "dipendenza del controllore fisso",
-				"es": "dependencia fija js-controller",
-				"pl": "zmodyfikowana zależność js-kontrolacyjna",
-				"uk": "фіксована залежність js-controler",
-				"zh-cn": "固定控制者"
 			}
 		},
 		"titleLang": {

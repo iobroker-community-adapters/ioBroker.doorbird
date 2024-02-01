@@ -1,4 +1,8 @@
 # Older changes
+## 1.2.1 (2023-08-17)
+
+-   (Schmakus) Issue 'Maximum call stack size exceeded' - try to fix
+
 ## 1.2.0 (2023-08-08)
 
 -   (Schmakus) Update package.json (Node.js v16 or higher and NPM v7 or higher is required!)

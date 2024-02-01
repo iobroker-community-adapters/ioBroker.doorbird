@@ -108,8 +108,7 @@ onFile("doorbird.0", "TakeSnapshot_1.jpg", true, function (id, fileName, size, f
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-
-### **WORK IN PROGRESS**
+### 1.3.1 (2024-02-01)
 
 -   (Schmakus) update dependencies
 
@@ -130,10 +129,6 @@ onFile("doorbird.0", "TakeSnapshot_1.jpg", true, function (id, fileName, size, f
 ### 1.2.2 (2023-08-17)
 
 -   (Schmakus) some code improvements
-
-### 1.2.1 (2023-08-17)
-
--   (Schmakus) Issue 'Maximum call stack size exceeded' - try to fix
 
 ## License
 
