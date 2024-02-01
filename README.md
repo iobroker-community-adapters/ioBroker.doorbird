@@ -139,7 +139,7 @@ onFile("doorbird.0", "TakeSnapshot_1.jpg", true, function (id, fileName, size, f
 
 The MIT License (MIT)
 
-Copyright (c) 2023 iobroker-community-adapters <>
+Copyright (c) 2024 iobroker-community-adapters <>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
