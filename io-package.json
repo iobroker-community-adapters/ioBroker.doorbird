@@ -1,8 +1,21 @@
 {
 	"common": {
 		"name": "doorbird",
-		"version": "1.4.0",
+		"version": "1.4.1",
 		"news": {
+			"1.4.1": {
+				"en": "Creation of favorites and schedules only once after starting the adapter and successfully connecting to DoorBird. (Another step to solve \"Maximum call stack size exceeded\" problem.)",
+				"de": "Erstellung von Favoriten und Zeitplänen nur einmal nach dem Start des Adapters und erfolgreicher Verbindung zur DoorBird. (Ein weiterer Schritt, um \"Maximum Call Stack Größe überschritten\" Problem zu lösen.)",
+				"ru": "Создание фаворитов и графиков только один раз после запуска адаптера и успешного подключения к DoorBird. (Еще один шаг к решению проблемы \"Максимальный размер стека вызовов превысил\")",
+				"pt": "Criação de favoritos e horários só uma vez depois de iniciar o adaptador e se conectar com sucesso ao DoorBird. (Outra etapa para resolver o problema \"Tamanho máximo da pilha de chamada excedeu\".)",
+				"nl": "Creatie van favorieten en schema's slechts één keer na het starten van de adapter en het succesvol verbinden met DoorBird. (Een andere stap om \"Maximale aanroep stack grootte overschreden\" probleem op te lossen.)",
+				"fr": "Création des favoris et des horaires seulement une fois après le démarrage de l'adaptateur et la connexion réussie à DoorBird. (Une autre étape pour résoudre le problème « Taille maximale de la pile d'appel dépassée ».)",
+				"it": "Creazione di preferiti e programmi solo una volta dopo l'avvio dell'adattatore e la connessione con successo a DoorBird. (Un altro passo per risolvere il problema \"Maximum call stack size superato\".)",
+				"es": "Creación de favoritos y horarios sólo una vez después de iniciar el adaptador y conectarse con éxito a DoorBird. (Otro paso para resolver \"El tamaño de la pila de llamadas Maxum superó\" problema.)",
+				"pl": "Tworzenie ulubionych i harmonogramów tylko raz po uruchomieniu adaptera i pomyślnym połączeniu z DoorBird. (Kolejny krok do rozwiązania \"Maksymalny rozmiar stosu wywołania przekroczony\" problem.)",
+				"uk": "Створення фаворитів і графіків тільки після запуску адаптера і вдало підключених до DoorBird. (Іншим кроком для вирішення проблеми «Максимум виклику, розмір яких перевищує».)",
+				"zh-cn": "在启动适配器并成功连接到DoorBird后,只创建一次最爱和时间表. (另一步骤解决\"最大调用堆栈大小超过\"问题"
+			},
 			"1.4.0": {
 				"en": "update dependencies (security updates)",
 				"de": "Aktualisierung von Abhängigkeiten (Sicherheits Updates)",
@@ -80,19 +93,6 @@
 				"pl": "ulepszenia kodu",
 				"uk": "деякі покращення коду",
 				"zh-cn": "某些守则的改进"
-			},
-			"1.2.1": {
-				"en": "Issue 'Maximum call stack size exceeded' - try to fix",
-				"de": "Fehler 'Maximum call stack size exceeded' - Versuch zu beheben",
-				"ru": "Номер 'Максимальный размер стока вызова превышает' - попробуйте исправить",
-				"pt": "Problema 'Maximum call stack size excedido' - tente corrigir",
-				"nl": "Issue 'Maximum call stapelmaat overschreden - proberen te repareren",
-				"fr": "Question 'La taille maximale de la pile d'appel dépasse' - essayez de réparer",
-				"it": "Problema 'Maximum call stack size superato' - cercare di risolvere",
-				"es": "Número 'Maximum call stack size exceeded' - tratar de arreglar",
-				"pl": "Numer 'Maximum call stack znacznie przewyższał\" - próba naprawy stosu",
-				"uk": "Випуск 'Максимум виклику розмір стека перевищений' - спробуйте виправити",
-				"zh-cn": "马格姆岛的停泊面积超过——试图固定固定"
 			}
 		},
 		"titleLang": {

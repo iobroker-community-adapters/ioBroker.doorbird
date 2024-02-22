@@ -1,4 +1,8 @@
 # Older changes
+## 1.2.3 (2023-08-17)
+
+-   (Schmakus) changed schedule handling. (fix status code 400)
+
 ## 1.2.2 (2023-08-17)
 
 -   (Schmakus) some code improvements
