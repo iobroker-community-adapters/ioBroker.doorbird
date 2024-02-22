@@ -18,6 +18,8 @@ const InterimSolutionForDeletionOfDuplicates = false;
 const MAX_SCHEDULES = 200;
 let COUNT_SCHEDULES = 0;
 
+let adapterStarted = false;
+
 class Doorbird extends utils.Adapter {
 	/**
 	 * @param {Partial<utils.AdapterOptions>} [options={}]
@@ -235,7 +237,10 @@ class Doorbird extends utils.Adapter {
 				this.authorized = true;
 				await this.setStateAsync('info.connection', true, true);
 				this.log.debug('Authorization with User ' + this.config.birduser + ' successful!');
-				await this.getInfoAsync();
+				if (!adapterStarted) {
+					adapterStarted = true;
+					await this.getInfoAsync();
+				}
 			}
 		} catch (error) {
 			if (error.code === 'EHOSTUNREACH') {
@@ -254,10 +259,10 @@ class Doorbird extends utils.Adapter {
 		}
 
 		if (this.birdConCheck) this.clearTimeout(this.birdConCheck), (this.birdConCheck = null);
-		this.birdConCheck = this.setTimeout(() => {
+		this.birdConCheck = this.setTimeout(async () => {
 			this.log.debug(`Refresh connection check...`);
 			this.birdConCheck = null;
-			this.testBirdAsync();
+			await this.testBirdAsync();
 		}, 180000);
 	}
 
