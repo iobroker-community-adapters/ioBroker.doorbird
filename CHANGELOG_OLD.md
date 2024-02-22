@@ -1,4 +1,8 @@
 # Older changes
+## 1.2.2 (2023-08-17)
+
+-   (Schmakus) some code improvements
+
 ## 1.2.1 (2023-08-17)
 
 -   (Schmakus) Issue 'Maximum call stack size exceeded' - try to fix

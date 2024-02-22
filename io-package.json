@@ -1,8 +1,21 @@
 {
 	"common": {
 		"name": "doorbird",
-		"version": "1.3.1",
+		"version": "1.4.0",
 		"news": {
+			"1.4.0": {
+				"en": "update dependencies (security updates)",
+				"de": "Aktualisierung von Abhängigkeiten (Sicherheits Updates)",
+				"ru": "обновление зависимостей (защищенные обновления)",
+				"pt": "dependências de atualização (atualizações seguras)",
+				"nl": "update afhankelijkheden (veilige updates)",
+				"fr": "mise à jour des dépendances (mises à jour sécurisées)",
+				"it": "aggiornamento dipendenze (aggiornamento sicuro)",
+				"es": "dependencias de actualización (actualizaciones seguras)",
+				"pl": "aktualizacji zależności (bezpieczne aktualizacje)",
+				"uk": "оновлення залежності",
+				"zh-cn": "更新依赖性( 安全更新)"
+			},
 			"1.3.1": {
 				"en": "update dependencies",
 				"de": "Aktualisierung der Abhängigkeiten",
@@ -80,19 +93,6 @@
 				"pl": "Numer 'Maximum call stack znacznie przewyższał\" - próba naprawy stosu",
 				"uk": "Випуск 'Максимум виклику розмір стека перевищений' - спробуйте виправити",
 				"zh-cn": "马格姆岛的停泊面积超过——试图固定固定"
-			},
-			"1.2.0": {
-				"en": "Update package.json (Node.js v16 or higher and NPM v7 or higher is required!)\nbugfix 'listen on all interfaces'",
-				"de": "Update package.json (Node.js v16 oder höher und NPM v7 oder höher ist erforderlich)\nbugfix 'hören auf allen schnittstellen '",
-				"ru": "Требуется обновление пакета.json (Node.js v16 или выше и NPM v7 или выше)\nbugfix 'listen на всех интерфейсах « »",
-				"pt": "Atualizar package.json (Node.js v16 ou superior e NPM v7 ou superior é necessário)\nbugfix 'listen em todas as interfaces '",
-				"nl": "Update pakket.Json v16 of hoger en NPM v7 of hoger is vereist\nquality over quantity (qoq) releases vertaling: '",
-				"fr": "Update package.json (Node.js v16 ou supérieur et NPM v7 ou supérieur est requis)\nbugfix 'listen sur toutes les interfaces '",
-				"it": "Pacchetto aggiornamento.json (Node.js v16 o superiore e NPM v7 o superiore è richiesto)\nbugfix 'ascolto su tutte le interfacce '",
-				"es": "Paquete de actualización.json (Node.js v16 o superior y NPM v7 o superior es requerido)\nbugfix 'listen en todas las interfaces '",
-				"pl": "Update package.json (Node.js v16, NPM v7) (ang.)\nbugfix 'listen on all interfaces (ang.). '",
-				"uk": "Оновлення пакета.json (Node.js v16 або вище і NPM v7 або вище потрібно)\nвиправлення помилок р",
-				"zh-cn": "新的一揽子计划(第Ijs诉16号或更高职等的和国家预防计划诉7号或更高的)\nb 每个接口的名单 评 注"
 			}
 		},
 		"titleLang": {

@@ -109,9 +109,9 @@ onFile("doorbird.0", "TakeSnapshot_1.jpg", true, function (id, fileName, size, f
     ### **WORK IN PROGRESS**
 -->
 
-### **WORK IN PROGRESS**
+### 1.4.0 (2024-02-22)
 
--   (Schmakus) update dependencies (secure updates)
+-   (Schmakus) update dependencies (security updates)
 
 ### 1.3.1 (2024-02-01)
 
@@ -130,10 +130,6 @@ onFile("doorbird.0", "TakeSnapshot_1.jpg", true, function (id, fileName, size, f
 ### 1.2.3 (2023-08-17)
 
 -   (Schmakus) changed schedule handling. (fix status code 400)
-
-### 1.2.2 (2023-08-17)
-
--   (Schmakus) some code improvements
 
 ## License
 
