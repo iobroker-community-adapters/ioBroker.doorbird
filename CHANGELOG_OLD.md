@@ -1,4 +1,9 @@
 # Older changes
+## 1.2.4 (2023-08-31)
+
+-   (Schmakus) tryed to fixed [#73] Maximum call stack size exceeded
+-   (Stefan592) fixed 'listen on all interfaces'
+
 ## 1.2.3 (2023-08-17)
 
 -   (Schmakus) changed schedule handling. (fix status code 400)
