@@ -348,6 +348,11 @@ class Doorbird extends utils.Adapter {
 
 			if (response.status === 200) {
 				const favorites = response.data;
+				if (!favorites.http || typeof favorites.http !== 'object') {
+					this.log.warn('It seems that the list of HTTP Favorites is empty!');
+					await this.createFavoritesAsync(0);
+					return;
+				}
 				for (const [key, obj] of Object.entries(favorites.http)) {
 					if (
 						obj.title.includes('ioBroker ' + this.namespace) &&
