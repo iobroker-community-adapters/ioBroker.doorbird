@@ -1,4 +1,9 @@
 # Older changes
+## 1.3.0 (2023-10-03)
+
+-   (Schmakus) add debug logs to find out "Maximum call stack size exceeded"
+-   (Schmakus) update dependencies
+
 ## 1.2.4 (2023-08-31)
 
 -   (Schmakus) tryed to fixed [#73] Maximum call stack size exceeded
