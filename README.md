@@ -108,6 +108,11 @@ onFile("doorbird.0", "TakeSnapshot_1.jpg", true, function (id, fileName, size, f
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+
+### **WORK IN PROGRESS**
+
+-   (Schmakus) Dependencies have been updated
+
 ### 1.6.0 (2024-07-02)
 
 -   (mcm1957) Adapter requires node.js >= 18 and Admin >=6 now
