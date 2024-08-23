@@ -124,7 +124,10 @@
 		"authors": ["BuZZy1337 <buzzy1337@outlook.de>", "Schmakus <schmakus@gmail.com>"],
 		"keywords": ["doorbird", "VIS", "GUI"],
 		"tier": 3,
-		"license": "MIT",
+		"licenseInformation": {
+			"license": "MIT",
+			"type": "free"
+		},
 		"platform": "Javascript/Node.js",
 		"main": "main.js",
 		"icon": "doorbird.png",
