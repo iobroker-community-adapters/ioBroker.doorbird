@@ -108,8 +108,7 @@ onFile("doorbird.0", "TakeSnapshot_1.jpg", true, function (id, fileName, size, f
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-
-### **WORK IN PROGRESS**
+### 1.7.0 (2024-08-23)
 
 -   (Schmakus) Dependencies have been updated
 
@@ -129,10 +128,6 @@ onFile("doorbird.0", "TakeSnapshot_1.jpg", true, function (id, fileName, size, f
 ### 1.4.0 (2024-02-22)
 
 -   (Schmakus) update dependencies (security updates)
-
-### 1.3.1 (2024-02-01)
-
--   (Schmakus) update dependencies
 
 ## License
 
