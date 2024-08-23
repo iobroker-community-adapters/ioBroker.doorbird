@@ -129,7 +129,6 @@
 			"type": "free"
 		},
 		"platform": "Javascript/Node.js",
-		"main": "main.js",
 		"icon": "doorbird.png",
 		"materialize": true,
 		"messagebox": true,
