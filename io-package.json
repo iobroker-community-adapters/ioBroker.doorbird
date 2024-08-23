@@ -130,7 +130,6 @@
 		},
 		"platform": "Javascript/Node.js",
 		"icon": "doorbird.png",
-		"materialize": true,
 		"messagebox": true,
 		"enabled": true,
 		"extIcon": "https://raw.githubusercontent.com/iobroker-community-adapters/ioBroker.doorbird/master/admin/doorbird.png",
@@ -141,6 +140,9 @@
 		"compact": true,
 		"connectionType": "local",
 		"dataSource": "push",
+		"adminUI": {
+			"config": "materialized"
+		},
 		"messages": [
 			{
 				"condition": {
