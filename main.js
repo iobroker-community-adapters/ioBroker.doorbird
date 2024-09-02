@@ -9,7 +9,7 @@
 const utils = require('@iobroker/adapter-core');
 
 const dgram = require('dgram');
-const Axios = require('axios').default;
+const Axios = require('axios');
 Axios.defaults.timeout = 5000;
 const http = require('http');
 const udpserver = dgram.createSocket('udp4');
