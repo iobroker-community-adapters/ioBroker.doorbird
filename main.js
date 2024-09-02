@@ -758,7 +758,7 @@ class Doorbird extends utils.Adapter {
 			this.sockets = [];
 			callback();
 		} catch (error) {
-			// eslint-disable-line no-unused-vars
+			this.log.error(`Error in onUnload: ${error}`);
 			callback();
 		}
 	}
