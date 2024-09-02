@@ -1,4 +1,8 @@
 # Older changes
+## 1.4.0 (2024-02-22)
+
+-   (Schmakus) update dependencies (security updates)
+
 ## 1.3.1 (2024-02-01)
 
 -   (Schmakus) update dependencies
