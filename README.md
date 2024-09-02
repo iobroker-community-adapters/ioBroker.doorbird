@@ -67,20 +67,7 @@ http://192.168.0.2:8081/files/doorbird.0/Doorbell1_1.jpg
 
 #### Example
 
-```
-readFile("doorbird.0", "TakeSnapshot_1.jpg", function (error, data) {
-  if (error) {
-    console.error(error);
-  } else {
-    sendTo("telegram.0", {
-      text: data,
-      type: "photo",
-    });
-  }
-});
-```
-
-or since js-controller 5
+js-controller 5 necessary
 
 ```
 setState('doorbird.0.TakeSnapshot', true);
