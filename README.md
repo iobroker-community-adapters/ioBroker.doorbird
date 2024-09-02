@@ -108,6 +108,11 @@ onFile("doorbird.0", "TakeSnapshot_1.jpg", true, function (id, fileName, size, f
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+
+### **WORK IN PROGRESS**
+
+-   (Schmakus) update dependencies
+
 ### 1.7.0 (2024-08-23)
 
 -   (Schmakus) Dependencies have been updated
