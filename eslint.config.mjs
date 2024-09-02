@@ -44,8 +44,11 @@ export default [
 			'no-unused-vars': [
 				'error',
 				{
-					ignoreRestSiblings: true,
-					argsIgnorePattern: '^_',
+					vars: 'all',
+					args: 'after-used',
+					caughtErrors: 'all',
+					ignoreRestSiblings: false,
+					reportUsedIgnorePattern: false,
 				},
 			],
 
