@@ -94,7 +94,7 @@ onFile('doorbird.0', 'TakeSnapshot_1.jpg', true, (id, fileName, size, fileData, 
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 3.0.0 (2025-03-03)
 
 NodeJS >= 20.x and js-controller >= 6 is required
 
@@ -117,10 +117,6 @@ NodeJS >= 20.x and js-controller >= 6 is required
 ### 1.5.0 (2024-03-01)
 
 - (Schmakus) update dependencies
-
-### 1.4.1 (2024-02-22)
-
-- (Schmakus) Creation of favorites and schedules only once after starting the adapter and successfully connecting to DoorBird. (Another step to solve "Maximum call stack size exceeded" problem.)
 
 ## License
 

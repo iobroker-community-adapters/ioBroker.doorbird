@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "doorbird",
-    "version": "2.0.0",
+    "version": "3.0.0",
     "news": {
+      "3.0.0": {
+        "en": "NodeJS >= 20.x and js-controller >= 6 is required\n\n* Migrated to json config\n* Updated documentation and dependencies",
+        "de": "NodeJS >= 20.x und js-Controller >= 6 ist erforderlich\n\n* Migrated to json config\n* Aktualisierte Dokumentation und Abhängigkeiten",
+        "ru": "NodeJS >= 20.x и js-контроллер >= 6 Требуется\n\n* Перешел в конфигурацию json\n* Обновленная документация и зависимости",
+        "pt": "NodeJS >= 20.x e js-controller >= 6 é necessário\n\n* Migrado para json config\n* Documentação e dependências atualizadas",
+        "nl": "Van niet-gelegeerd staal 6 is vereist\n\n* Migrated to json config\n* Bijgewerkte documentatie en afhankelijkheden",
+        "fr": "NodeJS >= 20.x et js-controller >= 6 est nécessaire\n\n* Migré à la config de Json\n* Documentation et dépendances actualisées",
+        "it": "NodeJS >= 20.x e js-controller >= 6 è richiesto\n\n* Migrato a json config\n* Documentazione e dipendenze aggiornate",
+        "es": "NodeJS ю= 20.x y js-controller Se requiere 6\n\n* Migrated to json config\n* Documentación actualizada y dependencias",
+        "pl": "NodeJS > = 20 x i kontroler js- > = 6 jest wymagane\n\n* Migrated to json config\n* Aktualizacja dokumentacji i zależności",
+        "uk": "NodeJS >= 20.x та js-controller >= 6 обов'язковий\n\n* Migrated to json config\n* Оновлена документація та залежності",
+        "zh-cn": "节点JS20x和js控制器QQ 需要6个\n\n* 移动到 Json 配置\n* 更新的文件和依赖性"
+      },
       "2.0.0": {
         "en": "update dependencies",
         "de": "aktualisierung der abhängigkeiten",
@@ -80,19 +93,6 @@
         "pl": "aktualizacji zależności (bezpieczne aktualizacje)",
         "uk": "оновлення залежності",
         "zh-cn": "更新依赖性( 安全更新)"
-      },
-      "1.3.1": {
-        "en": "update dependencies",
-        "de": "Aktualisierung der Abhängigkeiten",
-        "ru": "обновление зависимостей",
-        "pt": "dependências",
-        "nl": "afhankelijkheden bijwerken",
-        "fr": "mettre à jour les dépendances",
-        "it": "aggiornamento dipendenze",
-        "es": "dependencias de actualización",
-        "pl": "aktualizacji zależności",
-        "uk": "оновлення залежності",
-        "zh-cn": "更新依赖关系"
       }
     },
     "titleLang": {
