@@ -54,14 +54,6 @@ class Doorbird extends utils.Adapter {
         // Reset the connection indicator during startup
         await this.setState('info.connection', { val: false, ack: true });
 
-        const systemConfig = await this.getForeignObjectAsync('system.config');
-
-        if (systemConfig && systemConfig.native && systemConfig.native.secret) {
-            this.config.birdpw = this.decryption(systemConfig.native.secret, this.config.birdpw || 'empty');
-        } else {
-            this.config.birdpw = this.decryption('Zgfr56gFe87jJOM', this.config.birdpw || 'empty');
-        }
-
         await Promise.all([this.migrateAsync(), this.mainAsync()]);
     }
 
@@ -82,23 +74,10 @@ class Doorbird extends utils.Adapter {
         // udpserver.bind(35344);
         if (this.config.adapterAddress) {
             try {
-                let ip;
-                let msg;
-
-                if (this.config.listenOnAllInterfaces) {
-                    ip = '0.0.0.0';
-                    msg = `Server gestartet auf allen Interfaces auf Port ${this.config.adapterport || 8100}`;
-                } else {
-                    ip = this.config.adapterAddress;
-                    msg = `Server gestartet auf Port ${this.config.adapterport || 8100} und IP ${
-                        this.config.adapterAddress
-                    }`;
-                }
-
                 this.server = http.createServer(async (req, res) => {
                     if (res.socket && res.socket.remoteAddress) {
                         const remoteAddress = res.socket.remoteAddress.replace(/^.*:/, '');
-                        if (remoteAddress === this.config.birdip || this.config.listenOnAllInterfaces) {
+                        if (remoteAddress === this.config.birdip) {
                             res.writeHead(204, { 'Content-Type': 'text/plain' });
                             if (req.url == '/motion') {
                                 this.log.debug('Received Motion-alert from Doorbird!');
@@ -131,8 +110,10 @@ class Doorbird extends utils.Adapter {
                     }
                 });
 
-                this.server.listen(this.config.adapterport || 8081, ip, () => {
-                    this.log.debug(msg);
+                this.server.listen(this.config.adapterport || 8081, this.config.adapterAddress, () => {
+                    this.log.debug(
+                        `Server started on port ${this.config.adapterport || 8100} with IP ${this.config.adapterAddress}`,
+                    );
                 });
             } catch (e) {
                 this.log.warn(`There was an Error starting the HTTP Server! (${e})`);

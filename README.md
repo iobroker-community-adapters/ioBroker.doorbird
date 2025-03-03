@@ -86,6 +86,7 @@ onFile('doorbird.0', 'TakeSnapshot_1.jpg', true, (id, fileName, size, fileData, 
 | DoorBird Video Door Station D21x | 1.00 and above   | 000108 and above |
 | BirdGuard B10x                   | 1.00 and above   | 000099 and above |
 | DoorBird Video Door Station D11x | 1.00 and above   | 000130 and above |
+| DoorBird Mini Dome Camera A1131  | 1.00 and above   | 000148 and above |
 
 ## Changelog
 
@@ -96,6 +97,9 @@ onFile('doorbird.0', 'TakeSnapshot_1.jpg', true, (id, fileName, size, fileData, 
 ### **WORK IN PROGRESS**
 
 NodeJS >= 20.x and js-controller >= 6 is required
+
+- (@klein0r) Migrated to json config
+- (@klein0r) Updated documentation and dependencies
 
 ### 2.0.0 (2024-09-02)
 

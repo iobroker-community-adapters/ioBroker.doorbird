@@ -150,7 +150,7 @@
     "connectionType": "local",
     "dataSource": "push",
     "adminUI": {
-      "config": "materialize"
+      "config": "json"
     },
     "messages": [
       {
@@ -205,14 +205,21 @@
       }
     ]
   },
+  "protectedNative": [
+    "birdid",
+    "birduser",
+    "birdpw"
+  ],
+  "encryptedNative": [
+    "birdpw"
+  ],
   "native": {
-    "adapterport": 8100,
     "adapterAddress": "",
+    "adapterport": 8100,
     "birdip": "",
     "birdid": "",
     "birduser": "",
-    "birdpw": "",
-    "listenOnAllInterfaces": false
+    "birdpw": ""
   },
   "objects": [],
   "instanceObjects": [

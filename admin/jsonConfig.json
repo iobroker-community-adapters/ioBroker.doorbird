@@ -1,0 +1,73 @@
+{
+    "i18n": true,
+    "type": "tabs",
+    "tabsStyle": {
+        "width": "calc(100% - 100px)"
+    },
+    "iconPosition": "top",
+    "items": {
+        "_general": {
+            "type": "panel",
+            "label": "General settings",
+            "icon": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj4NCiAgICA8cGF0aCBmaWxsPSJjdXJyZW50Q29sb3IiIGQ9Ik00OTUuOSAxNjYuNmMzLjIgOC43IC41IDE4LjQtNi40IDI0LjZsLTQzLjMgMzkuNGMxLjEgOC4zIDEuNyAxNi44IDEuNyAyNS40cy0uNiAxNy4xLTEuNyAyNS40bDQzLjMgMzkuNGM2LjkgNi4yIDkuNiAxNS45IDYuNCAyNC42Yy00LjQgMTEuOS05LjcgMjMuMy0xNS44IDM0LjNsLTQuNyA4LjFjLTYuNiAxMS0xNCAyMS40LTIyLjEgMzEuMmMtNS45IDcuMi0xNS43IDkuNi0yNC41IDYuOGwtNTUuNy0xNy43Yy0xMy40IDEwLjMtMjguMiAxOC45LTQ0IDI1LjRsLTEyLjUgNTcuMWMtMiA5LjEtOSAxNi4zLTE4LjIgMTcuOGMtMTMuOCAyLjMtMjggMy41LTQyLjUgMy41cy0yOC43LTEuMi00Mi41LTMuNWMtOS4yLTEuNS0xNi4yLTguNy0xOC4yLTE3LjhsLTEyLjUtNTcuMWMtMTUuOC02LjUtMzAuNi0xNS4xLTQ0LTI1LjRMODMuMSA0MjUuOWMtOC44IDIuOC0xOC42IC4zLTI0LjUtNi44Yy04LjEtOS44LTE1LjUtMjAuMi0yMi4xLTMxLjJsLTQuNy04LjFjLTYuMS0xMS0xMS40LTIyLjQtMTUuOC0zNC4zYy0zLjItOC43LS41LTE4LjQgNi40LTI0LjZsNDMuMy0zOS40QzY0LjYgMjczLjEgNjQgMjY0LjYgNjQgMjU2cy42LTE3LjEgMS43LTI1LjRMMjIuNCAxOTEuMmMtNi45LTYuMi05LjYtMTUuOS02LjQtMjQuNmM0LjQtMTEuOSA5LjctMjMuMyAxNS44LTM0LjNsNC43LTguMWM2LjYtMTEgMTQtMjEuNCAyMi4xLTMxLjJjNS45LTcuMiAxNS43LTkuNiAyNC41LTYuOGw1NS43IDE3LjdjMTMuNC0xMC4zIDI4LjItMTguOSA0NC0yNS40bDEyLjUtNTcuMWMyLTkuMSA5LTE2LjMgMTguMi0xNy44QzIyNy4zIDEuMiAyNDEuNSAwIDI1NiAwczI4LjcgMS4yIDQyLjUgMy41YzkuMiAxLjUgMTYuMiA4LjcgMTguMiAxNy44bDEyLjUgNTcuMWMxNS44IDYuNSAzMC42IDE1LjEgNDQgMjUuNGw1NS43LTE3LjdjOC44LTIuOCAxOC42LS4zIDI0LjUgNi44YzguMSA5LjggMTUuNSAyMC4yIDIyLjEgMzEuMmw0LjcgOC4xYzYuMSAxMSAxMS40IDIyLjQgMTUuOCAzNC4zek0yNTYgMzM2YTgwIDgwIDAgMSAwIDAtMTYwIDgwIDgwIDAgMSAwIDAgMTYweiIvPg0KPC9zdmc+DQo=",
+            "items": {
+                "adapterAddress": {
+                    "newLine": true,
+                    "type": "ip",
+                    "listenOnAllPorts": true,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 4,
+                    "lg": 4,
+                    "label": "Adapter IP"
+                },
+                "adapterport": {
+                    "type": "number",
+                    "min": 1,
+                    "max": 65535,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 4,
+                    "lg": 2,
+                    "label": "Port"
+                },
+                "birdip": {
+                    "newLine": true,
+                    "type": "text",
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 4,
+                    "lg": 4,
+                    "label": "DoorBird Device IP"
+                },
+                "birdid": {
+                    "type": "text",
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 4,
+                    "lg": 4,
+                    "label": "DoorBird Device ID"
+                },
+                "birduser": {
+                    "newLine": true,
+                    "type": "text",
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 4,
+                    "lg": 4,
+                    "label": "Username"
+                },
+                "birdpw": {
+                    "type": "password",
+                    "repeat": false,
+                    "visible": true,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 4,
+                    "lg": 4,
+                    "label": "Password"
+                }
+            }
+        }
+    }
+}
