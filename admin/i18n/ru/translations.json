@@ -3,5 +3,7 @@
     "DoorBird Device IP": "IP устройства DoorBird",
     "Password": "Пароль",
     "Press the RING Button on your DoorBird and wait a few seconds.": "Нажмите кнопку RING на DoorBird и подождите несколько секунд.",
-    "Username": "Имя пользователя"
+    "Username": "Имя пользователя",
+    "DoorBird Device ID": "Идентификатор устройства двери",
+    "General settings": "Общие настройки"
 }

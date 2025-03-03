@@ -1,7 +1,9 @@
 {
-    "Adapter IP": "",
+    "Adapter IP": "IP -адаптер IP",
     "DoorBird Device IP": "IP пристрою DoorBird",
     "Password": "Пароль",
     "Press the RING Button on your DoorBird and wait a few seconds.": "Натисніть кнопку RING на вашому DoorBird і зачекайте кілька секунд.",
-    "Username": "Ім'я користувача"
+    "Username": "Ім'я користувача",
+    "DoorBird Device ID": "Ідентифікатор пристрою дверей",
+    "General settings": "Загальні налаштування"
 }

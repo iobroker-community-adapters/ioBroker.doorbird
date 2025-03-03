@@ -3,5 +3,7 @@
     "DoorBird Device IP": "IP del dispositivo DoorBird",
     "Password": "Contraseña",
     "Press the RING Button on your DoorBird and wait a few seconds.": "Presione el botón RING en su DoorBird y espere unos segundos.",
-    "Username": "Nombre de usuario"
+    "Username": "Nombre de usuario",
+    "DoorBird Device ID": "ID de dispositivo de tumbona",
+    "General settings": "Configuración general"
 }

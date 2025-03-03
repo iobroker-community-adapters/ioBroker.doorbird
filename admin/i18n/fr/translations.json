@@ -3,5 +3,7 @@
     "DoorBird Device IP": "IP de l'appareil DoorBird",
     "Password": "Mot de passe",
     "Press the RING Button on your DoorBird and wait a few seconds.": "Appuyez sur le bouton SONNERIE de votre DoorBird et attendez quelques secondes.",
-    "Username": "Nom d'utilisateur"
+    "Username": "Nom d'utilisateur",
+    "DoorBird Device ID": "ID de l'appareil de l'oiseau de porte",
+    "General settings": "Paramètres généraux"
 }
