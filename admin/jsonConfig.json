@@ -48,6 +48,20 @@
                     "lg": 4,
                     "label": "DoorBird Device ID"
                 },
+                "_startWizard": {
+                    "type": "sendTo",
+                    "command": "wizard",
+                    "jsonData": "{\"address\": \"${data.adapterAddress}\"}",
+                    "icon": "search",
+                    "variant": "contained",
+                    "showProcess": true,
+                    "useNative": true,
+                    "xs": 2,
+                    "sm": 2,
+                    "md": 2,
+                    "lg": 2,
+                    "label": "DoorBird Device IP"
+                },
                 "birduser": {
                     "newLine": true,
                     "type": "text",

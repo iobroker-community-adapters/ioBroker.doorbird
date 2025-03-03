@@ -738,7 +738,6 @@ class Doorbird extends utils.Adapter {
      */
     async startWizard(msg) {
         this.wizard = true;
-        const wizData = [];
         const wizServer = dgram.createSocket('udp4');
 
         wizServer.on('listening', () => {
@@ -747,12 +746,26 @@ class Doorbird extends utils.Adapter {
         });
 
         wizServer.on('message', (message, remote) => {
-            if (remote.address && message.length > 25 && wizData.length == 0) {
-                wizData.push(remote.address);
-            }
-            if (wizData[0] == remote.address && message.length < 25) {
-                wizData.push(message.toString('utf-8').split(':')[1]);
-                this.sendTo(msg.from, msg.command, wizData, msg.callback);
+            const text = message.toString('utf-8');
+            this.log.debug(`Wizard received message [${message.length}]: ${remote.address}: ${text}`);
+
+            if (remote.address && message.includes(':')) {
+                const parts = text.split(':', 3); // e.g. 847:jxazqm:1741003295
+
+                this.sendTo(
+                    msg.from,
+                    msg.command,
+                    {
+                        native: {
+                            birdip: remote.address,
+                            birdid: parts[1],
+                        },
+                        saveConfig: true,
+                        error: null,
+                    },
+                    msg.callback,
+                );
+
                 this.wizard = false;
                 (() => {
                     if (this.wizardTimeout) {
@@ -768,12 +781,23 @@ class Doorbird extends utils.Adapter {
         });
 
         wizServer.bind(6524);
+
         if (this.wizardTimeout) {
             this.clearTimeout(this.wizardTimeout);
         }
         this.wizardTimeout = this.setTimeout(() => {
             wizServer.close();
             this.wizard = false;
+
+            this.sendTo(
+                msg.from,
+                msg.command,
+                {
+                    error: 'timeout',
+                },
+                msg.callback,
+            );
+
             this.log.debug('Wizard timeout!');
         }, 60000);
     }
