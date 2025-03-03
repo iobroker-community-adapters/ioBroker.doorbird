@@ -87,7 +87,7 @@
     "release-major": "release-script major --yes"
   },
   "bugs": {
-    "url": "https://github.com/BuZZy1337/ioBroker.doorbird/issues"
+    "url": "https://github.com/iobroker-community-adapters/ioBroker.doorbird/issues"
   },
   "readmeFilename": "README.md"
 }
