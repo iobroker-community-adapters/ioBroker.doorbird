@@ -51,7 +51,7 @@ http://<ioBroker-IP>:<Port>/files/doorbird.<instance>.Doorbell<number>_1.jpg
 http://<ioBroker-IP>:<Port>/files/doorbird.<instance>.Motion_1.jpg
 ```
 
-or
+or (when Redis is not used)
 
 ```
 /opt/iobroker/iobroker-data/files/doorbird.<instance>/Doorbell<number>_1.jpg'
@@ -59,9 +59,7 @@ or
 
 #### Example:
 
-```
-http://192.168.0.2:8081/files/doorbird.0/Doorbell1_1.jpg
-```
+`http://192.168.0.2:8081/files/doorbird.0/Doorbell1_1.jpg`
 
 ### Send Snapshot per Telegram
 
@@ -69,9 +67,9 @@ http://192.168.0.2:8081/files/doorbird.0/Doorbell1_1.jpg
 
 js-controller 5 necessary
 
-```
+```js
 setState('doorbird.0.TakeSnapshot', true);
-onFile("doorbird.0", "TakeSnapshot_1.jpg", true, function (id, fileName, size, fileData, mimeType) {
+onFile('doorbird.0', 'TakeSnapshot_1.jpg', true, (id, fileName, size, fileData, mimeType) => {
     sendTo('telegram.0', {
         text: fileData,
         type: 'photo'
