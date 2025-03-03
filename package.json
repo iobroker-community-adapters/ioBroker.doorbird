@@ -8,16 +8,16 @@
   },
   "contributors": [
     {
-      "name": "BuZZy1337",
-      "email": "buzzy1337@outlook.de"
-    },
-    {
       "name": "McM1957",
       "email": "mcm57@gmx.at"
     },
     {
       "name": "Schmakus",
       "email": "schmakus@gmail.com"
+    },
+    {
+      "name": "Matthias Kleine",
+      "email": "info@haus-automatisierung.com"
     }
   ],
   "engines": {
