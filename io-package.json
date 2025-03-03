@@ -123,6 +123,7 @@
     },
     "authors": [
       "BuZZy1337 <buzzy1337@outlook.de>",
+      "McM1957 <mcm57@gmx.at>",
       "Schmakus <schmakus@gmail.com>"
     ],
     "keywords": [
@@ -194,7 +195,7 @@
     ],
     "dependencies": [
       {
-        "js-controller": ">=5.0.19"
+        "js-controller": ">=6.0.0"
       }
     ],
     "globalDependencies": [

@@ -21,7 +21,7 @@
     }
   ],
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   },
   "homepage": "https://github.com/iobroker-community-adapters/ioBroker.doorbird",
   "license": "MIT",
