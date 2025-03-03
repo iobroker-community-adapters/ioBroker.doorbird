@@ -54,7 +54,7 @@ http://<ioBroker-IP>:<Port>/files/doorbird.<instance>.Motion_1.jpg
 or (when Redis is not used)
 
 ```
-/opt/iobroker/iobroker-data/files/doorbird.<instance>/Doorbell<number>_1.jpg'
+/opt/iobroker/iobroker-data/files/doorbird.<instance>/Doorbell<number>_1.jpg
 ```
 
 #### Example:
