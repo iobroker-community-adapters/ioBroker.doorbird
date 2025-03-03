@@ -8,10 +8,10 @@
 // you need to create an adapter
 const utils = require('@iobroker/adapter-core');
 
-const dgram = require('dgram');
-const Axios = require('axios');
+const dgram = require('node:dgram');
+const Axios = require('axios').default;
 Axios.defaults.timeout = 5000;
-const http = require('http');
+const http = require('node:http');
 const udpserver = dgram.createSocket('udp4');
 
 const InterimSolutionForDeletionOfDuplicates = false;
@@ -52,7 +52,7 @@ class Doorbird extends utils.Adapter {
      */
     async onReady() {
         // Reset the connection indicator during startup
-        await this.setStateAsync('info.connection', false, true);
+        await this.setState('info.connection', { val: false, ack: true });
 
         const systemConfig = await this.getForeignObjectAsync('system.config');
 
@@ -103,24 +103,24 @@ class Doorbird extends utils.Adapter {
                             if (req.url == '/motion') {
                                 this.log.debug('Received Motion-alert from Doorbird!');
                                 await Promise.all([
-                                    this.setStateAsync('Motion.trigger', true, true),
+                                    this.setState('Motion.trigger', { val: true, ack: true }),
                                     this.downloadFileAsync('Motion'),
                                 ]);
 
                                 this.setTimeout(async () => {
-                                    await this.setStateAsync('Motion.trigger', false, true);
+                                    await this.setState('Motion.trigger', { val: false, ack: true });
                                 }, 2500);
                             }
                             if (req.url && req.url.indexOf('ring') != -1) {
                                 const id = req.url.substring(req.url.indexOf('?') + 1, req.url.length);
                                 this.log.debug(`Received Ring-alert (ID: ${id}) from Doorbird!`);
                                 await Promise.all([
-                                    this.setStateAsync(`Doorbell.${id}.trigger`, true, true),
+                                    this.setState(`Doorbell.${id}.trigger`, { val: true, ack: true }),
                                     this.downloadFileAsync(`Doorbell${id}`),
                                 ]);
 
                                 this.setTimeout(async () => {
-                                    await this.setStateAsync(`Doorbell.${id}.trigger`, false, true);
+                                    await this.setState(`Doorbell.${id}.trigger`, { val: false, ack: true });
                                 }, 2000);
                             }
                             res.end();
@@ -228,12 +228,12 @@ class Doorbird extends utils.Adapter {
 
             if (response.status === 401) {
                 this.authorized = false;
-                await this.setStateAsync('info.connection', false, true);
+                await this.setState('info.connection', { val: false, ack: true });
                 this.log.warn(`Whooops.. DoorBird says User ${this.config.birduser} is unauthorized!!`);
                 this.log.warn('Check Username + Password and enable the "API-Operator" Permission for the User!!');
             } else if (response.status === 200) {
                 this.authorized = true;
-                await this.setStateAsync('info.connection', true, true);
+                await this.setState('info.connection', { val: true, ack: true });
                 this.log.debug(`Authorization with User ${this.config.birduser} successful!`);
                 if (!adapterStarted) {
                     adapterStarted = true;
@@ -243,22 +243,24 @@ class Doorbird extends utils.Adapter {
         } catch (error) {
             if (error.code === 'EHOSTUNREACH') {
                 this.authorized = false;
-                await this.setStateAsync('info.connection', false, true);
+                await this.setState('info.connection', { val: false, ack: true });
                 this.log.warn('DoorBird Device is offline!!');
             } else if (error.code === 'ECONNABORTED') {
                 this.authorized = false;
-                await this.setStateAsync('info.connection', false, true);
+                await this.setState('info.connection', { val: false, ack: true });
                 this.log.warn(`Error in testBird() Request timed out: ${error}`);
             } else {
                 this.authorized = false;
-                await this.setStateAsync('info.connection', false, true);
+                await this.setState('info.connection', { val: false, ack: true });
                 this.log.warn(`Error in testBird() Request: ${error}`);
             }
         }
 
         if (this.birdConCheck) {
-            this.clearTimeout(this.birdConCheck), (this.birdConCheck = null);
+            this.clearTimeout(this.birdConCheck);
+            this.birdConCheck = null;
         }
+
         this.birdConCheck = this.setTimeout(async () => {
             this.log.debug(`Refresh connection check...`);
             this.birdConCheck = null;
@@ -280,9 +282,9 @@ class Doorbird extends utils.Adapter {
 
                 if (response.status === 200) {
                     const info = response.data;
-                    await this.setStateAsync('info.firmware', info.BHA.VERSION[0].FIRMWARE, true);
-                    await this.setStateAsync('info.build', info.BHA.VERSION[0].BUILD_NUMBER, true);
-                    await this.setStateAsync('info.type', info.BHA.VERSION[0]['DEVICE-TYPE'], true);
+                    await this.setState('info.firmware', { val: info.BHA.VERSION[0].FIRMWARE, ack: true });
+                    await this.setState('info.build', { val: info.BHA.VERSION[0].BUILD_NUMBER, ack: true });
+                    await this.setState('info.type', { val: info.BHA.VERSION[0]['DEVICE-TYPE'], ack: true });
 
                     const relays = info.BHA.VERSION[0].RELAYS;
 
@@ -725,8 +727,11 @@ class Doorbird extends utils.Adapter {
      */
     onUnload(callback) {
         try {
+            this.setState('info.connection', { val: false, ack: true });
+
             if (this.birdConCheck) {
-                this.clearTimeout(this.birdConCheck), (this.birdConCheck = null);
+                this.clearTimeout(this.birdConCheck);
+                this.birdConCheck = null;
             }
             if (this.server) {
                 this.server.close(() => {
