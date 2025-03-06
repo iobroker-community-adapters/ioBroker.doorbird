@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
     "i18n": true,
     "type": "tabs",
     "tabsStyle": {
@@ -85,3 +86,57 @@
         }
     }
 }
+=======
+	"i18n": true,
+	"type": "panel",
+	"items": {
+		"adapterAddress": {
+			"type": "ip",
+			"label": "IP of Adapter (ioBroker). e.g. 192.168.1.100",
+			"sm": 3,
+			"md": 3,
+			"lg": 3,
+			"onlyIp4": true,
+			"listenOnAllPorts": true
+		},
+		"adapterport": {
+			"type": "number",
+			"label": "Port of Adapter (ioBroker). e.g. 8100",
+			"sm": 3,
+			"md": 3,
+			"lg": 3,
+			"default": 8100
+		},
+		"birdip": {
+			"type": "text",
+			"label": "IP of DoorBird Device. e.g. 192.168.1.100",
+			"sm": 3,
+			"md": 3,
+			"lg": 3,
+			"newLine": true
+		},
+		"birdid": {
+			"type": "text",
+			"label": "Device ID of DoorBird. e.g. ghfxxx",
+			"sm": 3,
+			"md": 3,
+			"lg": 3
+		},
+		"birduser": {
+			"type": "text",
+			"label": "Username e.g. ghfxxx0001",
+			"sm": 3,
+			"md": 3,
+			"lg": 3,
+			"newLine": true
+		},
+		"birdpw": {
+			"type": "password",
+			"label": "Password",
+			"sm": 3,
+			"md": 3,
+			"lg": 3
+		}
+	}
+}
+>>>>>>> a9e541f (upgrade to jsonConfig)
