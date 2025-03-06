@@ -94,21 +94,12 @@ onFile('doorbird.0', 'TakeSnapshot_1.jpg', true, (id, fileName, size, fileData, 
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-<<<<<<< HEAD
 ### 3.0.0 (2025-03-03)
 
 NodeJS >= 20.x and js-controller >= 6 is required
 
 - (@klein0r) Migrated to json config
 - (@klein0r) Updated documentation and dependencies
-=======
-
-### **WORK IN PROGRESS**
-
--   (Schmakus) migrated to admin 5 UI (jsonConfig)
--   (Schmakus) Removed Wizard
--   (Schmakus) changed async methods
->>>>>>> a9e541f (upgrade to jsonConfig)
 
 ### 2.0.0 (2024-09-02)
 
