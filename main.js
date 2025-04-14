@@ -167,7 +167,6 @@ class Doorbird extends utils.Adapter {
         if (typeof obj === 'object' && obj.message) {
             if (obj.command === 'wizard' && !this.wizard) {
                 this.startWizard(obj);
-                this.wizard = true;
             }
         }
     }
