@@ -36,7 +36,7 @@
     "url": "https://github.com/iobroker-community-adapters/ioBroker.doorbird"
   },
   "dependencies": {
-    "@iobroker/adapter-core": "^3.2.3",
+    "@iobroker/adapter-core": "^3.3.2",
     "http": "^0.0.1-security"
   },
   "devDependencies": {
