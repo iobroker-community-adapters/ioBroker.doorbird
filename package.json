@@ -18,6 +18,10 @@
     {
       "name": "Matthias Kleine",
       "email": "info@haus-automatisierung.com"
+    },
+    {
+      "name": "iobroker-community-adapters",
+      "email": "iobroker-community-adapters@gmx.de"
     }
   ],
   "engines": {
