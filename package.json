@@ -2,23 +2,12 @@
   "name": "iobroker.doorbird",
   "version": "3.0.0",
   "description": "ioBroker doorbird Adapter",
-  "author": {
-    "name": "BuZZy1337",
-    "email": "buzzy1337@outlook.de"
-  },
+  "author": "BuZZy1337 <buzzy1337@outlook.de>",
   "contributors": [
-    {
-      "name": "McM1957",
-      "email": "mcm57@gmx.at"
-    },
-    {
-      "name": "Schmakus",
-      "email": "schmakus@gmail.com"
-    },
-    {
-      "name": "Matthias Kleine",
-      "email": "info@haus-automatisierung.com"
-    }
+    "McM1957 <mcm57@gmx.at>",
+    "Schmakus <schmakus@gmail.com>",
+    "Matthias Kleine <info@haus-automatisierung.com>",
+    "iobroker-community-adapters <iobroker-community-adapters@gmx.de>"
   ],
   "engines": {
     "node": ">=20"

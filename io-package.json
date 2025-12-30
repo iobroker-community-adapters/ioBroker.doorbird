@@ -125,7 +125,8 @@
       "BuZZy1337 <buzzy1337@outlook.de>",
       "McM1957 <mcm57@gmx.at>",
       "Schmakus <schmakus@gmail.com>",
-      "Matthias Kleine <info@haus-automatisierung.com>"
+      "Matthias Kleine <info@haus-automatisierung.com>",
+      "iobroker-community-adapters <iobroker-community-adapters@gmx.de>"
     ],
     "keywords": [
       "doorbird",
@@ -198,12 +199,12 @@
     ],
     "dependencies": [
       {
-        "js-controller": ">=6.0.0"
+        "js-controller": ">=6.0.11"
       }
     ],
     "globalDependencies": [
       {
-        "admin": ">=7.4.10"
+        "admin": ">=7.6.17"
       }
     ]
   },
