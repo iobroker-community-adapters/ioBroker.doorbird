@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "doorbird",
-    "version": "3.0.0",
+    "version": "3.1.0",
     "news": {
+      "3.1.0": {
+        "en": "**CI/CD**: Migrated to ESLint 9 with @iobroker/eslint-config standard configuration\nAdapter requires admin >= 7.7.22 now\nAdapter requires js-controller >= 6.0.11 now",
+        "de": "**CI/CD*: auf ESLint 9 mit @iobroker/eslint-config Standardkonfiguration migriert\nAdapter benötigt admin >= 7.7.22 jetzt\nAdapter benötigt jetzt js-controller >= 6.0.11",
+        "ru": "**CI/CD**: ESLint 9 с конфигурацией @iobroker/eslint-config\nАдаптер требует администратора >= 7.7.22\nАдаптер требует js-контроллер >= 6.0.11",
+        "pt": "**CI/CD**: Migrado para ESLint 9 com configuração padrão @iobroker/eslint-config\nAdaptador requer admin >= 7.7.22 agora\nAdaptador requer js-controlador >= 6.0.11 agora",
+        "nl": "**CI/CD**: Migreren naar ESLint 9 met standaardconfiguratie @iobroker/eslint-config\nAdapter vereist admin < 7.7.22 nu\nAdapter vereist js-controller > 6,0.11 nu",
+        "fr": "**CI/CD**: Migré en ESLint 9 avec la configuration standard @iobroker/eslint-config\nAdaptateur nécessite admin >= 7.7.22 maintenant\nAdaptateur nécessite js-controller >= 6.0.11 maintenant",
+        "it": "**CI/CD**: Migrato a ESLint 9 con configurazione standard @iobroker/eslint-config\nAdattatore richiede admin >= 7.7.22 ora\nAdattatore richiede js-controller >= 6.0.11 ora",
+        "es": "**CI/CD**: Migrated to ESLint 9 with @iobroker/eslint-config standard settings\nEl adaptador requiere admin= 7.7.22 ahora\nAdaptador requiere js-controller >= 6.0.11",
+        "pl": "* *CI / CD* *: Migrated to ESLint 9 with @ iobroker / eslint- config standard configuration \nAdapter wymaga admin > = 7.7.22\nAdapter wymaga sterownika js- > = 6.0.11",
+        "uk": "**CI/CD**: Migrated to ESLint 9 з @iobroker/eslint-config стандартна конфігурація\nАдаптер вимагає адмін >= 7.7.22 тепер\nАдаптер вимагає js-controller >=6.0.11 тепер",
+        "zh-cn": "** CI/CD**:以 @iobroduc/eslint-config 标准配置方式迁移到ESLint 9\n适任者需要管理员 \\ 7.7.22 现在\n适配器需要js控制器 现在6.0.11"
+      },
       "3.0.0": {
         "en": "NodeJS >= 20.x and js-controller >= 6 is required\n\n* Migrated to json config\n* Updated documentation and dependencies",
         "de": "NodeJS >= 20.x und js-Controller >= 6 ist erforderlich\n\n* Migrated to json config\n* Aktualisierte Dokumentation und Abhängigkeiten",
@@ -80,19 +93,6 @@
         "pl": "Tworzenie ulubionych i harmonogramów tylko raz po uruchomieniu adaptera i pomyślnym połączeniu z DoorBird. (Kolejny krok do rozwiązania \"Maksymalny rozmiar stosu wywołania przekroczony\" problem.)",
         "uk": "Створення фаворитів і графіків тільки після запуску адаптера і вдало підключених до DoorBird. (Іншим кроком для вирішення проблеми «Максимум виклику, розмір яких перевищує».)",
         "zh-cn": "在启动适配器并成功连接到DoorBird后,只创建一次最爱和时间表. (另一步骤解决\"最大调用堆栈大小超过\"问题"
-      },
-      "1.4.0": {
-        "en": "update dependencies (security updates)",
-        "de": "Aktualisierung von Abhängigkeiten (Sicherheits Updates)",
-        "ru": "обновление зависимостей (защищенные обновления)",
-        "pt": "dependências de atualização (atualizações seguras)",
-        "nl": "update afhankelijkheden (veilige updates)",
-        "fr": "mise à jour des dépendances (mises à jour sécurisées)",
-        "it": "aggiornamento dipendenze (aggiornamento sicuro)",
-        "es": "dependencias de actualización (actualizaciones seguras)",
-        "pl": "aktualizacji zależności (bezpieczne aktualizacje)",
-        "uk": "оновлення залежності",
-        "zh-cn": "更新依赖性( 安全更新)"
       }
     },
     "titleLang": {

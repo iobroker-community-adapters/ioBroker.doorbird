@@ -1,4 +1,8 @@
 # Older changes
+## 1.5.0 (2024-03-01)
+
+- (Schmakus) update dependencies
+
 ## 1.4.1 (2024-02-22)
 
 - (Schmakus) Creation of favorites and schedules only once after starting the adapter and successfully connecting to DoorBird. (Another step to solve "Maximum call stack size exceeded" problem.)
