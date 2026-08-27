@@ -190,6 +190,9 @@ class Doorbird extends utils.Adapter {
      * @param command
      */
     buildURL(command) {
+        if (!/^[a-zA-Z0-9.\-]+$/.test(this.config.birdip)) {
+            throw new Error(`Invalid birdip configuration value: ${this.config.birdip}`);
+        }
         return `http://${this.config.birdip}/bha-api/${command}.cgi?http-user=${this.config.birduser}&http-password=${
             this.config.birdpw
         }`;
