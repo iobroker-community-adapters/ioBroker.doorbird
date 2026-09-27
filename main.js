@@ -190,9 +190,9 @@ class Doorbird extends utils.Adapter {
      * @param command
      */
     buildURL(command) {
-        return `http://${this.config.birdip}/bha-api/${command}.cgi?http-user=${this.config.birduser}&http-password=${
-            this.config.birdpw
-        }`;
+        return `http://${encodeURIComponent(this.config.birduser)}:${encodeURIComponent(
+            this.config.birdpw,
+        )}@${this.config.birdip}/bha-api/${command}.cgi`;
     }
 
     /**
